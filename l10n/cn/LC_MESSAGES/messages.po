@@ -1,0 +1,189 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0 trunk\n"
+"AMAMReport-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-02 18:36+0400\n"
+"PO-Revision-Date: 2022-12-07 23:30+0800\n"
+"Last-Translator: 1 <10@qq.com>\n"
+"Language-Team: TODO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
+"X-Generator: Poedit 2.2\n"
+
+msgid "Landing Gear Handle"
+msgstr "起落架手柄"
+
+msgid "Taxi/Landing Light"
+msgstr "滑行/着陆灯"
+
+msgid "Anti-Collision Light"
+msgstr "防撞灯"
+
+msgid "Navigation Light"
+msgstr "航行灯"
+
+msgid "Tail Navigation Light"
+msgstr "尾部航行灯"
+
+msgid "Main Power Switch"
+msgstr "电瓶开关"
+
+msgid "Left PowerGenerator Switch"
+msgstr "左发电机开关"
+
+msgid "Right PowerGenerator Switch"
+msgstr "右发电机开关"
+
+msgid "Left Inverter Switch"
+msgstr "左逆变器开关"
+
+msgid "Right Inverter Switch"
+msgstr "右逆变器开关"
+
+msgid "ADI Power Switch"
+msgstr "姿态仪电源开关"
+
+msgid "HSI Power Switch"
+msgstr "航向仪电源开关"
+
+msgid "Radio Altitude Power Switch"
+msgstr "无线电高度开关"
+
+msgid "Oil Pressure Gauge Power Switch"
+msgstr "油压表电源开关"
+
+msgid "Emergency Converter Switch"
+msgstr "应急逆变器开关"
+
+msgid "Weapon Power Switch"
+msgstr "武器电源开关"
+
+msgid "HUD Power Switch"
+msgstr "HUD电源开关"
+
+msgid "RWR Power Switch"
+msgstr "RWR电源开关"
+
+msgid "Eject Power 1"
+msgstr "弹射系统电源1"
+
+msgid "Eject Power 2"
+msgstr "弹射系统电源2"
+
+msgid "Eject Power 3"
+msgstr "弹射系统电源3"
+
+msgid "Camera Gun Power Switch"
+msgstr "照相枪电源开关"
+
+msgid "Missile Warming Switch"
+msgstr "导弹告警开关"
+
+msgid "Missile Filament Switch"
+msgstr "Missile Filament Switch"
+
+msgid "Missile Launch Switch"
+msgstr "导弹发射架电源开关"
+
+msgid "Drop Tanks Ind Switch"
+msgstr "副油箱指示器开关"
+
+msgid "Windshield Anti Ice Switch"
+msgstr "风挡除冰开关"
+
+msgid "Pump 4 Switch"
+msgstr "4号油泵组"
+
+msgid "Pump 3 Switch"
+msgstr "3号油泵组"
+
+msgid "Motor Starter"
+msgstr "起动机开关"
+
+msgid "Oil Pump Switch"
+msgstr "油泵开关"
+
+msgid "Start Unit"
+msgstr "启动单元"
+
+msgid "Generator Oil Pressure"
+msgstr "发电机油压开关"
+
+msgid "After Burn Switch"
+msgstr "加力燃烧室开关"
+
+msgid "Right Engine Start/Stop"
+msgstr "右发启动/停止"
+
+msgid "Left Engine Start/Stop"
+msgstr "左发启动/停止"
+
+msgid "Flight Mode"
+msgstr "飞行模式"
+
+msgid "Master Arm"
+msgstr "主军械开关"
+
+msgid "Weapon Type"
+msgstr "武器类型"
+
+msgid "Pylon 1 Select"
+msgstr "选择1号挂架"
+
+msgid "Pylon 2 Select"
+msgstr "选择2号挂架"
+
+msgid "Pylon 3 Select"
+msgstr "选择3号挂架"
+
+msgid "Pylon 4 Select"
+msgstr "选择4号挂架"
+
+msgid "Pylon 5 Select"
+msgstr "选择5号挂架"
+
+msgid "Radar OFF/STBY/ON"
+msgstr "雷达 关闭/待机/工作"
+
+msgid "Radar Max Range"
+msgstr "雷达最大量程"
+
+msgid "Release Quantity x10"
+msgstr "投掷数量X10 +-"
+
+msgid "Release Quantity x1"
+msgstr "投掷数量X1 +-"
+
+msgid "Release Multitude x10"
+msgstr "投掷次数X10 +-"
+
+msgid "Release Multitude x1"
+msgstr "投掷次数X1 +-"
+
+msgid "Release Interval x100"
+msgstr "投掷间隔X100毫秒 +-"
+
+msgid "Release Interval x10"
+msgstr "投掷间隔X10毫秒 +-"
+
+msgid "Release Interval x1"
+msgstr "投掷间隔X1毫秒 +-"
+
+msgid "Radar Range"
+msgstr "雷达量程"
+
+msgid "A Lightness"
+msgstr "A亮度"
+
+msgid "B Lightness"
+msgstr "B亮度"
+
+msgid "Radar Lightness"
+msgstr "雷达显示器亮度"
+
+msgid "Flood Light"
+msgstr "泛光灯"
+
