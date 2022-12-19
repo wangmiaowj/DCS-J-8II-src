@@ -20,6 +20,7 @@ HUD_base_clip.material		    = "DBG_GREY"
 HUD_base_clip.h_clip_relation   = h_clip_relations.REWRITE_LEVEL --INCREASE_IF_LEVEL--COMPARE --REWRITE_LEVEL
 HUD_base_clip.level			    = HUD_DEFAULT_NOCLIP_LEVEL
 HUD_base_clip.isdraw		    = true
+HUD_base_clip.collimated		= false
 HUD_base_clip.change_opacity    = false
 HUD_base_clip.element_params    = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
 HUD_base_clip.controllers       = {{"opacity_using_parameter",0}}
@@ -37,14 +38,14 @@ speed_move_clip.material		        = "DBG_GREEN"
 speed_move_clip.h_clip_relation         = h_clip_relations.INCREASE_IF_LEVEL--COMPARE --REWRITE_LEVEL
 speed_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 speed_move_clip.change_opacity          = false
-speed_move_clip.collimated 		        = false
+speed_move_clip.collimated 		        = true
 speed_move_clip.element_params          = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
 speed_move_clip.controllers             = {{"opacity_using_parameter",0}}
 speed_move_clip.isvisible		        = SHOW_MASKS
-speed_move_clip.parent_element	       = "hud_base_data_clip"
+--speed_move_clip.parent_element	       = "hud_base_data_clip"
 Add(speed_move_clip)
 
--- 速度移动条裁剪层
+-- 高度移动条裁剪层
 altitude_move_clip 			                = CreateElement "ceMeshPoly" --这是创建一个平面
 altitude_move_clip.name 			        = "altitude_move_clip"
 altitude_move_clip.vertices 		        = hud_duo_vert_gen(680, 2600, 232)
@@ -55,7 +56,7 @@ altitude_move_clip.material		            = "DBG_GREEN"
 altitude_move_clip.h_clip_relation          = h_clip_relations.INCREASE_IF_LEVEL--COMPARE --REWRITE_LEVEL
 altitude_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 altitude_move_clip.change_opacity           = false
-altitude_move_clip.collimated 		        = false
+altitude_move_clip.collimated 		        = true
 altitude_move_clip.element_params           = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
 altitude_move_clip.controllers              = {{"opacity_using_parameter",0}}
 altitude_move_clip.isvisible		        = SHOW_MASKS
@@ -72,6 +73,7 @@ heading_move_clip.material		        = "DBG_GREEN"
 heading_move_clip.h_clip_relation       = h_clip_relations.INCREASE_IF_LEVEL--COMPARE --REWRITE_LEVEL
 heading_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 heading_move_clip.change_opacity        = false
+heading_move_clip.collimated            = true
 heading_move_clip.element_params        = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
 heading_move_clip.controllers           = {{"opacity_using_parameter",0}}
 heading_move_clip.isvisible		        = SHOW_MASKS

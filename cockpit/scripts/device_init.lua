@@ -39,7 +39,12 @@ creators[devices.LIGHT_SYSTEM]    ={"avLuaDevice"           ,LockOn_Options.scri
 -- this is 14, dont move this position for now XD, the command from EFM is constant send to lua device 14 
 creators[devices.SOUND_SYSTEM]    ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/sound_system.lua"} 
 -- warning panel controller 
-creators[devices.WARNING_SYSTEM]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/warning_system.lua"} 
+creators[devices.WARNING_SYSTEM]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/warning_system.lua"}
+--杆量指示器
+creators[devices.ROD]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Rod/device/Rod_init.lua"}
+--empty
+creators[devices.TEST]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/empty.lua"}
+creators[devices.FLIR]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Helmet/device/init.lua"}
 -- ipad controller
 --creators[devices.IPAD_SYSTEM]     ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/ipad_ctrl.lua"} 
 -- menu controller
@@ -51,6 +56,9 @@ indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."HUD/I
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRadar/Indicator/init.lua",nil,{{"RDR_C","RDR_D","RDR_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRwr/Indicator/init.lua",nil,{{"RWR_C","RWR_D","RWR_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."UHF/Radio_init.lua",nil,{{"UHF_C","UHF_D","UHF_R"}}}
+
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Rod/Indicator/init.lua",nil,nil}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Helmet/Indicator/init.lua",nil,nil}
 show_param_handles_list()
 -- Enable KneeBoard for Test
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/declare_kneeboard_device.lua")

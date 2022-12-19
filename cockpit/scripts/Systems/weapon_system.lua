@@ -9,6 +9,9 @@ dofile(LockOn_Options.common_script_path .. "../../../Database/wsTypes.lua")
 local update_time_step = 0.02 --每秒50次刷新
 make_default_activity(update_time_step)
 
+local cannonAmmo = 200
+local unlimit_weapon = false
+
 local A2A_dg = {
     "{R-13M}", "{R-13M1}", "{R-3S}", "{R-60}", "{R-60M}", "{R-60M 2L}", "{R-60M 2R}", "{R-60 2L}", "{R-60 2R}", "{R-55}",
     "DIS_PL-5EII", "DIS_PL-8A",
@@ -17,21 +20,8 @@ local A2A_r = {
     "{R-3R}", "{Aspide_MK1}", "DIS_PL-12", "{AIM-7F}"
 }
 
-local sensor_data = get_base_data()
-
-local iCommandPlaneWingtipSmokeOnOff = 78
-local iCommandPlaneJettisonWeapons = 82
 local iCommandPlaneFire = 84
 local iCommandPlaneFireOff = 85
-local iCommandPlaneChangeWeapon = 101
-local iCommandActiveJamming = 136
-local iCommandPlaneJettisonFuelTanks = 178
-local iCommandPlanePickleOn = 350
-local iCommandPlanePickleOff = 351
---local iCommandPlaneDropFlareOnce = 357
---local iCommandPlaneDropChaffOnce = 358
-
--- local pylonSelected = -1
 
 -- 获取锁定状态
 -- 是否锁定
@@ -41,6 +31,8 @@ local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")
 local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
 
 local hud_lock_test_sign = get_param_handle("PULLUP_FLASH")
+
+local weaponPwrSwitch = get_param_handle('PNT_1011')
 
 -- 似乎是设置预设锁定方向？
 -- 方位角
@@ -74,6 +66,10 @@ WeaponSystem:listen_command(Keys.Pylon4SelUP)
 WeaponSystem:listen_command(Keys.Pylon4SelDOWN)
 WeaponSystem:listen_command(Keys.Pylon5SelUP)
 WeaponSystem:listen_command(Keys.Pylon5SelDOWN)
+WeaponSystem:listen_command(Keys.Pylon6SelUP)
+WeaponSystem:listen_command(Keys.Pylon6SelDOWN)
+WeaponSystem:listen_command(Keys.Pylon7SelUP)
+WeaponSystem:listen_command(Keys.Pylon7SelDOWN)
 WeaponSystem:listen_command(Keys.QuantityTumbWheel10_UP)
 WeaponSystem:listen_command(Keys.QuantityTumbWheel10_DN)
 WeaponSystem:listen_command(Keys.QuantityTumbWheel_UP)
@@ -102,21 +98,10 @@ local c = 0
 ----rest are for pylon drop tank checking and will send to parameters
 
 local LAUNCH_MODE = 0 -- 未选择:0; 红外弹: 1; 中距弹: 2; 机炮: 3; 火箭弹: 4; 炸弹: 5; 6: A2G弹; 7:拉烟弹
-local LAST_LAUNCH_BUTTON = -1
-local ATTACK_MODE = -1 -- DELAY: 0; LAB IP: 1; LAB TGT: 2; GCB: 3; ROCKET: 4; HI LOFT: 5; STRAIGHT PATH: 6; GENERAL: 7; -1 : unselected
-local LAST_ATTACK_BUTTON = -1
-local IS_TRAINING = 0 -- TRAINING: 1;
-local RESELECT_LIGHT_STATUS = 0
-local COMPLETE_LIGHT_STATUS = 0
-local RESELECT_LIGHT = get_param_handle("PTN_562")
-local COMPLETE_LIGHT = get_param_handle("PTN_563")
-local TOTAL_LAUNCH_NUM = 0
 local INTERVAL_SET = 0
-local TIME_SET = 0
 local QUANTITY_SET = 0
 local MULT_SET = 0
 local MANUAL_RELEASE_SIGNAL = 0
-local DataFreeze = 0
 local STEP_SIGNAL = 0
 local FIREHOLD = 0
 local isFire = 0
@@ -125,7 +110,9 @@ local SELECTED_LIST = {
     -- {is_launch, pylon launch number, select_light}
     { 0, 0, get_param_handle("PNT_1266") },
     { 0, 0, get_param_handle("PNT_1267") },
+    { 0, 0, get_param_handle("PNT_2267") },
     { 0, 0, get_param_handle("PNT_1268") },
+    { 0, 0, get_param_handle("PNT_2269") },
     { 0, 0, get_param_handle("PNT_1269") },
     { 0, 0, get_param_handle("PNT_1270") },
 }
@@ -147,6 +134,8 @@ local pylon2_select_switch = _switch_counter()
 local pylon3_select_switch = _switch_counter()
 local pylon4_select_switch = _switch_counter()
 local pylon5_select_switch = _switch_counter()
+local pylon6_select_switch = _switch_counter()
+local pylon7_select_switch = _switch_counter()
 
 local attack_interval_A = _switch_counter()
 local attack_interval_B = _switch_counter()
@@ -175,9 +164,11 @@ local target_status = {
     { master_arm_switch, SWITCH_OFF, get_param_handle("PNT_1203"), "PNT_1203" },
     { pylon1_select_switch, SWITCH_OFF, get_param_handle("PNT_1261"), "PNT_1261" },
     { pylon2_select_switch, SWITCH_OFF, get_param_handle("PNT_1262"), "PNT_1262" },
-    { pylon3_select_switch, SWITCH_OFF, get_param_handle("PNT_1263"), "PNT_1263" },
-    { pylon4_select_switch, SWITCH_OFF, get_param_handle("PNT_1264"), "PNT_1264" },
-    { pylon5_select_switch, SWITCH_OFF, get_param_handle("PNT_1265"), "PNT_1265" },
+    { pylon3_select_switch, SWITCH_OFF, get_param_handle("PNT_2263"), "PNT_2263" },
+    { pylon4_select_switch, SWITCH_OFF, get_param_handle("PNT_1263"), "PNT_1263" },
+    { pylon5_select_switch, SWITCH_OFF, get_param_handle("PNT_2264"), "PNT_2264" },
+    { pylon6_select_switch, SWITCH_OFF, get_param_handle("PNT_1264"), "PNT_1264" },
+    { pylon7_select_switch, SWITCH_OFF, get_param_handle("PNT_1265"), "PNT_1265" },
     { attack_interval_A, SWITCH_OFF, get_param_handle("PNT_1298"), "PNT_1298" },
     { attack_interval_B, SWITCH_OFF, get_param_handle("PNT_1299"), "PNT_1299" },
     { attack_interval_C, SWITCH_OFF, get_param_handle("PNT_1300"), "PNT_1300" },
@@ -206,6 +197,8 @@ local current_status = {
     { pylon3_select_switch, SWITCH_OFF, SWITCH_OFF },
     { pylon4_select_switch, SWITCH_OFF, SWITCH_OFF },
     { pylon5_select_switch, SWITCH_OFF, SWITCH_OFF },
+    { pylon6_select_switch, SWITCH_OFF, SWITCH_OFF },
+    { pylon7_select_switch, SWITCH_OFF, SWITCH_OFF },
     { attack_interval_A, SWITCH_OFF, },
     { attack_interval_B, SWITCH_OFF, },
     { attack_interval_C, SWITCH_OFF, },
@@ -243,6 +236,10 @@ local pylon4_ammos_10 = _num_counter()
 local pylon4_ammos_1 = _num_counter()
 local pylon5_ammos_10 = _num_counter()
 local pylon5_ammos_1 = _num_counter()
+local pylon6_ammos_10 = _num_counter()
+local pylon6_ammos_1 = _num_counter()
+local pylon7_ammos_10 = _num_counter()
+local pylon7_ammos_1 = _num_counter()
 local gun_ammo_100 = _num_counter()
 local gun_ammo_10 = _num_counter()
 local gun_ammo_1 = _num_counter()
@@ -259,12 +256,16 @@ local num_target = {
     { pylon1_ammos_1, 0, get_param_handle('PNT_1272') },
     { pylon2_ammos_10, 0, get_param_handle('PNT_1273') },
     { pylon2_ammos_1, 0, get_param_handle('PNT_1274') },
-    { pylon3_ammos_10, 0, get_param_handle('PNT_1275') },
-    { pylon3_ammos_1, 0, get_param_handle('PNT_1276') },
-    { pylon4_ammos_10, 0, get_param_handle('PNT_1277') },
-    { pylon4_ammos_1, 0, get_param_handle('PNT_1278') },
-    { pylon5_ammos_10, 0, get_param_handle('PNT_1279') },
-    { pylon5_ammos_1, 0, get_param_handle('PNT_1280') },
+    { pylon3_ammos_10, 0, get_param_handle('PNT_2273') },
+    { pylon3_ammos_1, 0, get_param_handle('PNT_2274') },
+    { pylon4_ammos_10, 0, get_param_handle('PNT_1275') },
+    { pylon4_ammos_1, 0, get_param_handle('PNT_1276') },
+    { pylon5_ammos_10, 0, get_param_handle('PNT_2277') },
+    { pylon5_ammos_1, 0, get_param_handle('PNT_2278') },
+    { pylon6_ammos_10, 0, get_param_handle('PNT_1277') },
+    { pylon6_ammos_1, 0, get_param_handle('PNT_1278') },
+    { pylon7_ammos_10, 0, get_param_handle('PNT_1279') },
+    { pylon7_ammos_1, 0, get_param_handle('PNT_1280') },
     { gun_ammo_100, 0, get_param_handle('PNT_1281') },
     { gun_ammo_10, 0, get_param_handle('PNT_1282') },
     { gun_ammo_1, 0, get_param_handle('PNT_1283') },
@@ -288,6 +289,10 @@ local num_current = {
     { pylon4_ammos_1, 0, 99 },
     { pylon5_ammos_10, 0, 99 },
     { pylon5_ammos_1, 0, 99 },
+    { pylon6_ammos_10, 0, 99 },
+    { pylon6_ammos_1, 0, 99 },
+    { pylon7_ammos_10, 0, 99 },
+    { pylon7_ammos_1, 0, 99 },
     { gun_ammo_100, 0, 999 },
     { gun_ammo_10, 0, 999 },
     { gun_ammo_1, 0, 999 },
@@ -332,7 +337,7 @@ local function initSnd()
 end
 
 local function ammo_count_cal()
-    for i = 0, 4, 1 do
+    for i = 0, 6, 1 do
         local pylon_num = i
         local pylon_info = WeaponSystem:get_station_info(pylon_num)
         local num_x10 = 0
@@ -345,6 +350,15 @@ local function ammo_count_cal()
         num_target[2 * i + 1][2] = num_x10
         num_target[2 * i + 2][2] = num_x1
     end
+end
+
+local function calGunAmmo()
+    if get_elec_ac_status() and weaponPwrSwitch:get() == SWITCH_ON and LAUNCH_MODE == 3 and isFire == 1 and FIREHOLD >=0.04 and math.floor((FIREHOLD*100)%4) == 0 and not unlimit_weapon then
+        cannonAmmo = cannonAmmo -1
+    end
+    num_target[gun_ammo_100][2] = math.floor(cannonAmmo/100) * 0.1
+    num_target[gun_ammo_10][2] = math.floor(cannonAmmo %100/10)*0.1
+    num_target[gun_ammo_1][2] = math.floor(cannonAmmo % 10) * 0.1
 end
 
 local function update_num_anim()
@@ -366,7 +380,7 @@ local pylon_is_tank = {
 
 local function check_externel_tank_status()
     local pylonSelection
-    for pylonSelection = 0, 4, 1 do
+    for pylonSelection = 0, 6, 1 do
         local station = WeaponSystem:get_station_info(pylonSelection)
         if (station.CLSID == "{5f5a94ef-a4d7-464e-8d80-b40e6cd6c264}") then
             pylon_is_tank[pylonSelection + 1]:set(1)
@@ -384,14 +398,14 @@ end
 
 local function update_Pylon_list()
     local pylonSelection
-    for pylonSelection = 0, 4, 1 do
+    for pylonSelection = 0, 6, 1 do
         local station_data = WeaponSystem:get_station_info(pylonSelection)
         PYLON_INFO_LIST[pylonSelection + 1] = { station_data.weapon.level2, station_data.weapon.level3,
             station_data.count }
     end
 end
 
----[[
+--[[
 local tablePrinted = {}
 local file = io.open("e:\\00_00_00_海外组_学习\\挂架.txt", "w")
 assert(file)
@@ -415,7 +429,8 @@ function post_initialize()
     update_Pylon_list()
     check_externel_tank_status()
     initSnd()
-    printTableItem("pylon",{WeaponSystem:get_station_info(0),WeaponSystem:get_station_info(1),WeaponSystem:get_station_info(2),WeaponSystem:get_station_info(3),WeaponSystem:get_station_info(4)},0)
+    unlimit_weapon = LockOn_Options.flight.unlimited_weapons
+    --printTableItem("LockOn_Options",LockOn_Options,0)
 end
 
 function getPylonInfo()
@@ -437,56 +452,45 @@ function SetCommand(command, value)
         MANUAL_RELEASE_SIGNAL = 1
     elseif (command == Keys.WeaponLaunchOff) then
         MANUAL_RELEASE_SIGNAL = 0
-        STEP_SIGNAL = 0
         FIREHOLD = 0
         isFire = 0
         dispatch_action(nil, iCommandPlaneFireOff, 1)
     elseif (command == Keys.WeaponMasterSwitch) then
         target_status[master_arm_switch][2] = 1 - target_status[master_arm_switch][2]
     elseif (command == Keys.Pylon1SelUP) then
-        if target_status[pylon1_select_switch][2] < 0.5 then
-            target_status[pylon1_select_switch][2] = target_status[pylon1_select_switch][2] + 1
-        end
+        target_status[pylon1_select_switch][2] = SWITCH_ON
     elseif (command == Keys.Pylon1SelDOWN) then
-        if target_status[pylon1_select_switch][2] > -0.5 then
-            target_status[pylon1_select_switch][2] = target_status[pylon1_select_switch][2] - 1
-        end
+        target_status[pylon1_select_switch][2] = SWITCH_OFF
         --2
     elseif (command == Keys.Pylon2SelUP) then
-        if target_status[pylon2_select_switch][2] < 0.5 then
-            target_status[pylon2_select_switch][2] = target_status[pylon2_select_switch][2] + 1
-        end
+        target_status[pylon2_select_switch][2] = SWITCH_ON
     elseif (command == Keys.Pylon2SelDOWN) then
-        if target_status[pylon2_select_switch][2] > -0.5 then
-            target_status[pylon2_select_switch][2] = target_status[pylon2_select_switch][2] - 1
-        end
+        target_status[pylon2_select_switch][2] = SWITCH_OFF
         -- 3
     elseif (command == Keys.Pylon3SelUP) then
-        if target_status[pylon3_select_switch][2] < 0.5 then
-            target_status[pylon3_select_switch][2] = target_status[pylon3_select_switch][2] + 1
-        end
+        target_status[pylon3_select_switch][2] = SWITCH_ON
     elseif (command == Keys.Pylon3SelDOWN) then
-        if target_status[pylon3_select_switch][2] > -0.5 then
-            target_status[pylon3_select_switch][2] = target_status[pylon3_select_switch][2] - 1
-        end
+        target_status[pylon3_select_switch][2] = SWITCH_OFF
         -- 4
     elseif (command == Keys.Pylon4SelUP) then
-        if target_status[pylon4_select_switch][2] < 0.5 then
-            target_status[pylon4_select_switch][2] = target_status[pylon4_select_switch][2] + 1
-        end
+        target_status[pylon4_select_switch][2] = SWITCH_ON
     elseif (command == Keys.Pylon4SelDOWN) then
-        if target_status[pylon4_select_switch][2] > -0.5 then
-            target_status[pylon4_select_switch][2] = target_status[pylon4_select_switch][2] - 1
-        end
+        target_status[pylon4_select_switch][2] = SWITCH_OFF
         -- 5
     elseif (command == Keys.Pylon5SelUP) then
-        if target_status[pylon5_select_switch][2] < 0.5 then
-            target_status[pylon5_select_switch][2] = target_status[pylon5_select_switch][2] + 1
-        end
+        target_status[pylon5_select_switch][2] = SWITCH_ON
     elseif (command == Keys.Pylon5SelDOWN) then
-        if target_status[pylon5_select_switch][2] > -0.5 then
-            target_status[pylon5_select_switch][2] = target_status[pylon5_select_switch][2] - 1
-        end
+        target_status[pylon5_select_switch][2] = SWITCH_OFF
+        -- 6
+    elseif (command == Keys.Pylon6SelUP) then
+        target_status[pylon6_select_switch][2] = SWITCH_ON
+    elseif (command == Keys.Pylon6SelDOWN) then
+        target_status[pylon6_select_switch][2] = SWITCH_OFF
+        -- 7
+    elseif (command == Keys.Pylon7SelUP) then
+        target_status[pylon7_select_switch][2] = SWITCH_ON
+    elseif (command == Keys.Pylon7SelDOWN) then
+        target_status[pylon7_select_switch][2] = SWITCH_OFF
         -- tumb wheel
     elseif command == Keys.IntervalTumbWheel100_UP then
         if target_status[attack_interval_A][2] < 1 then
@@ -742,7 +746,9 @@ function SetCommand(command, value)
             -- {is_launch, pylon launch number, select_light}
             { 0, 0, get_param_handle("PNT_1266") },
             { 0, 0, get_param_handle("PNT_1267") },
+            { 0, 0, get_param_handle("PNT_2267") },
             { 0, 0, get_param_handle("PNT_1268") },
+            { 0, 0, get_param_handle("PNT_2269") },
             { 0, 0, get_param_handle("PNT_1269") },
             { 0, 0, get_param_handle("PNT_1270") },
         }
@@ -800,85 +806,9 @@ end
 USING_PYLON_DATA = { -1, nil, 0 }
 BOMB_COUNT = 0
 function update_launch_selection()
-    --[[
-    local selected_station_num = 0
-    local max_bomb_num_on_one_pylon = 500
-    local reselect_signal = 0
-    local same_type_selected = 1
-    local last_kind_weapon = -1
-    if target_status[master_arm_switch][2] ~= SWITCH_OFF then
-        for i = 2, 6, 1 do
-            if target_status[i][2] ~= SWITCH_OFF then
-                SELECTED_LIST[i - 1][1] = 1
-                selected_station_num = selected_station_num + 1
-                -- print_message_to_user(PYLON_INFO_LIST[i-1][3])
-                if max_bomb_num_on_one_pylon > PYLON_INFO_LIST[i - 1][3] then
-                    max_bomb_num_on_one_pylon = PYLON_INFO_LIST[i - 1][3]
-                end
-                if (PYLON_INFO_LIST[i - 1][1] ~= wsType_Missile and PYLON_INFO_LIST[i - 1][2] ~= wsType_Rocket) and
-                    target_status[i][2] == SWITCH_OFF then
-                    reselect_signal = 1
-                end
-                if last_kind_weapon ~= PYLON_INFO_LIST[i - 1][1] and last_kind_weapon ~= -1 then
-                    same_type_selected = 0
-                end
-                last_kind_weapon = PYLON_INFO_LIST[i - 1][1];
-                if LAUNCH_MODE ~= 5 then
-                    if target_status[i][2] == SWITCH_ON and
-                        (PYLON_INFO_LIST[i - 1][1] ~= wsType_Shell and PYLON_INFO_LIST[i - 1][1] ~= wsType_Bomb) then
-                        reselect_signal = 1
-                    end
-                end
-                -- check if is gun and missile for gun and missile mode
-                if LAUNCH_MODE == 3 then
-                    -- print_message_to_user(PYLON_INFO_LIST[i-1][1].."XX"..PYLON_INFO_LIST[i-1][2])
-                    if PYLON_INFO_LIST[i - 1][1] ~= wsType_Shell then
-                        reselect_signal = 1
-                    end
-                elseif LAUNCH_MODE == 4 then
-                    if PYLON_INFO_LIST[i - 1][1] ~= wsType_Missile or target_status[i][2] == SWITCH_ON then
-                        reselect_signal = 1
-                    end
-                end
-            else
-                SELECTED_LIST[i - 1][1] = 0
-            end
-        end
-        -- get max available for one launch
-        TOTAL_LAUNCH_NUM = max_bomb_num_on_one_pylon * selected_station_num
-        if TOTAL_LAUNCH_NUM > QUANTITY_SET then
-            local temp_num = math.fmod(QUANTITY_SET, selected_station_num)
-            TOTAL_LAUNCH_NUM = QUANTITY_SET - temp_num
-        end
-        if TOTAL_LAUNCH_NUM < 0 then
-            TOTAL_LAUNCH_NUM = 0
-            reselect_signal = 1
-        else
-            for i = 1, 4, 1 do
-                if SELECTED_LIST[i][1] == 1 then
-                    SELECTED_LIST[i][2] = TOTAL_LAUNCH_NUM / selected_station_num
-                end
-            end
-        end
-        if same_type_selected == 0 and LAUNCH_MODE ~= 5 then
-            reselect_signal = 1
-        end
-        -- if reselect_signal is triggered then reset list
-        if reselect_signal == 1 then
-            RESELECT_LIGHT_STATUS = 1
-            SELECTED_LIST = {
-                -- {is_launch, pylon launch number, select_light}
-                { 0, 0, get_param_handle("PNT_1266") },
-                { 0, 0, get_param_handle("PNT_1267") },
-                { 0, 0, get_param_handle("PNT_1268") },
-                { 0, 0, get_param_handle("PNT_1269") },
-                { 0, 0, get_param_handle("PNT_1270") },
-            }
-        else
-            RESELECT_LIGHT_STATUS = 0
-        end
+    if not get_elec_ac_status() then
+        return
     end
-    --]]
     if MANUAL_RELEASE_SIGNAL == 1 then
         FIREHOLD = FIREHOLD + update_time_step
     end
@@ -927,7 +857,7 @@ function update_launch_selection()
         end
         
     elseif LAUNCH_MODE == 0 and MANUAL_RELEASE_SIGNAL == 1 and current_status[master_arm_switch][2] == SWITCH_ON then
-        for i = 2, 6, 1 do
+        for i = 2, 8, 1 do
             if target_status[i][2] == SWITCH_ON then
                 --丢弃挂载
                 snd_list[drop_weapon][2]:play_once()
@@ -960,8 +890,8 @@ local function rocket_launch()
                     WeaponSystem:launch_station(USING_PYLON_DATA[1] - 1)
                 else
                     WeaponSystem:launch_station(USING_PYLON_DATA[1] - 1)
-                    if SELECTED_LIST[6-USING_PYLON_DATA[1]][1] == SWITCH_ON and PYLON_INFO_LIST[6-USING_PYLON_DATA[1]][3] > 0 then
-                        WeaponSystem:launch_station(6-USING_PYLON_DATA[1]-1)
+                    if SELECTED_LIST[8-USING_PYLON_DATA[1]][1] == SWITCH_ON and PYLON_INFO_LIST[8-USING_PYLON_DATA[1]][3] > 0 then
+                        WeaponSystem:launch_station(8-USING_PYLON_DATA[1]-1)
                     end
                 end
                 isFire = 1
@@ -972,71 +902,11 @@ local function rocket_launch()
                 WeaponSystem:launch_station(USING_PYLON_DATA[1] - 1)
             else
                 WeaponSystem:launch_station(USING_PYLON_DATA[1] - 1)
-                if SELECTED_LIST[6-USING_PYLON_DATA[1]][1] == SWITCH_ON and PYLON_INFO_LIST[6-USING_PYLON_DATA[1]][3] > 0 then
-                    WeaponSystem:launch_station(6-USING_PYLON_DATA[1]-1)
+                if SELECTED_LIST[8-USING_PYLON_DATA[1]][1] == SWITCH_ON and PYLON_INFO_LIST[8-USING_PYLON_DATA[1]][3] > 0 then
+                    WeaponSystem:launch_station(8-USING_PYLON_DATA[1]-1)
                 end
             end
         end
-    end
-end
-
-function step_mode_manual_launch()
-    if STEP_SIGNAL == 0 and MANUAL_RELEASE_SIGNAL == 1 then
-        for i = 1, 5, 1 do
-            if SELECTED_LIST[i][1] == 1 and PYLON_INFO_LIST[i][1] ~= wsType_Shell and
-                PYLON_INFO_LIST[i][1] ~= wsType_Missile then
-                WeaponSystem:launch_station(i - 1)
-            end
-        end
-        STEP_SIGNAL = 1
-    end
-end
-
-function seletion_jettsion()
-    if STEP_SIGNAL == 0 and MANUAL_RELEASE_SIGNAL == 1 then
-        for i = 1, 5, 1 do
-            if SELECTED_LIST[i][1] == 1 then
-                WeaponSystem:emergency_jettison(i - 1)
-            end
-        end
-        STEP_SIGNAL = 1
-    end
-end
-
-function gun_mode_firing()
-    if MANUAL_RELEASE_SIGNAL == 1 and target_status[guns_mode_switch][2] == SWITCH_ON then
-        if STEP_SIGNAL == 0 then
-            for i = 1, 5, 1 do
-                if SELECTED_LIST[i][1] == 1 then
-                    WeaponSystem:launch_station(i - 1) -- this mode will always fire at blust max length
-                end
-            end
-            STEP_SIGNAL = 1
-        elseif STEP_SIGNAL <= 5 then
-            STEP_SIGNAL = STEP_SIGNAL + 1
-        elseif STEP_SIGNAL > 5 then
-            STEP_SIGNAL = 0
-        end
-    end
-end
-
-local MISSILE_COOLING = { 0, 0, 0, 0, 0 }
-
-function update_missile_cooling_status()
-    if LAUNCH_MODE == 1 then
-        if target_status[missile_cooling_switch][2] == SWITCH_ON then
-            for i = 1, 5, 1 do
-                if SELECTED_LIST[i][1] == 1 and PYLON_INFO_LIST[i][1] == wsType_Missile and PYLON_INFO_LIST[i][3] > 0 then
-                    MISSILE_COOLING[i] = MISSILE_COOLING[i] + 1
-                else
-                    MISSILE_COOLING[i] = 0
-                end
-            end
-        else
-            MISSILE_COOLING = { 0, 0, 0, 0, 0 }
-        end
-    else
-        MISSILE_COOLING = { 0, 0, 0, 0, 0 }
     end
 end
 
@@ -1065,12 +935,10 @@ local function resetReleaseProgram()
 end
 
 function update_launch_mode()
-    if LAUNCH_MODE == 0 then
-        SELECTED_LIST[1][1] = SWITCH_OFF
-        SELECTED_LIST[2][1] = SWITCH_OFF
-        SELECTED_LIST[3][1] = SWITCH_OFF
-        SELECTED_LIST[4][1] = SWITCH_OFF
-        SELECTED_LIST[5][1] = SWITCH_OFF
+    if LAUNCH_MODE == 0 or not get_elec_ac_status() then
+        for k, v in pairs(SELECTED_LIST) do
+            v[1]=SWITCH_OFF
+        end
         return
     end
     if USING_PYLON_DATA[3] ~= LAUNCH_MODE then
@@ -1082,80 +950,87 @@ function update_launch_mode()
     if USING_PYLON_DATA[1] ~= -1 then
         USING_PYLON_DATA[2] = WeaponSystem:get_station_info(USING_PYLON_DATA[1] - 1) --刷新使用中的挂载信息
     end
-    if LAUNCH_MODE==3 then
-        USING_PYLON_DATA = {-1,nil,LAUNCH_MODE}
+    if LAUNCH_MODE == 3 then
+        USING_PYLON_DATA = { -1, nil, LAUNCH_MODE }
     end
-    for i = 1, 5, 1 do
-        local pylonData = WeaponSystem:get_station_info(i - 1)
-        if pylonData ~= nil and pylonData.count > 0 then
-            local wsType = pylonData.weapon
-            if LAUNCH_MODE == 1 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 7 and
-                isInTbl(pylonData.CLSID, A2A_dg) then
-                --A2A IR
-                --target_status[i+1][2]=SWITCH_ON
-                SELECTED_LIST[i][1] = SWITCH_ON
-
-                if USING_PYLON_DATA[1] == -1 or
-                    (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                    WeaponSystem:select_station(i - 1)
-
-                    USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                end
-            elseif LAUNCH_MODE == 2 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 7 and
-                isInTbl(pylonData.CLSID, A2A_r) then
-                --target_status[i+1][2]=SWITCH_ON
-                SELECTED_LIST[i][1] = SWITCH_ON
-                if USING_PYLON_DATA[1] == -1 or
-                    (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                    WeaponSystem:select_station(i - 1)
-
-                    USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                end
-                --A2a_r
-            elseif LAUNCH_MODE == 3 then
-                --机炮
-                --target_status[i+1][2]=SWITCH_OFF
+    for i = 1, 7, 1 do
+        repeat
+            local pylonPwrStatus = get_param_handle("PNT_108" .. i)
+            if pylonPwrStatus == SWITCH_OFF then
                 SELECTED_LIST[i][1] = SWITCH_OFF
-            elseif LAUNCH_MODE == 4 and wsType.level1 == 4 and wsType.level2 == 7 and wsType.level3 == 33 then
-                --火箭弹
-                --target_status[i+1][2]=SWITCH_ON
-                SELECTED_LIST[i][1] = SWITCH_ON
-                if USING_PYLON_DATA[1] == -1 or
-                    (USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                    WeaponSystem:select_station(i - 1)
-                    USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                end
-            elseif LAUNCH_MODE == 5 and wsType.level1 == 4 and wsType.level2 == 5 then
-                --炸弹
-                --target_status[i+1][2]=SWITCH_ON
-                SELECTED_LIST[i][1] = SWITCH_ON
-                if USING_PYLON_DATA[1] == -1 or
-                    (USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                    WeaponSystem:select_station(i - 1)
-                    USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                end
-            elseif LAUNCH_MODE == 6 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 8 then
-                --A2G弹
-                --target_status[i+1][2]=SWITCH_ON
-                SELECTED_LIST[i][1] = SWITCH_ON
-                if USING_PYLON_DATA[1] == -1 or
-                    (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                    WeaponSystem:select_station(i - 1)
-
-                    USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                end
-            elseif LAUNCH_MODE == 7 and wsType.level1 == 4 and wsType.level2 == 15 and wsType.level3 == 50 then
-                SELECTED_LIST[i][1] = SWITCH_ON
-                if USING_PYLON_DATA[1] == -1 or
-                    (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                    WeaponSystem:select_station(i - 1)
-
-                    USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                end
-            else
-                SELECTED_LIST[i][1] = SWITCH_OFF
+                break
             end
-        end
+            local pylonData = WeaponSystem:get_station_info(i - 1)
+            if pylonData ~= nil and pylonData.count > 0 then
+                local wsType = pylonData.weapon
+                if LAUNCH_MODE == 1 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 7 and
+                    isInTbl(pylonData.CLSID, A2A_dg) then
+                    --A2A IR
+                    --target_status[i+1][2]=SWITCH_ON
+                    SELECTED_LIST[i][1] = SWITCH_ON
+
+                    if USING_PYLON_DATA[1] == -1 or
+                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
+                        WeaponSystem:select_station(i - 1)
+
+                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
+                    end
+                elseif LAUNCH_MODE == 2 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 7 and
+                    isInTbl(pylonData.CLSID, A2A_r) then
+                    --target_status[i+1][2]=SWITCH_ON
+                    SELECTED_LIST[i][1] = SWITCH_ON
+                    if USING_PYLON_DATA[1] == -1 or
+                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
+                        WeaponSystem:select_station(i - 1)
+
+                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
+                    end
+                    --A2a_r
+                elseif LAUNCH_MODE == 3 then
+                    --机炮
+                    --target_status[i+1][2]=SWITCH_OFF
+                    SELECTED_LIST[i][1] = SWITCH_OFF
+                elseif LAUNCH_MODE == 4 and wsType.level1 == 4 and wsType.level2 == 7 and wsType.level3 == 33 then
+                    --火箭弹
+                    --target_status[i+1][2]=SWITCH_ON
+                    SELECTED_LIST[i][1] = SWITCH_ON
+                    if USING_PYLON_DATA[1] == -1 or
+                        (USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
+                        WeaponSystem:select_station(i - 1)
+                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
+                    end
+                elseif LAUNCH_MODE == 5 and wsType.level1 == 4 and wsType.level2 == 5 then
+                    --炸弹
+                    --target_status[i+1][2]=SWITCH_ON
+                    SELECTED_LIST[i][1] = SWITCH_ON
+                    if USING_PYLON_DATA[1] == -1 or
+                        (USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
+                        WeaponSystem:select_station(i - 1)
+                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
+                    end
+                elseif LAUNCH_MODE == 6 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 8 then
+                    --A2G弹
+                    --target_status[i+1][2]=SWITCH_ON
+                    SELECTED_LIST[i][1] = SWITCH_ON
+                    if USING_PYLON_DATA[1] == -1 or
+                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
+                        WeaponSystem:select_station(i - 1)
+
+                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
+                    end
+                elseif LAUNCH_MODE == 7 and wsType.level1 == 4 and wsType.level2 == 15 and wsType.level3 == 50 then
+                    SELECTED_LIST[i][1] = SWITCH_ON
+                    if USING_PYLON_DATA[1] == -1 or
+                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
+                        WeaponSystem:select_station(i - 1)
+
+                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
+                    end
+                else
+                    SELECTED_LIST[i][1] = SWITCH_OFF
+                end
+            end
+        until true
     end
 end
 
@@ -1219,26 +1094,21 @@ function update()
     update_switch_status()--更新拨杆
     check_externel_tank_status()--检查副油箱
     get_tumb_wheel_set()--更新投放程序
-    bomb_launch() --炸弹投放程序
-    rocket_launch() --火箭弹射击程序
-    update_launch_mode()--更新发射模式以及下一个该发射的挂架
-    update_ir_msl_status()--更新红外弹参数
-    if DataFreeze == 0 then
+    --calGunAmmo()
+    if get_elec_ac_status() and weaponPwrSwitch:get() == SWITCH_ON then
+        bomb_launch() --炸弹投放程序
+        rocket_launch() --火箭弹射击程序
+        update_launch_mode()--更新发射模式以及下一个该发射的挂架
+        update_ir_msl_status()--更新红外弹参数 
         update_launch_selection()--更新发射状态
+        update_display_light()--更新挂架选择灯
     end
-    update_display_light()--更新挂架选择灯
+    
     if c > 1 then
-        hud_lock_test_sign:set()
+        --hud_lock_test_sign:set()
         c = 0
     end
     c = c + update_time_step
-    dbg_param[4]:set(BOMB_COUNT)
-    if math.floor((bomb_launch_time * 100) % INTERVAL_SET) == 0 then
-        dbg_param[5]:set(1)
-    else
-        dbg_param[5]:set(0)
-    end
-    
 end
 
 need_to_be_closed = false

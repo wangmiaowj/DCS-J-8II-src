@@ -6,49 +6,49 @@ local self_ID = "J-8B by shenHaiSanXi"
 declare_plugin(self_ID,
 {
 dirName	 	 = current_mod_path,
-displayName		= _("J-8B"),
-shortName		= "J-8B",
-fileMenuName	= _("J-8B"),
+displayName		= _("J-8II"),
+shortName		= "J-8II",
+fileMenuName	= _("J-8II"),
 version		 = "2.7.2",--__DCS_VERSION__,
 state		 = "installed",
-info		 = _("J-8B Info"),
+info		 = _("J-8II Info"),
 developerName	= _("shenHaiSanXi"),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
---binaries     = { 'J-8B_FM' },
+--binaries     = { 'J-8II_FM' },
 Skins =
 {
 	{
-		name	= "J-8B",
+		name	= "J-8II",
 		dir		= "Skins/1"
 	},
 },
 Missions =
 {
 	{
-		name	= _("J-8B"),
+		name	= _("J-8II"),
 		dir		= "Missions",
-		CLSID	= "{J-8B missions}",
+		CLSID	= "{J-8II missions}",
 	},
 },
 LogBook =
 {
 	{
-		name	= _("J-8B"),
-		type	= "J-8B",
+		name	= _("J-8II"),
+		type	= "J-8II",
 	},
 },
 Options =
 {
 	{
-		name		= _("J-8B"),
-		nameId		= "J-8B",
+		name		= _("J-8II"),
+		nameId		= "J-8II",
 		dir			= "Options",
-		CLSID		= "{J-8B options}"
+		CLSID		= "{J-8II options}"
 	},
 },
 InputProfiles = 
 {
-	["J-8B"]		= current_mod_path .. '/Input/J-8B/',
+	["J-8II"]		= current_mod_path .. '/Input/J-8II/',
 },
 })
 
@@ -59,19 +59,19 @@ mount_vfs_texture_path(current_mod_path.."/Textures")
 
 ---------------------------------------------------------
 dofile(current_mod_path.."/weapon.lua")
-dofile(current_mod_path.."/J-8B.lua")
+dofile(current_mod_path.."/J-8II.lua")
 dofile(current_mod_path.."/Views.lua") --View Settings.
 
 local cfg_path = current_mod_path .. '/FM/config.lua'
 dofile(cfg_path)
 
-J8B_FM[1]           = self_ID
-J8B_FM[2]           = 'J-8B_FM'
-J8B_FM.config_path  = cfg_path
---J8B_FM.user_options = ac_name
+J8II_FM[1]           = self_ID
+J8II_FM[2]           = 'J-8II_FM'
+J8II_FM.config_path  = cfg_path
+--J-8II_FM.user_options = ac_name
 
-make_flyable('J-8B', current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua') 
-make_view_settings('J-8B', ViewSettings, SnapViews) 
+make_flyable('J-8II', current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua') 
+make_view_settings('J-8II', ViewSettings, SnapViews) 
 ---------------------------------------------------------
 
 plugin_done()

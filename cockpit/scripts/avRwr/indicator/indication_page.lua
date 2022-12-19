@@ -100,7 +100,8 @@ for ia = 1, 20 do
                                }
     RWR_contact.element_params = {"RWR_CONTACT" .. i .. "AZIMUTH",
                                  "RWR_CONTACT" .. i .. "POWER_SYM",
-                                  "RWR_CONTACT" .. i .. "LOCK_SYM"}
+                                  "RWR_CONTACT" .. i .. "SCAN_SYM"
+                                }
     RWR_contact.parent_element =  RWR_Simp.name
     RWR_contact.h_clip_relation = h_clip_relations.COMPARE
     RWR_contact.level            = RWR_DEFAULT_LEVEL
@@ -158,31 +159,4 @@ for ia = 1, 20 do
     RWR_type_Num.h_clip_relation = h_clip_relations.COMPARE
     RWR_type_Num.level            = RWR_DEFAULT_LEVEL
     Add(RWR_type_Num)
-
-    -- LAUNCH RING
-    x_size = 0.065
-    local RWR_launch = CreateElement "ceStringPoly"
-    RWR_launch.name = "RWR" .. i .. "launch"
-    RWR_launch.init_pos = {0.0, 0.0, 0}
-    RWR_launch.init_rot = {0.0, 0.0, 0.0}
-    RWR_launch.material = RWR_MAGENTA
-    RWR_launch.value = ''
-    set_circle(RWR_launch, x_size + 0.009, x_size, 360, 64)
-    RWR_launch.element_params = {"RWR_CONTACT" .. i .. "LAUNCH_SYM",
-                                 "RWR_CONTACT" .. i .. "AZIMUTH",
-                                 "RWR_DISPLAY",
-                                "RWR_Overlay",
-                                "NULL_PARAM (So that I can assume postion 6 for the color params",
-                                "RWR_CONTACT" .. i .. "COLOR",
-                            }
-    RWR_launch.controllers = {{"parameter_in_range", 0, 0.4, 0.6},
-                            {"rotate_using_parameter", 1, -1},
-                            {"opacity_using_parameter", 2},
-                            --{"parameter_in_range", 3, 0.9, 1.1},
-                            YELLOW_CONTACT, RED_CONTACT,GREEN_CONTACT
-                        }
-    RWR_launch.parent_element = "RWR_contact" .. i .. "name"
-    RWR_launch.h_clip_relation = h_clip_relations.COMPARE
-    RWR_launch.level            = RWR_DEFAULT_LEVEL
-    Add(RWR_launch)
 end

@@ -20,6 +20,7 @@ HUD_base_clip.material		    = "DBG_GREY"
 HUD_base_clip.h_clip_relation   = h_clip_relations.REWRITE_LEVEL --INCREASE_IF_LEVEL--COMPARE --REWRITE_LEVEL
 HUD_base_clip.level			    = HUD_BASE_DEFAULT_NOCLIP_LEVEL
 HUD_base_clip.isdraw		    = true
+HUD_base_clip.collimated        = false
 HUD_base_clip.change_opacity    = false
 HUD_base_clip.element_params    = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
 HUD_base_clip.controllers       = {{"opacity_using_parameter",0}}
@@ -37,24 +38,12 @@ Base_Indication_clip.material		        = "DBG_GREEN"
 Base_Indication_clip.h_clip_relation        = h_clip_relations.INCREASE_IF_LEVEL--COMPARE --REWRITE_LEVEL
 Base_Indication_clip.level			        = HUD_BASE_DEFAULT_LEVEL - 1
 Base_Indication_clip.isdraw		            = true
+Base_Indication_clip.collimated        = true
 Base_Indication_clip.change_opacity         = false
 Base_Indication_clip.element_params         = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
 Base_Indication_clip.controllers            = {{"opacity_using_parameter",0}}
 Base_Indication_clip.isvisible		        = SHOW_MASKS
 Add(Base_Indication_clip)
-
--- target_box 			            = CreateElement "ceMeshPoly" --这是创建一个平面
--- target_box.name 			        = create_guid_string()
--- target_box.vertices 		        = {{0,1},{1,0},{0,-1},{-1,0},{0,0}}--{{0,0.1},{0.1,0},{0.09,0},{0,0.09},{0,-0.1},{0,-0.09},{-0.1,0},{-0.09,0}}
--- target_box.indices 		        = {0,1,4,2,1,4,2,3,4,2,4,0}--{0,1,2,2,3,0,1,4,5,5,4,1,4,6,7,7,6,4,6,0,2,2,0,6}
--- target_box.init_pos		        = {0, 0, default_hud_z_offset}
--- target_box.init_rot		        = {0, 0, default_hud_rot_offset}
--- target_box.material		        = MakeMaterial(nil,{0, 255, 0, 255})
--- target_box.h_clip_relation       = h_clip_relations.COMPARE--COMPARE --REWRITE_LEVEL
--- target_box.level			        = HUD_DEFAULT_LEVEL
--- target_box.change_opacity        = false
--- target_box.parent_element       = "hud_base_clip"
--- Add(target_box)
 
 -- 加载警告标记
 dofile(LockOn_Options.script_path.."HUD/Indicator/hud_warning_sign.lua")

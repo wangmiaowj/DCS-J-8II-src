@@ -603,6 +603,10 @@ Keys =
     Pylon4SelDOWN = __custom_counter(),
     Pylon5SelUP = __custom_counter(),
     Pylon5SelDOWN = __custom_counter(),
+	Pylon6SelUP = __custom_counter(),
+    Pylon6SelDOWN = __custom_counter(),
+	Pylon7SelUP = __custom_counter(),
+    Pylon7SelDOWN = __custom_counter(),
 
     ReleaseJettison = __custom_counter(),
     ReleaseGun = __custom_counter(),
@@ -655,6 +659,18 @@ Keys =
 	MissileWarmingSwitch = __custom_counter(),
 	MissileFilamentSwitch = __custom_counter(),
 	MissileLaunchSwitch = __custom_counter(),
+	pylon1Pwr = __custom_counter(),
+	pylon2Pwr = __custom_counter(),
+	pylon3Pwr = __custom_counter(),
+	pylon4Pwr = __custom_counter(),
+	pylon5Pwr = __custom_counter(),
+	pylon6Pwr = __custom_counter(),
+	pylon7Pwr = __custom_counter(),
+	blackBoxPwr = __custom_counter(),
+	rspPwr = __custom_counter(),
+	apkPwr = __custom_counter(),
+	lidSow_Hide = __custom_counter(),
+	batteryHeating = __custom_counter(),
 	
     -- this part is fpr music player
     MusicPauseOrPlay = __custom_counter(),
@@ -716,7 +732,7 @@ Keys =
     MultTumbWheel_DN = __custom_counter(),
 	RwrOnOffSwitch = __custom_counter(),
 	ICS_UNDEF_KNOB_ROT = __custom_counter(),
-	RwrLoudness = __custom_counter(),
+	RwrVolume = __custom_counter(),
 	RwrLightness = __custom_counter(),
     --起落架手柄 5001// 5050 EFM - 6000 for EFM
     NoseWheelSteeringOn = 5050,

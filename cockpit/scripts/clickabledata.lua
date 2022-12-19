@@ -438,6 +438,18 @@ multi_tumb_click_list = {
 	{"PNT_1020", "Missile Warming Switch", devices.ELECTRIC_SYSTEM, 1020, SOUND_DEFAULT_2_WAY_SWITCH , Keys.MissileWarmingSwitch},
 	{"PNT_1021", "Missile Filament Switch", devices.ELECTRIC_SYSTEM, 1021, SOUND_DEFAULT_2_WAY_SWITCH , Keys.MissileFilamentSwitch},
 	{"PNT_1022", "Missile Launch Switch", devices.ELECTRIC_SYSTEM, 1022, SOUND_DEFAULT_2_WAY_SWITCH , Keys.MissileLaunchSwitch},
+    {"PNT_1081", "Pylon1 Power Switch", devices.ELECTRIC_SYSTEM, 1081, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon1Pwr},
+    {"PNT_1082", "Pylon2 Power Switch", devices.ELECTRIC_SYSTEM, 1082, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon2Pwr},
+    {"PNT_1083", "Pylon3 Power Switch", devices.ELECTRIC_SYSTEM, 1083, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon3Pwr},
+    {"PNT_1084", "Pylon4 Power Switch", devices.ELECTRIC_SYSTEM, 1084, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon4Pwr},
+    {"PNT_1085", "Pylon5 Power Switch", devices.ELECTRIC_SYSTEM, 1085, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon5Pwr},
+    {"PNT_1086", "Pylon6 Power Switch", devices.ELECTRIC_SYSTEM, 1086, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon6Pwr},
+    {"PNT_1087", "Pylon7 Power Switch", devices.ELECTRIC_SYSTEM, 1087, SOUND_DEFAULT_2_WAY_SWITCH , Keys.pylon7Pwr},
+    {"PNT_1088", "Black Box Power Switch", devices.ELECTRIC_SYSTEM, 1088, SOUND_DEFAULT_2_WAY_SWITCH , Keys.blackBoxPwr},
+    {"PNT_1089", "Responder Power Switch", devices.ELECTRIC_SYSTEM, 1089, SOUND_DEFAULT_2_WAY_SWITCH , Keys.rspPwr},
+    {"PNT_1090", "Apk Power Switch", devices.ELECTRIC_SYSTEM, 1090, SOUND_DEFAULT_2_WAY_SWITCH , Keys.apkPwr},
+    {"PNT_1091", "Battery Heating Switch", devices.ELECTRIC_SYSTEM, 1091, SOUND_DEFAULT_2_WAY_SWITCH , Keys.batteryHeating},
+    {"PNT_1099", "Open/Close Cover", devices.ELECTRIC_SYSTEM, 1099, SOUND_DEFAULT_2_WAY_SWITCH , Keys.lidSow_Hide},
 	
 	-- Left Wall Panel 01
     {"PNT_1141", "Drop Tanks Ind Switch", devices.ENGINE, 1141, SOUND_DEFAULT_2_WAY_SWITCH , Keys.DropTankInd},
@@ -464,9 +476,11 @@ multi_tumb_click_list = {
 	{"PNT_1204", "Weapon Type", devices.WEAPON_SYSTEM, 1204, SOUND_DEFAULT_2_WAY_SWITCH, Keys.HK_R_Up,Keys.HK_R_Down},
 	{"PNT_1261", "Pylon 1 Select", devices.WEAPON_SYSTEM, 1261, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon1SelUP,Keys.Pylon1SelDOWN},
 	{"PNT_1262", "Pylon 2 Select", devices.WEAPON_SYSTEM, 1262, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon2SelUP,Keys.Pylon2SelDOWN},
-	{"PNT_1263", "Pylon 3 Select", devices.WEAPON_SYSTEM, 1263, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon3SelUP,Keys.Pylon3SelDOWN},
-	{"PNT_1264", "Pylon 4 Select", devices.WEAPON_SYSTEM, 1264, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon4SelUP,Keys.Pylon4SelDOWN},
-	{"PNT_1265", "Pylon 5 Select", devices.WEAPON_SYSTEM, 1265, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon5SelUP,Keys.Pylon5SelDOWN},
+    {"PNT_2263", "Pylon 3 Select", devices.WEAPON_SYSTEM, 2263, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon3SelUP,Keys.Pylon3SelDOWN},
+	{"PNT_1263", "Pylon 4 Select", devices.WEAPON_SYSTEM, 1263, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon4SelUP,Keys.Pylon4SelDOWN},
+    {"PNT_2264", "Pylon 5 Select", devices.WEAPON_SYSTEM, 2264, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon5SelUP,Keys.Pylon5SelDOWN},
+	{"PNT_1264", "Pylon 6 Select", devices.WEAPON_SYSTEM, 1264, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon6SelUP,Keys.Pylon6SelDOWN},
+	{"PNT_1265", "Pylon 7 Select", devices.WEAPON_SYSTEM, 1265, SOUND_DEFAULT_2_WAY_SWITCH, Keys.Pylon7SelUP,Keys.Pylon7SelDOWN},
 	
     --RWR
 	{"PNT_1196", "RWR Power", devices.RWR, 1311, SOUND_DEFAULT_2_WAY_SWITCH , Keys.RwrOnOffSwitch},
@@ -571,8 +585,8 @@ elements["PNT_527"] = default_axis("Right Large Knob", devices.HUD_DCMS, Keys.Na
 elements["PNT_528"] = default_axis("Right Small Knob", devices.HUD_DCMS, Keys.Nav_Right_Knob_S, 1134, 0, 0.1)
 
 --RWR
-elements["PNT_1311"] = default_axis("RWR Lightness", devices.RWR, Keys.RwrLightness, 1311, 0, 0.1)
-elements["PNT_1312"] = default_axis("ICS undef knob", devices.RWR, Keys.ICS_UNDEF_KNOB_ROT, 1312, 0, 0.1)
+elements["PNT_1311"] = default_axis("RWR Lightness", devices.RWR, Keys.RwrLightness, 1311, 0, 0.1,true,true)
+elements["PNT_1312"] = default_axis("RWR Volume", devices.RWR, Keys.RwrVolume, 1312, 0, 0.1,true,true)
 
 -- UHF R&S GB6500
 elements["PNT_554"] = default_axis("UHF Volume", devices.UHF_RADIO, Keys.UHF_Vol, 1134, 0, 0.1)

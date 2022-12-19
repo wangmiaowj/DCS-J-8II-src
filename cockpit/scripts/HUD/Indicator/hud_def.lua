@@ -46,7 +46,7 @@ default_hud_x = 2000
 default_hud_y = 2000 
 
 -- 定义默认HUD旋转角度和hud显示深度
-default_hud_z_offset = 6
+default_hud_z_offset = 4
 default_hud_y_offset = 0-- - 1.15 * default_hud_z_offset
 default_hud_rot_offset = 0
 

@@ -1,5 +1,5 @@
 
-J8B_FM = 
+J8II_FM = 
 {
     disable_built_in_oxygen_system = true,
     center_of_mass    = { 0.0, 0.0, 0.0},

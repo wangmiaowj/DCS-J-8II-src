@@ -77,7 +77,7 @@ local target_x=get_param_handle("TARGET_BOX_X")
 local target_y=get_param_handle("TARGET_BOX_Y")
 local hud_dis=get_param_handle("HUD_DIS_ENABLE")
 
-target_status = {
+local target_status = {
 	{radar_range, SWITCH_OFF, get_param_handle('PNT_1211'), 'PNT_1211'},
 	{radar_lightness_a, SWITCH_OFF, get_param_handle('PNT_1212'), 'PNT_1212'},
 	{radar_lightness, SWITCH_OFF, get_param_handle('PNT_1213'), 'PNT_1213'},
@@ -86,7 +86,7 @@ target_status = {
 	{radar_max_range, SWITCH_OFF, get_param_handle('PNT_1216'), 'PNT_1216'},
 }
 
-current_status = {
+local current_status = {
 	{radar_range, SWITCH_OFF, SWITCH_OFF},
 	{radar_lightness_a, SWITCH_OFF, SWITCH_OFF},
 	{radar_lightness, SWITCH_OFF, SWITCH_OFF},
@@ -223,6 +223,8 @@ function update_radar()
 	end
 	if get_elec_ac_status() then
 		Radar.radar_lightness:set(current_status[radar_lightness][2])
+	else
+		Radar.radar_lightness:set(0)
 	end
 end
 

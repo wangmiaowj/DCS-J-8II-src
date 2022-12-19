@@ -21,5 +21,10 @@ pages =
 }
 
 
-update_screenspace_diplacement(SelfWidth/SelfHeight,false)
+update_screenspace_diplacement(1,true)
+dedicated_viewport[1]=0
+dedicated_viewport[2]=0
+--固定在屏幕左上角
+dedicated_viewport[3]=dedicated_viewport[3]*0.5
+dedicated_viewport[4]=dedicated_viewport[4]*0.5
 dedicated_viewport_arcade = dedicated_viewport

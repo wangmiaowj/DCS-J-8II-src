@@ -26,8 +26,8 @@ local rwrBrt = _switch_counter()
 
 local target_status ={
     {rwrPower,SWITCH_OFF,get_param_handle("PNT_1196"),"PNT_1196"},
-    {rwrLoudness,SWITCH_OFF,get_param_handle("PNT_1311"),"PNT_1311"},
-    {rwrBrt,SWITCH_OFF,get_param_handle("PNT_1312"),"PNT_1312"},
+    {rwrLoudness,SWITCH_OFF,get_param_handle("PNT_1312"),"PNT_1312"},
+    {rwrBrt,SWITCH_OFF,get_param_handle("PNT_1311"),"PNT_1311"},
 }
 
 local current_status = {
@@ -154,10 +154,9 @@ for ia = 1, 20 do
 
         unit_type_is_num = get_param_handle("RWR_CONTACT" .. i .. "UNIT_TYPE_IS_NUMERIC"),
         power_sym_h = get_param_handle("RWR_CONTACT" .. i .. "POWER_SYM"),
-        lock_sym_h = get_param_handle("RWR_CONTACT" .. i .. "LOCK_SYM"),
-        launch_sym_h = get_param_handle("RWR_CONTACT" .. i .. "LAUNCH_SYM"),
         color_sym_h = get_param_handle("RWR_CONTACT" .. i .. "COLOR"),
         first_seen = get_param_handle("RWR_CONTACT" .. i .. "FIRST_SEEN"),
+        scan_sym = get_param_handle("RWR_CONTACT" .. i .. "SCAN_SYM"),
     }
     rwr[ia].first_seen:set(-1.0)
 end
@@ -165,7 +164,7 @@ end
 
 rwrSystem:listen_command(Keys.RwrOnOffSwitch)
 rwrSystem:listen_command(Keys.ICS_UNDEF_KNOB_ROT)
-rwrSystem:listen_command(Keys.RwrLoudness)
+rwrSystem:listen_command(Keys.RwrVolume)
 rwrSystem:listen_command(Keys.RwrLightness)
 
 function round(num, idp)
@@ -175,15 +174,16 @@ end
 
 function post_initialize()
     sndhost = create_sound_host("COCKPIT_RADAR_WARN", "HEADPHONES", 0, 0, 0)
-    rwrLaunch = sndhost:create_sound("Cockpit/rwr_warn")
-    rwrLock = sndhost:create_sound("Cockpit/rwr_lock")
-    initRwr = sndhost:create_sound("Aircrafts/Cockpits/RWR/ThreatNewUS_old")
+    rwrLaunch = sndhost:create_sound("Aircrafts/Cockpits/RWR/Launch")--rwrLaunch = sndhost:create_sound("Cockpit/rwr_warn")
+    rwrLock = sndhost:create_sound("Aircrafts/Cockpits/RWR/LockWarning")--rwrLock = sndhost:create_sound("Cockpit/rwr_lock")
+    initRwr = sndhost:create_sound("Aircrafts/J-8/Cockpit/rwr/init")
     local birth = LockOn_Options.init_conditions.birth_place
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
         firstRun = true
-        rwrSystem:performClickableAction(Keys.RwrOnOffSwitch, 1, true)
-        rwrSystem:performClickableAction(Keys.ICS_UNDEF_KNOB_ROT, 0.5, false)
-        rwrSystem:performClickableAction(Keys.RwrLoudness, 0.5)
+        target_status[rwrPower][2]=SWITCH_OFF
+        target_status[rwrPower][2]=SWITCH_ON
+        target_status[rwrLoudness][2] = 0.5
+        target_status[rwrBrt][2]=SWITCH_ON
     elseif birth == "GROUND_COLD" then
         target_status[rwrPower][2]=SWITCH_OFF
         target_status[rwrBrt][2]=SWITCH_OFF
@@ -192,37 +192,41 @@ end
 
 function SetCommand(command, value)
 
-    if command == Keys.ICS_UNDEF_KNOB_ROT then
+    if command == Keys.RwrVolume then
         target_status[rwrLoudness][2]=math.min(1.0, math.max(-1.0, target_status[rwrLoudness][2] + value))
-        local new_val = (target_status[rwrLoudness][2] + 1.0) / 2.0
-        local volumeLock = math.pow((((round(new_val / 0.5, 2)) * 0.3)), 3)
-        local volumeWarn = math.pow((((round(new_val / 0.5, 2)) * 0.4)), 3)
-        rwrLock:update(nil, volumeLock, nil)
-        rwrLaunch:update(nil, volumeWarn, nil)
     elseif command == Keys.RwrOnOffSwitch then
         target_status[rwrPower][2]=1-target_status[rwrPower][2]
-    elseif command == Keys.RwrLoudness then
-        local volumeLock = math.pow((((round(value / 0.5, 2)) * 0.3)), 3)
-        local volumeWarn = math.pow((((round(value / 0.5, 2)) * 0.4)), 3)
-        rwrLock:update(nil, volumeLock, nil)
-        rwrLaunch:update(nil, volumeWarn, nil)
     elseif command == Keys.RwrLightness then
-        if value > 0 and target_status[rwrBrt][2] < 1 then
-			target_status[rwrBrt][2] = target_status[rwrBrt][2] + update_time_step
-		elseif value < 0 and target_status[rwrBrt][2] > 0 then
-			target_status[rwrBrt][2] = target_status[rwrBrt][2] - update_time_step
+        if target_status[rwrBrt][2] >= 0 and target_status[rwrBrt][2] <= 1 then
+			if target_status[rwrBrt][2] + value > 1 then
+				target_status[rwrBrt][2] = 1
+			elseif target_status[rwrBrt][2] + value < 0 then
+				target_status[rwrBrt][2] = 0
+			else
+				target_status[rwrBrt][2] = target_status[rwrBrt][2] + value
+			end
 		end
     end
 end
-
+local function update_rwr_volume()
+    local new_val = (target_status[rwrLoudness][2] + 1.0) / 2.0
+    local volumeLock = math.pow((((round(new_val / 0.5, 2)) * 0.3)), 3)
+    local volumeWarn = math.pow((((round(new_val / 0.5, 2)) * 0.4)), 3)
+    rwrLock:update(nil, volumeLock, nil)
+    rwrLaunch:update(nil, volumeWarn, nil)
+end
 local counter = 0
+
+local rwrPwrSwitch = get_param_handle('PNT_1013')
 function update()
     -- print_message_to_user(rwrOverlay:get())
     update_switch_status()
-    if get_elec_ac_status() then
-        rwrDisplay:set(current_status[rwrBrt][2])
+    if get_elec_ac_status() and target_status[rwrPower][2] > 0 and rwrPwrSwitch:get() == SWITCH_ON then
+        update_rwr_volume()
+        rwrDisplay:set(math.min(current_status[rwrBrt][2],current_status[rwrPower][2]))
+    else
+        rwrDisplay:set(0)
     end
-    rwrDisplay:set(current_status[rwrPower][2])
     if counter > 1 then
         counter = 0
     else
@@ -246,33 +250,19 @@ function update()
                 else
                     if rwr[i].first_seen:get() == -1 then
                         rwr[i].first_seen:set(gettime())
-                        rwr[i].color_sym_h:set(1.0)
                     end
-                end
-                if (gettime() - rwr[i].first_seen:get()) < new_contact_time then
-                    rwr[i].color_sym_h:set(1.0)
-                else
-                    rwr[i].color_sym_h:set(2.0)
                 end
 
                 tmp_signal = rwr[i].signal_h:get()
+                rwr[i].scan_sym:set(0.5)
                 if tmp_signal == 2 then -- 2 Lock
                     lock = true
-                    rwr[i].lock_sym_h:set(0.5)
+                    rwr[i].color_sym_h:set(1.0)
                 elseif tmp_signal == 3 then -- 3 Launch
                     warn = true
-                    rwr[i].unit_type_is_num:set(counter)
-                    if rwr[i].lock_sym_h:get() == 1 then
-                        rwr[i].lock_sym_h:set(0.5)
-                        rwr[i].launch_sym_h:set(0.5)
-                        lock = true
-                    else
-                        rwr[i].lock_sym_h:set(0.5)
-                        rwr[i].launch_sym_h:set(0.5)
-                        lock = true
-                    end
+                    lock = true
+                    rwr[i].color_sym_h:set(2.0)
                 else -- else 1 - Search
-                    rwr[i].lock_sym_h:set(0.5)
                     rwr[i].color_sym_h:set(3.0)
                 end
 
@@ -280,16 +270,28 @@ function update()
                 if symb == nil then
                     symb = "UU"
                 end
-                if tmp_signal == 3 then
-                    rwr[i].unit_type_is_num:set(counter)
-                else
-                    rwr[i].unit_type_is_num:set(0.5)
-                end
-                RWR_dubug_01:set(symb)
                 if tonumber(symb) ~= nil then
                     rwr[i].unit_type_sym_num:set(symb)
+                    if tmp_signal == 3 then
+                        if math.floor(counter*10 % 2) == 0 then
+                            rwr[i].unit_type_is_num:set(1.0)
+                        else
+                            rwr[i].unit_type_is_num:set(0)
+                        end
+                    else
+                        rwr[i].unit_type_is_num:set(1.0)
+                    end
                 else
                     rwr[i].unit_type_sym_h:set(symb)
+                    if tmp_signal == 3 then
+                        if math.floor(counter*10 % 2) == 0 then
+                            rwr[i].unit_type_is_num:set(0.5)
+                        else
+                            rwr[i].unit_type_is_num:set(0)
+                        end
+                    else
+                        rwr[i].unit_type_is_num:set(0.5)
+                    end
                 end
             end
         end

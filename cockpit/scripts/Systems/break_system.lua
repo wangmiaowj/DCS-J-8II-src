@@ -122,23 +122,23 @@ function SetCommand(command,value)
         if get_aircraft_draw_argument_value(0) > 0.5 then
             if Flap_Target > 0.3 then
                 Flap_Target = 0
-                print_message_to_user("Flap: Retract")
+                --print_message_to_user("Flap: Retract")
             else
                 if (sensor_data.getWOW_NoseLandingGear() > 0.0001) then
                     Flap_Target = 0.5
-                    print_message_to_user("Flap: Takeoff")
+                   -- print_message_to_user("Flap: Takeoff")
                 else
                     Flap_Target = 1
-                    print_message_to_user("Flap: Landing")
+                    --print_message_to_user("Flap: Landing")
                 end
             end
         else
             if Flap_Target > 0.3 then
                 Flap_Target = 0
-                print_message_to_user("Flap: Retract")
+                --print_message_to_user("Flap: Retract")
             else
                 Flap_Target = 0.5
-                print_message_to_user("Flap: Combat")
+                --print_message_to_user("Flap: Combat")
             end
         end
     elseif (command == Keys.Flap_Pos_Up) then

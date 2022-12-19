@@ -1,5 +1,5 @@
 --初始化座舱模型
-shape_name   	   = "Cockpit_J-8B"
+shape_name   	   = "Cockpit_J-8II"
 is_EDM			   = true
 new_model_format   = true
 
@@ -49,14 +49,16 @@ function create_cockpit_animation_controller(input_num, set_parameter, _arg_numb
     if (_output == nil) then
         _output = {-1,1}
     end
-    TEMP_VAR[input_num] = CreateGauge("parameter")
+	if _controller ~= nil then
+		TEMP_VAR[input_num] = CreateGauge()
+		TEMP_VAR[input_num].controller		= _controller
+	else
+		TEMP_VAR[input_num] = CreateGauge("parameter")
+		TEMP_VAR[input_num].parameter_name		= set_parameter
+	end
     TEMP_VAR[input_num].arg_number		    = _arg_number
     TEMP_VAR[input_num].input				= _input
     TEMP_VAR[input_num].output			    = _output
-    TEMP_VAR[input_num].parameter_name		= set_parameter
-	if _controller ~= nil then
-		TEMP_VAR[input_num].controller		= _controller
-	end
 end
 
 counter_rec = 0
@@ -215,8 +217,8 @@ animation_list = {
 	{"PNT_1095", 1095},
 	{"PNT_1096", 1096},
 	{"PNT_1097", 1097},
-	{"PNT_1098 ", 1098},
-	{"PNT_1099 ", 1099,{0,1},{0,1}},
+	{"PNT_1098", 1098},
+	{"PNT_1099", 1099,{0,1},{0,1}},
 
     -- 右面板
     {"PNT_1101", 1101},
@@ -346,23 +348,34 @@ animation_list = {
 	--pylon select
 	{"PNT_1261",1261,{0,1},{0,1}},
 	{"PNT_1262",1262,{0,1},{0,1}},
+	{"PNT_2263",2263,{0,1},{0,1}},--3号挂架选择开关
 	{"PNT_1263",1263,{0,1},{0,1}},
+	{"PNT_2264",2264,{0,1},{0,1}},--5号挂架选择开关
 	{"PNT_1264",1264,{0,1},{0,1}},
 	{"PNT_1265",1265,{0,1},{0,1}},
 
 	--pylon selected
 	{"PNT_1266",1266,{0,1},{0,1}},
 	{"PNT_1267",1267,{0,1},{0,1}},
+	{"PNT_2267",2267,{0,1},{0,1}},
 	{"PNT_1268",1268,{0,1},{0,1}},
+	{"PNT_2269",2269,{0,1},{0,1}},
 	{"PNT_1269",1269,{0,1},{0,1}},
 	{"PNT_1270",1270,{0,1},{0,1}},
+	
+	
 	
 	--pylon ammo count
 	{"PNT_1271",1271},
 	{"PNT_1272",1272},
+	{"PNT_1272",1272},
 	{"PNT_1273",1273},
+	{"PNT_2273",2273},--3x10
+	{"PNT_2274",2274},--3x1
 	{"PNT_1274",1274},
 	{"PNT_1275",1275},
+	{"PNT_2277",2277},--5x10
+	{"PNT_2278",2278},--5x1
 	{"PNT_1276",1276},
 	{"PNT_1277",1277},
 	{"PNT_1278",1278},
@@ -391,8 +404,10 @@ animation_list = {
 	{"PNT_1299",1299},
 	{"PNT_1300",1300},
 
-	{"PNT_1311",1311,{0,1},{0,1}},--RWR音量
-	{"PNT_1312",1312,{0,1},{0,1}},--ICS UNDEF
+	{"PNT_1311",1311,{0,1},{1,0}},--RWR亮度
+	{"PNT_1312",1312,{0,1},{1,0}},--RWR音量
+
+	
 	
 	{"MOTOR_RPM",114514,{0,100},{0,1}},
 }

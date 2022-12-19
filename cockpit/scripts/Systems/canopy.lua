@@ -40,9 +40,9 @@ function post_initialize()
 		CanoStatus = 0
     elseif birth=="GROUND_COLD" then
         CANOPY_COMMAND = 1
-		CanoStatus = 0.98
+		CanoStatus = 0.9
     end
-	set_aircraft_draw_argument_value(38,CanoStatus)
+	--set_aircraft_draw_argument_value(38,CanoStatus)
 end
 
 local PlaneEjectCount = 0
@@ -71,11 +71,11 @@ function update()
             EndSndCpt:play_once()-- body
 			CanoStatus = 0
 		end
-	elseif (CANOPY_COMMAND == 1 and CanoStatus < 0.98 and EjectStatus == 0) then
+	elseif (CANOPY_COMMAND == 1 and CanoStatus < 0.9 and EjectStatus == 0) then
         -- open
 		CanoStatus = CanoStatus + 0.004
-        if CanoStatus > 0.98 then
-			CanoStatus = 0.98
+        if CanoStatus > 0.9 then
+			CanoStatus = 0.9
             OpenSndCpt:stop()
             EndSndCpt:play_once()-- body
         end
