@@ -17,7 +17,7 @@ local A2A_dg = {
     "DIS_PL-5EII", "DIS_PL-8A",
 }
 local A2A_r = {
-    "{R-3R}", "{Aspide_MK1}", "DIS_PL-12", "{AIM-7F}"
+    "{R-3R}", "{Aspide_MK1}", "DIS_PL-12", "{AIM-7F}","{LSWM_AA}"
 }
 
 local iCommandPlaneFire = 84
@@ -44,6 +44,8 @@ local target_round_dis = get_param_handle('TARGET_ROUND_DIS_ENABLE')
 local target_round_x = get_param_handle('TARGET_ROUND_X')
 local target_round_y = get_param_handle('TARGET_ROUND_Y')
 local hud_dis=get_param_handle("HUD_DIS_ENABLE")
+local gun_grid = get_param_handle('GUN_GRID')
+local ecmHandle = get_param_handle('ECM')
 
 local dbg_param = { 
     get_param_handle("WeaponSystemDebug_INV"), 
@@ -952,6 +954,11 @@ function update_launch_mode()
     end
     if LAUNCH_MODE == 3 then
         USING_PYLON_DATA = { -1, nil, LAUNCH_MODE }
+        if gun_grid:get() < 0.9 then
+            gun_grid:set(1)
+        end
+    else
+        gun_grid:set(0)
     end
     for i = 1, 7, 1 do
         repeat
@@ -1088,6 +1095,12 @@ end
 function update()
     -- WeaponSystem:emergency_jettison(i-1)
     -- WeaponSystem:launch_station(pylonSelected - 1)
+    local ECMStatus=WeaponSystem:get_ECM_status()
+    if ECMStatus and (get_elec_ac_status() or get_elec_dc_status()) then
+        ecmHandle:set(SWITCH_ON)
+    else
+        ecmHandle:set(SWITCH_OFF)
+    end
     ammo_count_cal()--绘制弹药数量信息
     update_num_anim()--绘制数字轮
     update_Pylon_list()--更新挂架信息

@@ -27,13 +27,16 @@ function _switch_counter()
 end
 
 local pullup = _switch_counter()
+local fuel_low = _switch_counter()
 
 local display_target_status = {
     {pullup , SWITCH_OFF, get_param_handle("PULLUP_FLASH")},
+    {fuel_low , SWITCH_OFF, get_param_handle("FUEL_LOW")},
 }
 
 local dis_play_current_status = {
     {pullup , SWITCH_OFF, SWITCH_OFF},
+    {fuel_low , SWITCH_OFF, SWITCH_OFF},
 }
 local snd_count = 0
 
@@ -78,15 +81,18 @@ end
 local warning_system_debug = get_param_handle("WARNING_SYS_DEBUG")
 local warning_system_debug2 = get_param_handle("WARNING_SYS_DEBUG2")
 local pullTimeCounter = 0
+
+local bitTime = 0
+
 local function calculate_pull_up()
     local vertices_velocity = sensor_data.getVerticalVelocity()
     local gear_up = sensor_data.getLeftMainLandingGearUp()
-    if vertices_velocity < 0 and gear_up == 1 then
+    if vertices_velocity < 0 and gear_up == 1 or (bitTime > 1 and bitTime < 2) then
         local radAlt = sensor_data.getRadarAltitude()
         local touchdownTime = radAlt / math.abs( vertices_velocity )
         warning_system_debug:set(touchdownTime)
         warning_system_debug2:set(pullTimeCounter)
-        if touchdownTime < 5 then
+        if touchdownTime < 5 or (bitTime > 1 and bitTime < 2) then
             pullTimeCounter = pullTimeCounter + update_rate
             if not snd_list[pullup_snd][2]:is_playing() then
                 snd_list[pullup_snd][2]:play_continue()
@@ -103,12 +109,18 @@ local function calculate_pull_up()
                 snd_list[pullup_snd][2]:stop()
             end
         end
+    else
+        pullTimeCounter = 0
+        display_target_status[pullup][2] = SWITCH_OFF
+        if snd_list[pullup_snd][2]:is_playing() then
+            snd_list[pullup_snd][2]:stop()
+        end
     end
     
 end
 local function calculate_overG()
     local G = sensor_data.getVerticalAcceleration()
-    if G > 7 then
+    if G > 7 or (bitTime > 3 and bitTime < 6) then
         if not snd_list[over_G_snd][2]:is_playing() then
             snd_list[over_G_snd][2]:play_continue()
         end
@@ -122,21 +134,21 @@ local function calculate_gear_tip()
     local gear_up = sensor_data.getLeftMainLandingGearUp()
     local ias = sensor_data.getIndicatedAirSpeed()*ias_conversion_to_kmh
     local radAlt = sensor_data.getRadarAltitude()
-    if radAlt < 150 and gear_up == 1 and ias < 350 then
+    if radAlt < 150 and gear_up == 1 and ias < 350 or (bitTime > 7 and bitTime < 8) then
         gearDnTimeCounter = gearDnTimeCounter + update_rate
-        if math.floor(gearDnTimeCounter%3) == 0 then
+        if math.floor(gearDnTimeCounter%3) == 0 or (bitTime > 7 and bitTime < 8 and not snd_list[gear_down_tip_snd][2]:is_playing()) then
             snd_list[gear_down_tip_snd][2]:play_once()
         end
     elseif gear_up == 0 and snd_list[gear_down_tip_snd][2]:is_playing() then
         snd_list[gear_down_tip_snd][2]:stop()
         gearDnTimeCounter = 0
     end
-    if radAlt > 300 and gear_up == 0 and ias > 500 then
+    if radAlt > 300 and gear_up == 0 and ias > 500 or (bitTime > 9 and bitTime < 10) then
         if snd_list[gear_down_tip_snd][2]:is_playing() then
             snd_list[gear_down_tip_snd][2]:stop()
         end
         gearUpTimeCounter = gearUpTimeCounter + update_rate
-        if math.floor(gearUpTimeCounter%3) == 0 then
+        if math.floor(gearUpTimeCounter%3) == 0 or (bitTime > 9 and bitTime < 10 and not snd_list[gear_up_tip_snd][2]:is_playing()) then
             snd_list[gear_up_tip_snd][2]:play_once()
         end
     elseif gear_up == 1 and snd_list[gear_up_tip_snd][2]:is_playing() then
@@ -147,11 +159,16 @@ end
 
 local function calculate_fuel()
     local fuel_mass = sensor_data.getTotalFuelWeight()
-    if fuel_mass < 1500 and not snd_list[fuel_1500][2]:is_playing() then
+    if fuel_mass < 1500 then
+        display_target_status[fuel_low][2] = SWITCH_ON
+    else
+        display_target_status[fuel_low][2] = SWITCH_OFF
+    end
+    if fuel_mass < 1500 and not snd_list[fuel_1500][2]:is_playing() or (bitTime > 11 and bitTime < 12 and not snd_list[fuel_1500][2]:is_playing()) then
         snd_list[fuel_1500][2]:play_once()
-    elseif fuel_mass < 800 and not snd_list[fuel_800][2]:is_playing() then
+    elseif fuel_mass < 800 and not snd_list[fuel_800][2]:is_playing() or (bitTime > 13 and bitTime < 14 and not snd_list[fuel_800][2]:is_playing()) then
         snd_list[fuel_800][2]:play_once()
-    elseif fuel_mass < 500 and not snd_list[fuel_500][2]:is_playing() then
+    elseif fuel_mass < 500 and not snd_list[fuel_500][2]:is_playing() or (bitTime > 15 and bitTime < 16 and not snd_list[fuel_500][2]:is_playing()) then
         snd_list[fuel_500][2]:play_once()
     elseif fuel_mass > 500 and snd_list[fuel_500][2]:is_playing() then
         snd_list[fuel_500][2]:stop()
@@ -177,6 +194,11 @@ function update()
         calculate_overG()
         calculate_gear_tip()
         calculate_fuel()
+        if get_cockpit_draw_argument_value(1202) == 0 then
+            bitTime = math.floor((bitTime + update_rate)*100 + 0.5) / 100
+        else
+            bitTime = 0
+        end
     else
         for key, value in pairs(display_target_status) do
             value[2]=SWITCH_OFF

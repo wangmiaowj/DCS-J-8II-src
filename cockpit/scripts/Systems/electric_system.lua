@@ -9,9 +9,11 @@ local electric_system = GetSelf()
 local update_time_step = 0.02 --每秒50次调用update()函数
 make_default_activity(update_time_step)
 
+local sensor_data = get_base_data()
+
 
 local power_load = get_param_handle("PWR_LOAD")
-power_load:set(-0.01) --默认电源负载0.01
+power_load:set( -0.01) --默认电源负载0.01
 
 electric_system:listen_command(Keys.InverterLeft)
 electric_system:listen_command(Keys.InverterRight)
@@ -82,96 +84,179 @@ local msl_warming              = _switch_counter() --导弹加温供电
 local msl_filament             = _switch_counter() --导弹灯丝
 local msl_launch               = _switch_counter() --导弹发射
 
-local pylon1_pwr = _switch_counter() --1号挂架电源
-local pylon2_pwr = _switch_counter() --2号挂架电源
-local pylon3_pwr = _switch_counter() --3号挂架电源
-local pylon4_pwr = _switch_counter() --4号挂架电源
-local pylon5_pwr = _switch_counter() --5号挂架电源
-local pylon6_pwr = _switch_counter() --6号挂架电源
-local pylon7_pwr = _switch_counter() --7号挂架电源
-local blackBox_pwr = _switch_counter() --黑匣子电源
-local rsp_pwr = _switch_counter() --应答机电源
-local apk_pwr = _switch_counter() --APK电源
-local battery_heating = _switch_counter() --电瓶加温
-local lid = _switch_counter() --右侧面板盖子
+local pylon1_pwr               = _switch_counter() --1号挂架电源
+local pylon2_pwr               = _switch_counter() --2号挂架电源
+local pylon3_pwr               = _switch_counter() --3号挂架电源
+local pylon4_pwr               = _switch_counter() --4号挂架电源
+local pylon5_pwr               = _switch_counter() --5号挂架电源
+local pylon6_pwr               = _switch_counter() --6号挂架电源
+local pylon7_pwr               = _switch_counter() --7号挂架电源
+local blackBox_pwr             = _switch_counter() --黑匣子电源
+local rsp_pwr                  = _switch_counter() --应答机电源
+local apk_pwr                  = _switch_counter() --APK电源
+local battery_heating          = _switch_counter() --电瓶加温
+local lid                      = _switch_counter() --右侧面板盖子
 
-local display_target_status = {
-    { main_power_switch, SWITCH_OFF, get_param_handle("PNT_1001"), "PNT_1001" },
-    { left_real_gen_switch, SWITCH_OFF, get_param_handle("PNT_1002"), "PNT_1002" },
-    { right_real_gen_switch, SWITCH_OFF, get_param_handle("PNT_1003"), "PNT_1003" },
-    { left_inverter_switch, SWITCH_OFF, get_param_handle("PNT_1004"), "PNT_1004" },
-    { right_inverter_switch, SWITCH_OFF, get_param_handle("PNT_1005"), "PNT_1005" },
-    { battery_capacity, 1000, get_param_handle("BATTERY_CAPACITY"), nil },
-    { adi_pwr, SWITCH_OFF, get_param_handle("PNT_1006"), "PNT_1006" },
-    { hsi_pwr, SWITCH_OFF, get_param_handle("PNT_1007"), "PNT_1007" },
-    { radio_alt_pwr, SWITCH_OFF, get_param_handle("PNT_1008"), "PNT_1008" },
-    { oil_hyd_pwr, SWITCH_OFF, get_param_handle("PNT_1009"), "PNT_1009" },
-    { converter_emerg_converse, SWITCH_OFF, get_param_handle("PNT_1010"), "PNT_1010" },
-    { weapon_pwr, SWITCH_OFF, get_param_handle("PNT_1011"), "PNT_1011" },
-    { hud_pwr, SWITCH_OFF, get_param_handle("PNT_1012"), "PNT_1012" },
-    { rwr_pwr, SWITCH_OFF, get_param_handle("PNT_1013"), "PNT_1013" },
-    { eject_pwr1, SWITCH_OFF, get_param_handle("PNT_1014"), "PNT_1014" },
-    { eject_pwr2, SWITCH_OFF, get_param_handle("PNT_1015"), "PNT_1015" },
-    { eject_pwr3, SWITCH_OFF, get_param_handle("PNT_1016"), "PNT_1016" },
-    { unknow1, SWITCH_OFF, get_param_handle("PNT_1017"), "PNT_1017" },
-    { unknow2, SWITCH_OFF, get_param_handle("PNT_1018"), "PNT_1018" },
-    { camera_gun, SWITCH_OFF, get_param_handle("PNT_1019"), "PNT_1019" },
-    { msl_warming, SWITCH_OFF, get_param_handle("PNT_1020"), "PNT_1020" },
-    { msl_filament, SWITCH_OFF, get_param_handle("PNT_1021"), "PNT_1021" },
-    { msl_launch, SWITCH_OFF, get_param_handle("PNT_1022"), "PNT_1022" },
-    { pylon1_pwr, SWITCH_OFF, get_param_handle("PNT_1081"), "PNT_1081" },
-    { pylon2_pwr, SWITCH_OFF, get_param_handle("PNT_1082"), "PNT_1082" },
-    { pylon3_pwr, SWITCH_OFF, get_param_handle("PNT_1083"), "PNT_1083" },
-    { pylon4_pwr, SWITCH_OFF, get_param_handle("PNT_1084"), "PNT_1084" },
-    { pylon5_pwr, SWITCH_OFF, get_param_handle("PNT_1085"), "PNT_1085" },
-    { pylon6_pwr, SWITCH_OFF, get_param_handle("PNT_1086"), "PNT_1086" },
-    { pylon7_pwr, SWITCH_OFF, get_param_handle("PNT_1087"), "PNT_1087" },
-    { blackBox_pwr, SWITCH_OFF, get_param_handle("PNT_1088"), "PNT_1088" },
-    { rsp_pwr, SWITCH_OFF, get_param_handle("PNT_1089"), "PNT_1089" },
-    { apk_pwr, SWITCH_OFF, get_param_handle("PNT_1090"), "PNT_1090" },
-    { battery_heating, SWITCH_OFF, get_param_handle("PNT_1091"), "PNT_1091" },
-    { lid, SWITCH_ON, get_param_handle("PNT_1099"), "PNT_1099" },
+local display_target_status    = {
+    { main_power_switch,        SWITCH_OFF, get_param_handle("PNT_1001"),         "PNT_1001" },
+    { left_real_gen_switch,     SWITCH_OFF, get_param_handle("PNT_1002"),         "PNT_1002" },
+    { right_real_gen_switch,    SWITCH_OFF, get_param_handle("PNT_1003"),         "PNT_1003" },
+    { left_inverter_switch,     SWITCH_OFF, get_param_handle("PNT_1004"),         "PNT_1004" },
+    { right_inverter_switch,    SWITCH_OFF, get_param_handle("PNT_1005"),         "PNT_1005" },
+    { battery_capacity,         1000,       get_param_handle("BATTERY_CAPACITY"), nil },
+    { adi_pwr,                  SWITCH_OFF, get_param_handle("PNT_1006"),         "PNT_1006" },
+    { hsi_pwr,                  SWITCH_OFF, get_param_handle("PNT_1007"),         "PNT_1007" },
+    { radio_alt_pwr,            SWITCH_OFF, get_param_handle("PNT_1008"),         "PNT_1008" },
+    { oil_hyd_pwr,              SWITCH_OFF, get_param_handle("PNT_1009"),         "PNT_1009" },
+    { converter_emerg_converse, SWITCH_OFF, get_param_handle("PNT_1010"),         "PNT_1010" },
+    { weapon_pwr,               SWITCH_OFF, get_param_handle("PNT_1011"),         "PNT_1011" },
+    { hud_pwr,                  SWITCH_OFF, get_param_handle("PNT_1012"),         "PNT_1012" },
+    { rwr_pwr,                  SWITCH_OFF, get_param_handle("PNT_1013"),         "PNT_1013" },
+    { eject_pwr1,               SWITCH_OFF, get_param_handle("PNT_1014"),         "PNT_1014" },
+    { eject_pwr2,               SWITCH_OFF, get_param_handle("PNT_1015"),         "PNT_1015" },
+    { eject_pwr3,               SWITCH_OFF, get_param_handle("PNT_1016"),         "PNT_1016" },
+    { unknow1,                  SWITCH_OFF, get_param_handle("PNT_1017"),         "PNT_1017" },
+    { unknow2,                  SWITCH_OFF, get_param_handle("PNT_1018"),         "PNT_1018" },
+    { camera_gun,               SWITCH_OFF, get_param_handle("PNT_1019"),         "PNT_1019" },
+    { msl_warming,              SWITCH_OFF, get_param_handle("PNT_1020"),         "PNT_1020" },
+    { msl_filament,             SWITCH_OFF, get_param_handle("PNT_1021"),         "PNT_1021" },
+    { msl_launch,               SWITCH_OFF, get_param_handle("PNT_1022"),         "PNT_1022" },
+    { pylon1_pwr,               SWITCH_OFF, get_param_handle("PNT_1081"),         "PNT_1081" },
+    { pylon2_pwr,               SWITCH_OFF, get_param_handle("PNT_1082"),         "PNT_1082" },
+    { pylon3_pwr,               SWITCH_OFF, get_param_handle("PNT_1083"),         "PNT_1083" },
+    { pylon4_pwr,               SWITCH_OFF, get_param_handle("PNT_1084"),         "PNT_1084" },
+    { pylon5_pwr,               SWITCH_OFF, get_param_handle("PNT_1085"),         "PNT_1085" },
+    { pylon6_pwr,               SWITCH_OFF, get_param_handle("PNT_1086"),         "PNT_1086" },
+    { pylon7_pwr,               SWITCH_OFF, get_param_handle("PNT_1087"),         "PNT_1087" },
+    { blackBox_pwr,             SWITCH_OFF, get_param_handle("PNT_1088"),         "PNT_1088" },
+    { rsp_pwr,                  SWITCH_OFF, get_param_handle("PNT_1089"),         "PNT_1089" },
+    { apk_pwr,                  SWITCH_OFF, get_param_handle("PNT_1090"),         "PNT_1090" },
+    { battery_heating,          SWITCH_OFF, get_param_handle("PNT_1091"),         "PNT_1091" },
+    { lid,                      SWITCH_ON,  get_param_handle("PNT_1099"),         "PNT_1099" },
 }
 
-local dis_play_current_status = {
+local dis_play_current_status  = {
     --  {switch_index,switch_status,unknow,pwr_load,needAc}
     --  {开关索引,开关状态,未知变量,功耗,是否需要交流电}
-    { main_power_switch, SWITCH_OFF, SWITCH_OFF, 0, false },
-    { left_real_gen_switch, SWITCH_OFF, SWITCH_OFF, 0.005, false },
-    { right_real_gen_switch, SWITCH_OFF, SWITCH_OFF, 0.005, false },
-    { left_inverter_switch, SWITCH_OFF, SWITCH_OFF, 0, false },
-    { right_inverter_switch, SWITCH_OFF, SWITCH_OFF, 0, false },
-    { battery_capacity, 1000, 1000, 0, false },
-    { adi_pwr, SWITCH_OFF, SWITCH_OFF, 0.005, false },
-    { hsi_pwr, SWITCH_OFF, SWITCH_OFF, 0.005, false },
-    { radio_alt_pwr, SWITCH_OFF, SWITCH_OFF, 0.005, false },
-    { oil_hyd_pwr, SWITCH_OFF, SWITCH_OFF, 0.005, false },
-    { converter_emerg_converse, SWITCH_OFF, SWITCH_OFF, 0.2, false },
-    { weapon_pwr, SWITCH_OFF, SWITCH_OFF, 0.04, true },
-    { hud_pwr, SWITCH_OFF, SWITCH_OFF, 0.075, true },
-    { rwr_pwr, SWITCH_OFF, SWITCH_OFF, 0.05, true },
-    { eject_pwr1, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { eject_pwr2, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { eject_pwr3, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { unknow1, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { unknow2, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { camera_gun, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { msl_warming, SWITCH_OFF, SWITCH_OFF, 0.025, true },
-    { msl_filament, SWITCH_OFF, SWITCH_OFF, 0.0025, true },
-    { msl_launch, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon1_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon2_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon3_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon4_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon5_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon6_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { pylon7_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { blackBox_pwr, SWITCH_OFF, SWITCH_OFF, 0.04, true },
-    { rsp_pwr, SWITCH_OFF, SWITCH_OFF, 0.025, true },
-    { apk_pwr, SWITCH_OFF, SWITCH_OFF, 0.01, true },
-    { battery_heating, SWITCH_OFF, SWITCH_OFF, 0.05, true },
-    { lid, SWITCH_ON, SWITCH_ON, 0, false },
+    { main_power_switch,        SWITCH_OFF, SWITCH_OFF, 0,      false },
+    { left_real_gen_switch,     SWITCH_OFF, SWITCH_OFF, 0.005,  false },
+    { right_real_gen_switch,    SWITCH_OFF, SWITCH_OFF, 0.005,  false },
+    { left_inverter_switch,     SWITCH_OFF, SWITCH_OFF, 0,      false },
+    { right_inverter_switch,    SWITCH_OFF, SWITCH_OFF, 0,      false },
+    { battery_capacity,         1000,       1000,       0,      false },
+    { adi_pwr,                  SWITCH_OFF, SWITCH_OFF, 0.005,  false },
+    { hsi_pwr,                  SWITCH_OFF, SWITCH_OFF, 0.005,  false },
+    { radio_alt_pwr,            SWITCH_OFF, SWITCH_OFF, 0.005,  false },
+    { oil_hyd_pwr,              SWITCH_OFF, SWITCH_OFF, 0.005,  false },
+    { converter_emerg_converse, SWITCH_OFF, SWITCH_OFF, 0.2,    false },
+    { weapon_pwr,               SWITCH_OFF, SWITCH_OFF, 0.04,   true },
+    { hud_pwr,                  SWITCH_OFF, SWITCH_OFF, 0.075,  true },
+    { rwr_pwr,                  SWITCH_OFF, SWITCH_OFF, 0.05,   true },
+    { eject_pwr1,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { eject_pwr2,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { eject_pwr3,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { unknow1,                  SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { unknow2,                  SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { camera_gun,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { msl_warming,              SWITCH_OFF, SWITCH_OFF, 0.025,  true },
+    { msl_filament,             SWITCH_OFF, SWITCH_OFF, 0.0025, true },
+    { msl_launch,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon1_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon2_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon3_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon4_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon5_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon6_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { pylon7_pwr,               SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { blackBox_pwr,             SWITCH_OFF, SWITCH_OFF, 0.04,   true },
+    { rsp_pwr,                  SWITCH_OFF, SWITCH_OFF, 0.025,  true },
+    { apk_pwr,                  SWITCH_OFF, SWITCH_OFF, 0.01,   true },
+    { battery_heating,          SWITCH_OFF, SWITCH_OFF, 0.05,   true },
+    { lid,                      SWITCH_ON,  SWITCH_ON,  0,      false },
 }
+
+local warning_panel_4_count    = 0
+local function warning_panel_counter()
+    warning_panel_4_count = warning_panel_4_count + 1
+    return warning_panel_4_count
+end
+
+local l_gen = warning_panel_counter()
+local r_gen = warning_panel_counter()
+local l_inv = warning_panel_counter()
+local r_inv = warning_panel_counter()
+local batt = warning_panel_counter()
+local dc_ok = warning_panel_counter()
+local ac_ok = warning_panel_counter()
+local gen_inter = warning_panel_counter()
+local eject_system = warning_panel_counter()
+local batt_color = warning_panel_counter()
+
+local warning_panel_status = {
+    { l_gen,         SWITCH_OFF, get_param_handle('L_GEN') },
+    { r_gen,         SWITCH_OFF, get_param_handle('R_GEN') },
+    { l_inv,         SWITCH_OFF, get_param_handle('L_INV') },
+    { r_inv,         SWITCH_OFF, get_param_handle('R_INV') },
+    { batt,          SWITCH_OFF, get_param_handle('BATT') },
+    { dc_ok,         SWITCH_OFF, get_param_handle('DC') },
+    { ac_ok,         SWITCH_OFF, get_param_handle('AC') },
+    { gen_inter,     SWITCH_OFF, get_param_handle('GEN_INTER') },
+    { eject_system,  SWITCH_OFF, get_param_handle('EJECT_SYSTEM') },
+    { batt_color,    SWITCH_OFF, get_param_handle('BATT_COLOR') }
+}
+
+local function drawingWarningPanel()
+    for k, v in pairs(warning_panel_status) do
+        v[3]:set(v[2])
+    end
+end
+
+local function updateWarningPanel()
+    warning_panel_status[dc_ok][2] = SWITCH_ON
+    if dis_play_current_status[battery_capacity][2] < 300 then
+        warning_panel_status[batt_color][2] = 0
+    elseif dis_play_current_status[battery_capacity][2] < 500 then
+        warning_panel_status[batt_color][2] = 1
+    elseif dis_play_current_status[battery_capacity][2] <= 1000 then
+        warning_panel_status[batt_color][2] = 2
+    end
+    if not get_elec_ac_status() or dis_play_current_status[battery_capacity][2] < 1000 then
+        warning_panel_status[batt][2] = SWITCH_ON
+    else
+        warning_panel_status[batt][2] = SWITCH_OFF
+    end
+    if elec_charging_status:get() == 0 or dis_play_current_status[left_real_gen_switch][2] == SWITCH_OFF or sensor_data.getEngineLeftRPM() < 50 then
+        warning_panel_status[l_gen][2] = SWITCH_ON
+    else
+        warning_panel_status[l_gen][2] = SWITCH_OFF
+    end
+    if elec_charging_status:get() == 0 or dis_play_current_status[right_real_gen_switch][2] == SWITCH_OFF or sensor_data.getEngineRightRPM() < 50 then
+        warning_panel_status[r_gen][2] = SWITCH_ON
+    else
+        warning_panel_status[r_gen][2] = SWITCH_OFF
+    end
+    if dis_play_current_status[left_inverter_switch][2] == SWITCH_OFF then
+        warning_panel_status[l_inv][2] = SWITCH_ON
+    else
+        warning_panel_status[l_inv][2] = SWITCH_OFF
+    end
+    if dis_play_current_status[right_inverter_switch][2] == SWITCH_OFF then
+        warning_panel_status[r_inv][2] = SWITCH_ON
+    else
+        warning_panel_status[r_inv][2] = SWITCH_OFF
+    end
+    if get_elec_ac_status() then
+        warning_panel_status[ac_ok][2] = SWITCH_ON
+    else
+        warning_panel_status[ac_ok][2] = SWITCH_OFF
+    end
+    if not get_elec_ac_status() or dis_play_current_status[eject_pwr1][2] == SWITCH_OFF or dis_play_current_status[eject_pwr2][2] == SWITCH_OFF or dis_play_current_status[eject_pwr3][2] == SWITCH_OFF then
+        warning_panel_status[eject_system][2] = SWITCH_ON
+    else
+        warning_panel_status[eject_system][2] = SWITCH_OFF
+    end
+end
+
 local snd_count = 0
 local function _snd_counter()
     snd_count = snd_count + 1
@@ -290,14 +375,14 @@ function post_initialize() --默认初始化函数
         electric_system:AC_Generator_1_on(true)
         electric_system:AC_Generator_2_on(true)
         electric_system:DC_Battery_on(true)
-        for k,v in pairs(display_target_status) do
-			display_target_status[k][2] = SWITCH_ON
-		end
-		display_target_status[converter_emerg_converse][2] = SWITCH_OFF
+        for k, v in pairs(display_target_status) do
+            display_target_status[k][2] = SWITCH_ON
+        end
+        display_target_status[converter_emerg_converse][2] = SWITCH_OFF
         display_target_status[unknow1][2] = SWITCH_OFF
         display_target_status[unknow2][2] = SWITCH_OFF
-    elseif birth=="GROUND_COLD" then
-        electric_system:AC_Generator_1_on(false) 
+    elseif birth == "GROUND_COLD" then
+        electric_system:AC_Generator_1_on(false)
         electric_system:AC_Generator_2_on(false)
         electric_system:DC_Battery_on(false)
     end
@@ -461,6 +546,14 @@ function update() --刷新状态
     update_snd()
     update_click_view()
     handlePwrLoad()
+    if get_elec_dc_status() or get_elec_ac_status() then
+        updateWarningPanel()
+    else
+        for k, v in pairs(warning_panel_status) do
+            v[2]=SWITCH_OFF
+        end
+    end
+    drawingWarningPanel()
 end
 
 --[[
@@ -495,4 +588,3 @@ iCommandElectricalPowerInverterOFF	1075
 iCommandElectricalPowerInverterTEST	1076
 --]]
 need_to_be_closed = false
-

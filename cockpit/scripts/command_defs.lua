@@ -734,7 +734,11 @@ Keys =
 	ICS_UNDEF_KNOB_ROT = __custom_counter(),
 	RwrVolume = __custom_counter(),
 	RwrLightness = __custom_counter(),
+	
+	autoStart = __custom_counter(),
+	autoStop = __custom_counter(),
     --起落架手柄 5001// 5050 EFM - 6000 for EFM
+	
     NoseWheelSteeringOn = 5050,
     NoseWheelSteeringOff = 5051,
     -- LeftEngineOFF = __custom_counter(),

@@ -141,3 +141,22 @@ target_round.isdraw          = true
 target_round.collimated      = true
 target_round.isvisible       = true
 Add(target_round)
+
+-- 机炮格子
+gun_grid_sign 				            = CreateElement "ceTexPoly"
+gun_grid_sign.vertices                 = hud_vert_gen(2400,2400)-- {{-106,125},{106,125},{106,-143},{-106,-143}}
+gun_grid_sign.indices                  = {0,1,2,2,3,0}
+gun_grid_sign.tex_coords               = tex_coord_gen(0,0,1024,1024,1024,1024)
+gun_grid_sign.material                 = MakeMaterial("./Bazar/Textures/AvionicsCommon/asp17grid.dds", HUD_DAY_COLOR)
+gun_grid_sign.name 			        = create_guid_string()
+gun_grid_sign.init_pos                 = {0, -0.3, default_hud_z_offset}
+gun_grid_sign.init_rot		            = {0, 0, default_hud_rot_offset}
+gun_grid_sign.collimated	            = true
+gun_grid_sign.element_params           = {"GUN_GRID"} --, "D_GUNSIGHT_VISIBLE"
+gun_grid_sign.controllers              = {{"parameter_in_range",0,0.9,1.1}}
+gun_grid_sign.use_mipfilter            = true
+gun_grid_sign.additive_alpha           = true
+gun_grid_sign.h_clip_relation          = h_clip_relations.COMPARE
+gun_grid_sign.level                    = HUD_BASE_DEFAULT_LEVEL
+gun_grid_sign.parent_element	        = "hud_base_clip"
+Add(gun_grid_sign)

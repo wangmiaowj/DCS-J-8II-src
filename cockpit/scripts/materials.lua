@@ -6,6 +6,7 @@ dofile(LockOn_Options.common_script_path.."Fonts/fonts_cmn.lua")
 materials = {}
 materials["DBG_GREY"]    = {2, 2, 2, 255}
 materials["DBG_BLACK"]   = {0, 0, 0, 255}
+materials["DBG_YELLOW"]   = {255, 255, 0, 255}
 materials["DBG_BLUE"]   = {0, 0, 100, 100}
 materials["DBG_GREEN"]   = {0, 80, 0, 100}
 materials["DBG_RED"]     = {255, 0, 0, 255}
@@ -127,7 +128,10 @@ fontdescription["font_UTF"] = font_unicode(IndicationFontPath.."Font_UTF.dds")
 	fonts["BS430_font_green"]		= {fontdescription["font_Pixel"], 10, {4,239,113,255} }
 	-- this is the chinese unicode font
 	fonts["unicode_cn"]				= {fontdescription["font_UTF"], 10, materials["TEST_COLOR"] }
-	fonts["unicode_cn_white"]		= {fontdescription["font_UTF"], 10, {255,255,255,255} }
+	fonts["unicode_cn_white"]		= {fontdescription["font_UTF"], 10, materials.DBG_WHITE }
+	fonts["unicode_cn_red"]		= {fontdescription["font_UTF"], 10, materials.DBG_RED }
+	fonts["unicode_cn_green"]		= {fontdescription["font_UTF"], 10, materials.DBG_GREEN }
+	fonts["unicode_cn_yellow"]		= {fontdescription["font_UTF"], 10, materials.DBG_YELLOW }
 
 -- force preload resources to avoid freeze on start (list of texture files)
 --[[

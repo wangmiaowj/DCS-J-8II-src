@@ -51,8 +51,8 @@ local right_eng_running = 0
 local motor_running = 0
 local motor_working = 0
 
-switch_count = 0
-function _switch_counter()
+local switch_count = 0
+local function _switch_counter()
     switch_count = switch_count + 1
     return switch_count
 end
@@ -69,7 +69,7 @@ local right_throttle_Idle = _switch_counter()
 local left_throttle_Idle = _switch_counter()
 local starter = _switch_counter()
 
-display_target_status = {
+local target_status = {
     {drop_tank_ind_switch , SWITCH_OFF, get_param_handle("PNT_1141"), "PNT_1141"},
 	{windshield_anti_ice_switch , SWITCH_OFF, get_param_handle("PNT_1142"), "PNT_1142"},
 	{pump_4_switch , SWITCH_OFF, get_param_handle("PNT_1143"), "PNT_1143"},
@@ -83,7 +83,7 @@ display_target_status = {
 	{starter , SWITCH_OFF, get_param_handle("PNT_1146"), "PNT_1146"},
 }
 
-dis_play_current_status = {
+local current_status = {
     {drop_tank_ind_switch , SWITCH_OFF, SWITCH_OFF},
 	{windshield_anti_ice_switch , SWITCH_OFF, SWITCH_OFF},
 	{pump_4_switch , SWITCH_OFF, SWITCH_OFF},
@@ -97,24 +97,53 @@ dis_play_current_status = {
 	{starter , SWITCH_OFF, SWITCH_OFF},
 }
 
-gauge_count = 0
-function _gauge_counter()
+local gauge_count = 0
+
+local function _gauge_counter()
     gauge_count = gauge_count + 1
     return gauge_count
+end
+
+local warning_count = 0
+
+local function _warning_counter()
+    warning_count = warning_count + 1
+    return warning_count
 end
 
 local motor_rpm = _gauge_counter()
 local left_eng_rpm = _gauge_counter()
 local right_eng_rpm = _gauge_counter()
 
-Gauge_display_state = { -- last parameter define if it is unneed from 9 to zero
+local motor_dis_rpm = _warning_counter()
+local l_ab  = _warning_counter()
+local r_ab  = _warning_counter()
+local l_eng_hot = _warning_counter()
+local r_eng_hot = _warning_counter()
+local anti_ice = _warning_counter()
+local oil_pump = _warning_counter()
+local lub_oil_pump = _warning_counter()
+local anti_skid = _warning_counter()
+
+local Gauge_display_state = { -- last parameter define if it is unneed from 9 to zero
     {motor_rpm, 0, 0, get_param_handle("MOTOR_RPM"), 3, 0.2},
 	{left_eng_rpm, 0, 0, get_param_handle("L_RPM"), 3, 0.04},
 	{right_eng_rpm, 0, 0, get_param_handle("R_RPM"), 3, 0.04},
 }
+local warning_panel_state = {
+	{motor_dis_rpm, 0, 0, get_param_handle("MOTOR_DIS_RPM"), 3, 0.2},
+	{l_ab, 0, 0, get_param_handle("L_AB"), 3, 0.5},
+	{r_ab, 0, 0, get_param_handle("R_AB"), 3, 0.5},
+	{l_eng_hot, 0, 0, get_param_handle("L_ENG_HOT"), 3, 0.5},
+	{r_eng_hot, 0, 0, get_param_handle("R_ENG_HOT"), 3, 0.5},
+	{ anti_ice,      SWITCH_OFF,0, get_param_handle('ANTI_ICE') },
+    { oil_pump,      SWITCH_OFF,0, get_param_handle('OIL_PUMP_FAIL') },
+    { lub_oil_pump,  SWITCH_OFF,0, get_param_handle('LUB_OIL_FAIL') },
+    { anti_skid,     SWITCH_OFF,0, get_param_handle('ANTI_SKID') },
+}
 
-snd_count = 0
-function _snd_counter()
+local snd_count = 0
+local function _snd_counter()
     snd_count = snd_count + 1
     return snd_count
 end
@@ -122,28 +151,28 @@ end
 local motor_snd_start = _snd_counter()
 local motor_snd_end = _snd_counter()
 
-snd_state = {}
+local snd_state = {}
 
-snd_3p_state = {}
+local snd_3p_state = {}
 
 function update_switch_status()
     local switch_moving_step = 0.15
-    for k,v in pairs(display_target_status) do
+    for k,v in pairs(target_status) do
         if k == right_throttle_Idle or k == left_throttle_Idle then
 			switch_moving_step = 0.04
 		else
 			switch_moving_step = 0.15
 		end
-		if math.abs(display_target_status[k][2] - dis_play_current_status[k][2]) < switch_moving_step then
-			dis_play_current_status[k][2] = display_target_status[k][2]
-		elseif display_target_status[k][2] > dis_play_current_status[k][2] then
-			dis_play_current_status[k][2] = dis_play_current_status[k][2] + switch_moving_step
-		elseif display_target_status[k][2] < dis_play_current_status[k][2] then
-			dis_play_current_status[k][2] = dis_play_current_status[k][2] - switch_moving_step
+		if math.abs(target_status[k][2] - current_status[k][2]) < switch_moving_step then
+			current_status[k][2] = target_status[k][2]
+		elseif target_status[k][2] > current_status[k][2] then
+			current_status[k][2] = current_status[k][2] + switch_moving_step
+		elseif target_status[k][2] < current_status[k][2] then
+			current_status[k][2] = current_status[k][2] - switch_moving_step
 		end
-        display_target_status[k][3]:set(dis_play_current_status[k][2])
-		if display_target_status[k][4] ~= nil then
-			local temp_switch_ref = get_clickable_element_reference(display_target_status[k][4])
+        target_status[k][3]:set(current_status[k][2])
+		if target_status[k][4] ~= nil then
+			local temp_switch_ref = get_clickable_element_reference(target_status[k][4])
 			temp_switch_ref:update()
 		end
         -- print_message_to_user(k)
@@ -156,7 +185,7 @@ function update_motor_rpm()
 		local cheaks = {starter,pump_3_switch,pump_4_switch,oil_pump_switch,start_unit_switch,gen_oil_press_switch}
 		local is_run = true
 		for k,v in pairs(cheaks) do
-			if dis_play_current_status[cheaks[k]][2] == SWITCH_OFF then
+			if current_status[cheaks[k]][2] == SWITCH_OFF then
 				is_run = false
 				break
 			end
@@ -216,23 +245,15 @@ function update_eng_rpm()
 	if get_elec_ac_status() then
 		motorRPM = Gauge_display_state[motor_rpm][4]:get()
 		local batteryHeatingSwitch = get_param_handle("PNT_1089")
-		if dis_play_current_status[left_throttle_Idle][2] == 1 and motorRPM >95 and left_eng_running == 0 and motor_working ==0 and batteryHeatingSwitch:get() == SWITCH_ON then
+		if current_status[left_throttle_Idle][2] == 1 and motorRPM >95 and left_eng_running == 0 and motor_working ==0 and batteryHeatingSwitch:get() == SWITCH_ON then
 			left_eng_running = 1
 			motor_working = 1
 			dispatch_action(nil,Keys.PlaneLeftEngineStart)
-		elseif (dis_play_current_status[left_throttle_Idle][2] == 0 and left_eng_running == 1) or (motor_running == 0 and l_eng_rpm < 30 and left_eng_running == 1) then
-			left_eng_running = 0
-			motor_working = 0
-			dispatch_action(nil,Keys.PlaneLeftEngineStop)
 		end
-		if dis_play_current_status[right_throttle_Idle][2] == 1 and motorRPM >95 and right_eng_running == 0 and motor_working == 0 and batteryHeatingSwitch:get() == SWITCH_ON then
+		if current_status[right_throttle_Idle][2] == 1 and motorRPM >95 and right_eng_running == 0 and motor_working == 0 and batteryHeatingSwitch:get() == SWITCH_ON then
 			right_eng_running = 1
 			motor_working = 1
 			dispatch_action(nil,Keys.PlaneRightEngineStart)
-		elseif (dis_play_current_status[right_throttle_Idle][2] == 0 and right_eng_running == 1) or (motor_running == 0 and r_eng_rpm < 30 and right_eng_running == 1) then
-			right_eng_running = 0
-			motor_working = 0
-			dispatch_action(nil,Keys.PlaneRightEngineStop)
 		end
 	else
 		if l_eng_rpm <30 and left_eng_running==1 then
@@ -245,6 +266,16 @@ function update_eng_rpm()
 			motor_working = 1
 			dispatch_action(nil,Keys.PlaneRightEngineStart)
 		end
+	end
+	if (current_status[left_throttle_Idle][2] == 0 and left_eng_running == 1) or (motor_running == 0 and l_eng_rpm < 30 and left_eng_running == 1) then
+		left_eng_running = 0
+		motor_working = 0
+		dispatch_action(nil, Keys.PlaneLeftEngineStop)
+	end
+	if (current_status[right_throttle_Idle][2] == 0 and right_eng_running == 1) or (motor_running == 0 and r_eng_rpm < 30 and right_eng_running == 1) then
+		right_eng_running = 0
+		motor_working = 0
+		dispatch_action(nil,Keys.PlaneRightEngineStop)
 	end
 	if motor_working == 1 and ((l_eng_rpm > 45 and r_eng_rpm == 0) or (r_eng_rpm > 45 and l_eng_rpm == 0) or (r_eng_rpm > 45 and l_eng_rpm > 45)) then
 		motor_working = 0
@@ -320,10 +351,10 @@ end
 function update_throttle()
 	local l_throttle_pos = 0
 	local r_throttle_pos = 0
-	if dis_play_current_status[left_throttle_Idle][2] == 1 then
+	if current_status[left_throttle_Idle][2] == 1 then
 		l_throttle_pos = sensor_data.getThrottleLeftPosition()
 	end
-	if dis_play_current_status[right_throttle_Idle][2] == 1 then
+	if current_status[right_throttle_Idle][2] == 1 then
 		r_throttle_pos = sensor_data.getThrottleRightPosition()
 	end
 	right_throttle:set(r_throttle_pos)
@@ -344,63 +375,110 @@ function post_initialize() --默认初始化函数
     InitEngineSounds()
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
-        for k,v in pairs(display_target_status) do
+        for k,v in pairs(target_status) do
 			if k ~= starter then
-				display_target_status[k][2] = SWITCH_ON
-				dis_play_current_status[k][2] = SWITCH_ON
+				target_status[k][2] = SWITCH_ON
+				current_status[k][2] = SWITCH_ON
 			end
 		end
+		left_eng_running = 1
+		right_eng_running = 1
     elseif birth=="GROUND_COLD" then
-		for k,v in pairs(display_target_status) do
-			display_target_status[k][2] = SWITCH_OFF
-			dis_play_current_status[k][2] = SWITCH_OFF
+		for k,v in pairs(target_status) do
+			target_status[k][2] = SWITCH_OFF
+			current_status[k][2] = SWITCH_OFF
 		end
     end
 end
 
 function SetCommand(command,value)
     if command == Keys.DropTankInd then
-		display_target_status[drop_tank_ind_switch][2] = 1 - display_target_status[drop_tank_ind_switch][2]
+		target_status[drop_tank_ind_switch][2] = 1 - target_status[drop_tank_ind_switch][2]
 	elseif command == Keys.windshieldAntiIce then
-		display_target_status[windshield_anti_ice_switch][2] = 1 - display_target_status[windshield_anti_ice_switch][2]
+		target_status[windshield_anti_ice_switch][2] = 1 - target_status[windshield_anti_ice_switch][2]
 	elseif command == Keys.pump3 then
-		display_target_status[pump_3_switch][2] = 1 - display_target_status[pump_3_switch][2]
+		target_status[pump_3_switch][2] = 1 - target_status[pump_3_switch][2]
 	elseif command == Keys.pump4 then
-		display_target_status[pump_4_switch][2] = 1 - display_target_status[pump_4_switch][2]
+		target_status[pump_4_switch][2] = 1 - target_status[pump_4_switch][2]
 	elseif command == Keys.groupSwitch01Down then
-		display_target_status[drop_tank_ind_switch][2] = SWITCH_ON
-		display_target_status[windshield_anti_ice_switch][2] = SWITCH_ON
-		display_target_status[pump_3_switch][2] = SWITCH_ON
-		display_target_status[pump_4_switch][2] = SWITCH_ON
+		target_status[drop_tank_ind_switch][2] = SWITCH_ON
+		target_status[windshield_anti_ice_switch][2] = SWITCH_ON
+		target_status[pump_3_switch][2] = SWITCH_ON
+		target_status[pump_4_switch][2] = SWITCH_ON
 		switchGroup1:set(SWITCH_ON)
 	elseif command == Keys.groupSwitch01Up then
 		switchGroup1:set(SWITCH_OFF)
 	elseif command == Keys.Starter then
-		display_target_status[starter][2] = 1 - display_target_status[starter][2]
+		target_status[starter][2] = 1 - target_status[starter][2]
 	elseif command == Keys.oilPump then
-		display_target_status[oil_pump_switch][2] = 1 - display_target_status[oil_pump_switch][2]
+		target_status[oil_pump_switch][2] = 1 - target_status[oil_pump_switch][2]
 	elseif command == Keys.startUnit then
-		display_target_status[start_unit_switch][2] = 1 - display_target_status[start_unit_switch][2]
+		target_status[start_unit_switch][2] = 1 - target_status[start_unit_switch][2]
 	elseif command == Keys.genOilPress then
-		display_target_status[gen_oil_press_switch][2] = 1 - display_target_status[gen_oil_press_switch][2]
+		target_status[gen_oil_press_switch][2] = 1 - target_status[gen_oil_press_switch][2]
 	elseif command == Keys.afterBurn then
-		display_target_status[afterburn_switch][2] = 1 - display_target_status[afterburn_switch][2]
+		target_status[afterburn_switch][2] = 1 - target_status[afterburn_switch][2]
 	elseif command == Keys.groupSwitch02Down then
-		display_target_status[oil_pump_switch][2] = SWITCH_ON
-		display_target_status[start_unit_switch][2] = SWITCH_ON
-		display_target_status[gen_oil_press_switch][2] = SWITCH_ON
-		display_target_status[afterburn_switch][2] = SWITCH_ON
+		target_status[oil_pump_switch][2] = SWITCH_ON
+		target_status[start_unit_switch][2] = SWITCH_ON
+		target_status[gen_oil_press_switch][2] = SWITCH_ON
+		target_status[afterburn_switch][2] = SWITCH_ON
 		switchGroup2:set(SWITCH_ON)
 	elseif command == Keys.groupSwitch02Up then
 		switchGroup2:set(SWITCH_OFF)
 	elseif command == Keys.LeftEngineStart then
-		display_target_status[left_throttle_Idle][2] = SWITCH_ON
+		target_status[left_throttle_Idle][2] = SWITCH_ON
 	elseif command == Keys.LeftEngineStop then
-		display_target_status[left_throttle_Idle][2] = SWITCH_OFF
+		target_status[left_throttle_Idle][2] = SWITCH_OFF
 	elseif command == Keys.RightEngineStart then
-		display_target_status[right_throttle_Idle][2] = SWITCH_ON
+		target_status[right_throttle_Idle][2] = SWITCH_ON
 	elseif command == Keys.RightEngineStop then
-		display_target_status[right_throttle_Idle][2] = SWITCH_OFF
+		target_status[right_throttle_Idle][2] = SWITCH_OFF
+	end
+end
+
+local function drawing_warning_panel()
+	for k, v in pairs(warning_panel_state) do
+		v[4]:set(v[2])
+	end
+end
+
+local function update_warning_panel()
+	warning_panel_state[motor_dis_rpm][2] = Gauge_display_state[motor_rpm][2]
+	if not get_elec_ac_status() or get_aircraft_draw_argument_value(29) > 0.03 then
+		warning_panel_state[l_ab][2] = SWITCH_ON
+	else
+		warning_panel_state[l_ab][2] = SWITCH_OFF
+	end
+	if not get_elec_ac_status() or get_aircraft_draw_argument_value(28) > 0.03 then
+		warning_panel_state[r_ab][2] = SWITCH_ON
+	else
+		warning_panel_state[r_ab][2] = SWITCH_OFF
+	end
+	if not get_elec_ac_status() or sensor_data.getEngineLeftTemperatureBeforeTurbine() > 1000 then
+		warning_panel_state[l_eng_hot][2] = SWITCH_ON
+	else
+		warning_panel_state[l_eng_hot][2] = SWITCH_OFF
+	end
+	if not get_elec_ac_status() or sensor_data.getEngineRightTemperatureBeforeTurbine() > 1000 then
+		warning_panel_state[r_eng_hot][2] = SWITCH_ON
+	else
+		warning_panel_state[r_eng_hot][2] = SWITCH_OFF
+	end
+	if current_status[windshield_anti_ice_switch][2] == SWITCH_OFF then
+		warning_panel_state[anti_ice][2] = SWITCH_ON
+	else
+		warning_panel_state[anti_ice][2] = SWITCH_OFF
+	end
+	if current_status[pump_3_switch][2] == SWITCH_OFF then
+		warning_panel_state[oil_pump][2] = SWITCH_ON
+	else
+		warning_panel_state[oil_pump][2] = SWITCH_OFF
+	end
+	if current_status[pump_4_switch][2] == SWITCH_OFF then
+		warning_panel_state[lub_oil_pump][2] = SWITCH_ON
+	else
+		warning_panel_state[lub_oil_pump][2] = SWITCH_OFF
 	end
 end
 
@@ -411,6 +489,14 @@ function update() --刷新状态
 	update_eng_rpm()
 	update_throttle()
 	update_Gauge_Display()
+	if get_elec_dc_status() or get_elec_ac_status() then
+		update_warning_panel()
+	else
+		for k, v in pairs(warning_panel_state) do
+			v[2]=SWITCH_OFF
+		end
+	end
+	drawing_warning_panel()
 	count = count + update_time_step
 	
 	if count > 1 then

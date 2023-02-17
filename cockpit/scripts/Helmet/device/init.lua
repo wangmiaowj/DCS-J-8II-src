@@ -33,7 +33,7 @@ function SetCommand(command, value)
 end
 
 function update()
-    if target_status[display][2] > 65 then
+    if target_status[display][2] > 605 then
         target_status[display][2] = 0
     else
         target_status[display][2] = target_status[display][2] + update_time_step

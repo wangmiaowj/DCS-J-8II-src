@@ -38,7 +38,7 @@ J8II_FM =
             arg_amortizer        = 1,
             arg_wheel_rotation   = 101,
             arg_wheel_yaw        = 2,
-            collision_shell_name = 'wheel_c_0',
+            collision_shell_name = 'F_Wheel_line',
         },
         {
             mass         = 200,
@@ -71,7 +71,7 @@ J8II_FM =
             arg_amortizer        = 6,
             arg_wheel_rotation   = 102,
             arg_wheel_yaw        = -1,
-            collision_shell_name = 'wheel_l_0',
+            collision_shell_name = 'L_Wheel_line',
         },
         {
             mass         = 200,
@@ -103,7 +103,7 @@ J8II_FM =
             arg_amortizer        = 4,
             arg_wheel_rotation   = 103,
             arg_wheel_yaw        = -1,
-            collision_shell_name = 'wheel_r_0',
+            collision_shell_name = 'R_Wheel_line',
         },
     }
 }

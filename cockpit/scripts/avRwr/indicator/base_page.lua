@@ -34,10 +34,10 @@ local indi = { 0, 1, 2, 0, 2, 3,
 
 
 
-Rwr_base          = CreateElement "ceSimple"
-Rwr_base.name     = "Rwr_base"
-Rwr_base.init_pos = { 0, 0, 0 }
-Add(Rwr_base)
+base          = CreateElement "ceSimple"
+base.name     = "Rwr_base"
+base.init_pos = { 0, 0, 0 }
+Add(base)
 
 ---------------------------------------------------
 local total_field_of_view         = CreateElement "ceMeshPoly"

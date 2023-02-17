@@ -177,6 +177,8 @@ function post_initialize()
 		RadarSystem:listen_command(2026)
 		RadarSystem:listen_command(2031)
 		RadarSystem:listen_command(2032)
+		RadarSystem:listen_command(2033)
+		RadarSystem:listen_command(2034)
 		
 		RadarSystem:listen_command(Keys.RadarRangeAxis)
 		RadarSystem:listen_command(Keys.RadarLightA)
@@ -228,6 +230,9 @@ function update_radar()
 	end
 end
 
+local tdc_azi_h_v = 0
+local tdc_range_h_v = 0
+
 function SetCommand(command,value)
 	--dprintf(string.format("Radar SetCom: C %i   V%.8f",command,value))
 ---------------------------------------------------------------------
@@ -258,9 +263,9 @@ function SetCommand(command,value)
 		end
 	elseif command == Keys.RadarLightnessAxis then
 		if value > 0 and target_status[radar_lightness][2] < 1 then
-			target_status[radar_lightness][2] = target_status[radar_lightness][2] + update_time_step
+			target_status[radar_lightness][2] = target_status[radar_lightness][2] + math.abs(value)
 		elseif value < 0 and target_status[radar_lightness][2] > 0 then
-			target_status[radar_lightness][2] = target_status[radar_lightness][2] - update_time_step
+			target_status[radar_lightness][2] = target_status[radar_lightness][2] - math.abs(value)
 		end
 	elseif command == Keys.RadarLightB then
 		if value > 0 and target_status[radar_lightness_b][2] < 1 then
@@ -277,29 +282,30 @@ function SetCommand(command,value)
 	end
 	
 ----------------------------------------------------------------------	
-	
+--print_message_to_user(command)
 	if Radar.tdc_range_h:get() > 60000 then
 		Radar.tdc_range_h:set(60000) -- 目标指示附 距离
 	elseif Radar.tdc_range_h:get() < 0 then
 		Radar.tdc_range_h:set(0)
 	end
-		
-	if Radar.tdc_azi_h:get() > 0.5 then
-		Radar.tdc_azi_h:set(0.5) -- 目标指示符 方向
-	elseif Radar.tdc_azi_h:get() < -0.5 then
-		Radar.tdc_azi_h:set(-0.5)
+
+	if Radar.tdc_azi_h:get() > 1 then
+		Radar.tdc_azi_h:set(1) -- 目标指示符 方向
+	elseif Radar.tdc_azi_h:get() < -1 then
+		Radar.tdc_azi_h:set(-1)
 	end
 	
 -------------------------------------------------
 	
-	if command == 2032  then
-			Radar.tdc_range_h:set(Radar.tdc_range_h:get()- value*200000)
-		
+	if command == 2034  then
+		--Radar.tdc_range_h:set(Radar.tdc_range_h:get()- value*1000)
+		tdc_range_h_v = value*1000
+		--print_message_to_user(value)
 	end
 	
-	if command == 2031  then
-			Radar.tdc_azi_h:set(Radar.tdc_azi_h:get()+ value*10)
-	
+	if command == 2033  then
+		--Radar.tdc_azi_h:set(Radar.tdc_azi_h:get()+ value*0.1)
+		tdc_azi_h_v = value*0.01
 	end
 
 -------------------------------------------------	
@@ -396,10 +402,15 @@ function updateTargetBox()
         target_y:set(0)
     end
 end
+function update_TDC_pos()
+	Radar.tdc_azi_h:set(Radar.tdc_azi_h:get()+tdc_azi_h_v)
+	Radar.tdc_range_h:set(Radar.tdc_range_h:get()+tdc_range_h_v)
+end
 function update()
 	update_radar()
 	update_switch_status()
 	updateTargetBox()
+	update_TDC_pos()
 	count = count + update_time_step
 	if count > 1 then
 		

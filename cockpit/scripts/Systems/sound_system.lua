@@ -27,17 +27,17 @@ function post_initialize()
     -- initial the sound
     -- center panel
     sndhost_cockpit_left            = create_sound_host("COCKPIT_LDP","3D",0.3,-0.3,-0.3) 
-    snd_left_panel_switch           = sndhost_cockpit_left:create_sound("Aircrafts/SK-60/SK60_Switch")
+    snd_left_panel_switch           = sndhost_cockpit_left:create_sound("Aircrafts/Cockpits/Switch1")
     -- center panel
     sndhost_cockpit_center          = create_sound_host("COCKPIT_CDP","3D",0.3,-0.3,0.3) 
-    snd_center_panel_switch         = sndhost_cockpit_center:create_sound("Aircrafts/SK-60/SK60_Switch")
+    snd_center_panel_switch         = sndhost_cockpit_center:create_sound("Aircrafts/Cockpits/Switch2")
     -- center panel
     sndhost_cockpit_right           = create_sound_host("COCKPIT_RDP","3D",0.3,-0.3,0.9) 
-    snd_right_panel_switch          = sndhost_cockpit_right:create_sound("Aircrafts/SK-60/SK60_Switch")
+    snd_right_panel_switch          = sndhost_cockpit_right:create_sound("Aircrafts/Cockpits/Switch1")
     -- electrical power
     sndhost_electrical              = create_sound_host("ELECTRIC_UNIT", "3D", -0.5, 0, 0)
-    snd_main_electric_invert        = sndhost_electrical:create_sound("Aircrafts/SK-60/SK60_Main_Elec")
-    snd_gear_action                 = sndhost_electrical:create_sound("Aircrafts/SK-60/SK60_Gear_Down")
+    snd_main_electric_invert        = sndhost_electrical:create_sound("Aircrafts/Cockpits/Avionics_AC_400Hz")
+    snd_gear_action                 = sndhost_electrical:create_sound("Aircrafts/GearElectricLoop")
 end
 
 SoundSystem:listen_command(Keys.SND_LEFT_PANEL)

@@ -11,6 +11,9 @@ make_default_activity(update_time_step)
 local hudBrt_value =0 --hud亮度旋钮的值
 local count = 0
 
+dev:listen_command(Keys.HK_L_Down)
+dev:listen_command(Keys.HK_L_Up)
+
 local hud_warning = get_param_handle("WARNING_FLASH")
 local hud_danger = get_param_handle("DANGER_FLASH")
 local hud_denied = get_param_handle("WARNING_FLASH")
@@ -36,6 +39,7 @@ local hud_nav_data_3 = get_param_handle("HUD_NAV_DATA_3_DIS")
 local hud_speed_bar_group = get_param_handle("HUD_SPEED_BAR_GROUP")
 local hud_alt_bar_group = get_param_handle("HUD_ALT_BAR_GROUP")
 local hud_hdg_bar_group = get_param_handle("HUD_HDG_BAR_GROUP")
+local hud_hdg_move = get_param_handle('HUD_HDG_MOV')
 
 local hud_pwr = get_param_handle("PNT_1012")--亮度模式DayNight句柄
 
@@ -47,6 +51,149 @@ local RAD_TO_DEGREE  = 57.29577951308233
 local METER_TO_INCH = 3.2808
 
 local maxG_record = 1
+
+local switch_count = 0
+local function _switch_counter()
+    switch_count = switch_count + 1
+    return switch_count
+end
+
+local HK_L_Axis = _switch_counter()
+
+local target_status = {
+	{HK_L_Axis,0.1,get_param_handle('PNT_1202'),'PNT_1202'}
+}
+
+local current_status = {
+	{HK_L_Axis,0.1,0}
+}
+
+local bitTime = 0
+
+local function bitProgram()
+	bitTime = math.floor((bitTime + update_time_step)*100 + 0.5) / 100
+	
+	if bitTime == 17 then
+		--右襟翼放下
+		print_message_to_user('右襟翼放下')
+	elseif bitTime == 19 then
+		--右襟翼收起
+		print_message_to_user('右襟翼收起')
+	elseif bitTime == 21 then
+		--左襟翼放下
+		print_message_to_user('左襟翼放下')
+	elseif bitTime == 23 then
+		--左襟翼收起
+		print_message_to_user('左襟翼收起')
+	elseif bitTime == 25 then
+		--右副翼向下偏转
+		print_message_to_user('右副翼向下偏转')
+	elseif bitTime == 27 then
+		--右副翼复位
+		print_message_to_user('右副翼复位')
+	elseif bitTime == 29 then
+		--右副翼向上偏转
+		print_message_to_user('右副翼向上偏转')
+	elseif bitTime == 31 then
+		--右副翼复位
+		print_message_to_user('右副翼复位')
+	elseif bitTime == 33 then
+		--左副翼向下偏转
+		print_message_to_user('左副翼向下偏转')
+	elseif bitTime == 35 then
+		--左副翼复位
+		print_message_to_user('左副翼复位')
+	elseif bitTime == 37 then
+		--左副翼向上偏转
+		print_message_to_user('左副翼向上偏转')
+	elseif bitTime == 39 then
+		--左副翼复位
+		print_message_to_user('左副翼复位')
+	elseif bitTime == 41 then
+		--右平尾翼向下偏转
+		print_message_to_user('右平尾翼向下偏转')
+	elseif bitTime == 43 then
+		--右平尾复位
+		print_message_to_user('右平尾复位')
+	elseif bitTime == 45 then
+		--右平尾翼向上偏转
+		print_message_to_user('右平尾翼向上偏转')
+	elseif bitTime == 47 then
+		--右平尾复位
+		print_message_to_user('右平尾复位')
+	elseif bitTime == 49 then
+		--左平尾翼向下偏转
+		print_message_to_user('左平尾翼向下偏转')
+	elseif bitTime == 51 then
+		--左平尾复位
+		print_message_to_user('左平尾复位')
+	elseif bitTime == 53 then
+		--左平尾翼向上偏转
+		print_message_to_user('左平尾翼向上偏转')
+	elseif bitTime == 55 then
+		--左平尾复位
+		print_message_to_user('左平尾复位')
+	elseif bitTime == 57 then
+		--垂尾向右偏转
+		print_message_to_user('垂尾向右偏转')
+	elseif bitTime == 59 then
+		--垂尾复位
+		print_message_to_user('垂尾复位')
+	elseif bitTime == 61 then
+		--垂尾向左偏转
+		print_message_to_user('垂尾向左偏转')
+	elseif bitTime == 63 then
+		--垂尾复位
+		print_message_to_user('垂尾复位')
+	elseif bitTime == 65 then
+		--扰流板打开
+		print_message_to_user('扰流板打开')
+	elseif bitTime == 67 then
+		--扰流板关闭
+		print_message_to_user('扰流板关闭')
+	elseif bitTime == 69 then
+		--襟翼、副翼、平尾、垂尾全部活动4秒
+		print_message_to_user('襟翼、副翼、平尾、垂尾全部活动4秒')
+	end
+end
+
+local function update_switch_status()
+    local switch_moving_step = 0.05
+    for k,v in pairs(target_status) do
+		if math.abs(target_status[k][2] - current_status[k][2]) < switch_moving_step then
+			current_status[k][2] = target_status[k][2]
+		elseif target_status[k][2] > current_status[k][2] then
+			current_status[k][2] = current_status[k][2] + switch_moving_step
+		elseif target_status[k][2] < current_status[k][2] then
+			current_status[k][2] = current_status[k][2] - switch_moving_step
+		end
+        target_status[k][3]:set(current_status[k][2])
+		if target_status[k][4] ~= nil then
+			local temp_switch_ref = get_clickable_element_reference(target_status[k][4])
+			temp_switch_ref:update()
+		end
+        -- print_message_to_user(k)
+    end
+end
+
+local function update_flight_mode()
+	if current_status[HK_L_Axis][2] == 0.0 then
+		bitProgram()
+	elseif current_status[HK_L_Axis][2] ~= 0.0 then
+		bitTime = 0
+	end
+	if current_status[HK_L_Axis][2] == 0.6 then
+		--起飞
+	elseif current_status[HK_L_Axis][2] == 0.7 then
+		--巡航
+	elseif current_status[HK_L_Axis][2] == 0.8 then
+		--对空
+	elseif current_status[HK_L_Axis][2] == 0.9 then
+		--对地
+	elseif current_status[HK_L_Axis][2] == 1.0 then
+		--降落
+	end
+end
 
 function post_initialize()
     hud_FD_x:set(0)
@@ -65,11 +212,31 @@ function post_initialize()
 end
 
 function SetCommand(command,value)
-	
+	if command == Keys.HK_L_Down then
+		if current_status[HK_L_Axis][2] > 0 then
+			target_status[HK_L_Axis][2] = target_status[HK_L_Axis][2] - 0.1
+		else
+			target_status[HK_L_Axis][2] = 0
+		end
+	elseif command == Keys.HK_L_Up then
+		if current_status[HK_L_Axis][2] < 1 then
+			target_status[HK_L_Axis][2] = target_status[HK_L_Axis][2] + 0.1
+		else
+			target_status[HK_L_Axis][2] = 1
+		end
+	end
 end
 
-
+local c = 0
 function update()
+	update_switch_status()
+	update_flight_mode()
+	local heading = sensor_data.getHeading()*RAD_TO_DEGREE
+	if heading > 160 then
+		hud_hdg_move:set(-(360-heading) * 0.008)
+	else
+		hud_hdg_move:set(heading * 0.008)
+	end
     hud_adi_rot:set(sensor_data.getRoll())
     hud_adi_pitch:set(-sensor_data.getPitch())
     hud_speed_dis:set(sensor_data.getIndicatedAirSpeed()*ias_conversion_to_kmh)

@@ -45,6 +45,7 @@ creators[devices.ROD]  ={"avLuaDevice"           ,LockOn_Options.script_path.."R
 --empty
 creators[devices.TEST]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/empty.lua"}
 creators[devices.FLIR]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Helmet/device/init.lua"}
+creators[devices.CHEAT]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/cheat.lua"}
 -- ipad controller
 --creators[devices.IPAD_SYSTEM]     ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/ipad_ctrl.lua"} 
 -- menu controller
@@ -56,11 +57,35 @@ indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."HUD/I
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRadar/Indicator/init.lua",nil,{{"RDR_C","RDR_D","RDR_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRwr/Indicator/init.lua",nil,{{"RWR_C","RWR_D","RWR_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."UHF/Radio_init.lua",nil,{{"UHF_C","UHF_D","UHF_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/1/Indicator/init.lua",nil,{{"Warning_1_C","Warning_1_D","Warning_1_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/2/Indicator/init.lua",nil,{{"Warning_2_C","Warning_2_D","Warning_2_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/3/Indicator/init.lua",nil,{{"Warning_3_C","Warning_3_D","Warning_3_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/4/Indicator/init.lua",nil,{{"Warning_4_C","Warning_4_D","Warning_4_R"}}}
 
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Rod/Indicator/init.lua",nil,nil}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Helmet/Indicator/init.lua",nil,nil}
-show_param_handles_list()
+--show_param_handles_list()
 -- Enable KneeBoard for Test
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/declare_kneeboard_device.lua")
 dofile(LockOn_Options.common_script_path.."PADLOCK/PADLOCK_declare.lua")
 ---------------------------------------------
+--[[
+local tablePrinted = {}
+local file = io.open("e:\\00_00_00_海外组_学习\\挂架.txt", "w")
+assert(file)
+function printTableItem(k, v, level)
+    for i = 1, level do
+        file:write("\t")
+    end
+    file:write(tostring(k) .. " = " .. tostring(v) .. "\r\n")
+    if type(v) == "table" then
+        if not tablePrinted[v] then
+            tablePrinted[v] = true
+            for k, v in pairs(v) do
+                printTableItem(k, v, level + 1)
+            end
+        end
+    end
+end
+printTableItem("LockOn_Options",LockOn_Options,0)printTableItem("LockOn_Options",LockOn_Options,0)
+--]]

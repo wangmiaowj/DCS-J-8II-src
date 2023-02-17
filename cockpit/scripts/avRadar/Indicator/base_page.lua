@@ -61,7 +61,7 @@ local black_background         = CreateElement "ceTexPoly"
 black_background.primitivetype = "triangles"
 black_background.name          = "black_background"
 black_background.init_pos      = { 0, 0, 0 }
-black_background.material      = MakeMaterial(nil, { 91, 255, 211, 255 })
+black_background.material      = MakeMaterial(nil, { 91, 255, 211, 32 })
 
 black_background.vertices        = vert
 black_background.indices         = indi
