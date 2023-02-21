@@ -19,7 +19,7 @@ add_warning_info("unicode_cn_green", { -maxWidth * 0.28, maxHeight * 0.75 }, '�
     { 'change_color_when_parameter_equal_to_number', 1, 1, 1, 1, 0, 1 },
     { 'change_color_when_parameter_equal_to_number', 1, 2, 0, 1, 0, 1 }}, { 'BATT', 'BATT_COLOR'})
 add_warning_info("unicode_cn_red",{maxWidth*0.3,maxHeight*0.75},'右发电机',{{'parameter_in_range',0,0.5,1.1},},{'R_GEN',})
-add_warning_info("unicode_cn_yellow",{maxWidth*0.87,maxHeight*0.75},'座舱\n未密封',{{'parameter_in_range',0,0.05,0.89},},{'CANOPY',})
+add_warning_info("unicode_cn_yellow",{maxWidth*0.87,maxHeight*0.75},'座舱\n未密封',{{'parameter_in_range',0,0.0,1.1},},{'CANOPY',})
 
 add_warning_info("unicode_cn_red",{-maxWidth*0.85,maxHeight*0.25},'左逆变器',{{'parameter_in_range',0,0.5,1.1},},{'L_INV',})
 add_warning_info("unicode_cn_green",{-maxWidth*0.28,maxHeight*0.25},'直流电',{{'parameter_in_range',0,0.5,1.1},},{'DC',})

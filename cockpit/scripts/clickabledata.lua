@@ -359,7 +359,7 @@ elements = {}
 
 
 --elements["PNT_003"] = default_2_position_tumb(_("Landing Gear Handle"), devices.GEAR_SYSTEM, click_cmd.GearLevel, 3)
-elements["PNT_083"] = default_2_position_tumb(_("Landing Gear Handle"), devices.GEAR_SYSTEM, click_cmd.GearLevel, 83, 4)
+elements["PNT_083"] = default_2_position_tumb(_("Landing Gear Handle"), devices.GEAR_SYSTEM, Click_cmd.GearLevel, 83, 4)
 
 -- Power Systems
 -- elements["PNT_107"] = default_2_position_tumb(_("Battry Swith"), devices.ELECTRIC_SYSTEM, Keys.BatteryPower, 107)

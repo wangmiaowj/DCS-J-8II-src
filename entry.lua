@@ -9,12 +9,12 @@ dirName	 	 = current_mod_path,
 displayName		= _("J-8II"),
 shortName		= "J-8II",
 fileMenuName	= _("J-8II"),
-version		 = "2.7.2",--__DCS_VERSION__,
+version		 = __DCS_VERSION__,
 state		 = "installed",
 info		 = _("J-8II Info"),
 developerName	= _("shenHaiSanXi"),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
-binaries     = { 'CustomFM' },
+--binaries     = {'avSimplest','CustomFM'},
 Skins =
 {
 	{
@@ -70,7 +70,7 @@ J8II_FM[2]           = 'CustomFM'
 J8II_FM.config_path  = cfg_path
 --J-8II_FM.user_options = ac_name
 
-make_flyable('J-8II', current_mod_path..'/Cockpit/Scripts/', J8II_FM, current_mod_path..'/comm.lua') 
+make_flyable('J-8II', current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua') 
 make_view_settings('J-8II', ViewSettings, SnapViews) 
 ---------------------------------------------------------
 

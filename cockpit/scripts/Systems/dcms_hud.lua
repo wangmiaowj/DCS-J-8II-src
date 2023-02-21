@@ -40,6 +40,8 @@ local hud_speed_bar_group = get_param_handle("HUD_SPEED_BAR_GROUP")
 local hud_alt_bar_group = get_param_handle("HUD_ALT_BAR_GROUP")
 local hud_hdg_bar_group = get_param_handle("HUD_HDG_BAR_GROUP")
 local hud_hdg_move = get_param_handle('HUD_HDG_MOV')
+local hud_detail_data_dis = get_param_handle('HUD_DETAIL_DATA_DIS')
+local hud_ralt_data_dis = get_param_handle('HUD_RALT_DATA_DIS')
 
 local hud_pwr = get_param_handle("PNT_1012")--亮度模式DayNight句柄
 
@@ -177,21 +179,52 @@ local function update_switch_status()
 end
 
 local function update_flight_mode()
-	if current_status[HK_L_Axis][2] == 0.0 then
+	local hk_l_val = math.floor(target_status[HK_L_Axis][2] * 10 + 0.5) / 10
+	if hk_l_val == 0.0 then
 		bitProgram()
-	elseif current_status[HK_L_Axis][2] ~= 0.0 then
+	elseif hk_l_val ~= 0.0 then
 		bitTime = 0
 	end
-	if current_status[HK_L_Axis][2] == 0.6 then
+	if hk_l_val == 0.1 then
+		--惯导校准
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.2 then
+		--导航
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.3 then
+		--边飞行边校准
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.4 then
+		--低航
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(1)
+	elseif hk_l_val == 0.5 then
+		--导航
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.6 then
 		--起飞
-	elseif current_status[HK_L_Axis][2] == 0.7 then
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.7 then
 		--巡航
-	elseif current_status[HK_L_Axis][2] == 0.8 then
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.8 then
 		--对空
-	elseif current_status[HK_L_Axis][2] == 0.9 then
+		hud_detail_data_dis:set(0)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 0.9 then
 		--对地
-	elseif current_status[HK_L_Axis][2] == 1.0 then
+		hud_detail_data_dis:set(0)
+		hud_ralt_data_dis:set(0)
+	elseif hk_l_val == 1.0 then
 		--降落
+		hud_detail_data_dis:set(1)
+		hud_ralt_data_dis:set(1)
 	end
 end
 
@@ -213,13 +246,13 @@ end
 
 function SetCommand(command,value)
 	if command == Keys.HK_L_Down then
-		if current_status[HK_L_Axis][2] > 0 then
+		if current_status[HK_L_Axis][2] >= 0.1 then
 			target_status[HK_L_Axis][2] = target_status[HK_L_Axis][2] - 0.1
 		else
 			target_status[HK_L_Axis][2] = 0
 		end
 	elseif command == Keys.HK_L_Up then
-		if current_status[HK_L_Axis][2] < 1 then
+		if current_status[HK_L_Axis][2] <= 0.9 then
 			target_status[HK_L_Axis][2] = target_status[HK_L_Axis][2] + 0.1
 		else
 			target_status[HK_L_Axis][2] = 1

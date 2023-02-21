@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 1.0 trunk\n"
 "AMAMReport-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-02 18:36+0400\n"
-"PO-Revision-Date: 2022-12-23 10:34+0800\n"
+"PO-Revision-Date: 2023-02-18 17:31+0800\n"
 "Last-Translator: 1 <10@qq.com>\n"
 "Language-Team: TODO\n"
 "MIME-Version: 1.0\n"
@@ -81,9 +81,6 @@ msgstr "照相枪电源开关"
 
 msgid "Missile Warming Switch"
 msgstr "导弹告警开关"
-
-msgid "Missile Filament Switch"
-msgstr "Missile Filament Switch"
 
 msgid "Missile Launch Switch"
 msgstr "导弹发射架电源开关"
@@ -190,5 +187,141 @@ msgstr "泛光灯"
 msgid "J-8II"
 msgstr "歼-8II"
 
-msgid "J-8II"
-msgstr "歼-8II"
+msgid "Anti Ship"
+msgstr "反舰"
+
+msgid "Anti Radiation"
+msgstr "反辐射"
+
+msgid "Beyond Visual Range"
+msgstr "超视距"
+
+msgid "Runway Start"
+msgstr "跑道起飞"
+
+msgid "FLIR WFOV"
+msgstr "FLIR宽视场"
+
+msgid "FLIR NFOV"
+msgstr "FLIR窄视场"
+
+msgid "FLIR Menu"
+msgstr "FLIR菜单"
+
+msgid "FLIR Hook"
+msgstr "FLIR Hook"
+
+msgid "FLIR Lock"
+msgstr "FLIR锁定"
+
+msgid "FLIR Freeze"
+msgstr "FLIR解锁"
+
+msgid "FLIR Track / Break"
+msgstr "FLIR追踪/停止追踪"
+
+msgid "FLIR Power"
+msgstr "FLIR电源"
+
+msgid "FLIR Focus Out"
+msgstr "FLIR Focus Out"
+
+msgid "FLIR Focus In"
+msgstr "FLIR Focus In"
+
+msgid "FLIR Cage"
+msgstr "FLIR Cage"
+
+msgid "FLIR IPHH"
+msgstr "FLIR IPHH"
+
+msgid "FLIR Polarity"
+msgstr "FLIR 反色"
+
+msgid "FLIR Slew Left"
+msgstr "FLIR向左移动"
+
+msgid "FLIR Slew Right"
+msgstr "FLIR向右移动"
+
+msgid "FLIR Slew Up"
+msgstr "FLIR向上移动"
+
+msgid "FLIR Slew Down"
+msgstr "FLIR向下移动"
+
+msgid "FLIR Gain Up"
+msgstr "FLIR增益"
+
+msgid "FLIR Gain Down"
+msgstr "FLIR减益"
+
+msgid "FLIR Level Up"
+msgstr "FLIR升级"
+
+msgid "FLIR Level Down"
+msgstr "FLIR降级"
+
+msgid "FLIR Auto Gain"
+msgstr "FLIR自动增益"
+
+msgid "start of autostart"
+msgstr "自动开车程序已开始"
+
+msgid "end of autostart"
+msgstr "自动开车程序已结束"
+
+msgid "Open/Close Cover"
+msgstr "挂架电源保护盖"
+
+msgid "Black Box Power Switch"
+msgstr "黑匣子电源开关"
+
+msgid "Responder Power Switch"
+msgstr "应答机电源开关"
+
+msgid "Battery Heating Switch"
+msgstr "电瓶加热开关"
+
+msgid "wait motor start"
+msgstr "等待起动机启动"
+
+msgid "Missile Filament Switch"
+msgstr "导弹灯丝"
+
+msgid "Pylon1 Power Switch"
+msgstr "1号挂架电源开关"
+
+msgid "Pylon2 Power Switch"
+msgstr "2号挂架电源开关"
+
+msgid "Pylon3 Power Switch"
+msgstr "3号挂架电源开关"
+
+msgid "Pylon4 Power Switch"
+msgstr "4号挂架电源开关"
+
+msgid "Pylon5 Power Switch"
+msgstr "5号挂架电源开关"
+
+msgid "Pylon6 Power Switch"
+msgstr "6号挂架电源开关"
+
+msgid "Pylon7 Power Switch"
+msgstr "7号挂架电源开关"
+
+msgid "RWR Lightness"
+msgstr "RWR亮度"
+
+msgid "RWR Volume"
+msgstr "RWR音量"
+
+msgid "LSWM Long-range Shock Wave Missile A2S"
+msgstr "LSWM 远距离震荡波导弹AS"
+
+msgid "LSWM Long-range Shock Wave Missile A2G"
+msgstr "LSWM 远距离震荡波导弹AG"
+
+msgid "LSWM Long-range Shock Wave Missile A2A"
+msgstr "LSWM 远距离震荡波导弹AA"
+

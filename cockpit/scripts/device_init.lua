@@ -1,3 +1,7 @@
+if get_aircraft_type() ~= "J-8II" then
+    return
+end
+
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."materials.lua") -- 加载材质
 
@@ -71,7 +75,7 @@ dofile(LockOn_Options.common_script_path.."PADLOCK/PADLOCK_declare.lua")
 ---------------------------------------------
 --[[
 local tablePrinted = {}
-local file = io.open("e:\\00_00_00_海外组_学习\\挂架.txt", "w")
+local file = io.open("e:\\00_00_00_海外组_学习\\_G.txt", "w")
 assert(file)
 function printTableItem(k, v, level)
     for i = 1, level do
@@ -87,5 +91,5 @@ function printTableItem(k, v, level)
         end
     end
 end
-printTableItem("LockOn_Options",LockOn_Options,0)printTableItem("LockOn_Options",LockOn_Options,0)
+printTableItem("_G",_G,0)
 --]]

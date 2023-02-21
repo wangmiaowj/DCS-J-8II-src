@@ -143,7 +143,7 @@ target_round.isvisible       = true
 Add(target_round)
 
 -- 机炮格子
-gun_grid_sign 				            = CreateElement "ceTexPoly"
+local gun_grid_sign 				            = CreateElement "ceTexPoly"
 gun_grid_sign.vertices                 = hud_vert_gen(2400,2400)-- {{-106,125},{106,125},{106,-143},{-106,-143}}
 gun_grid_sign.indices                  = {0,1,2,2,3,0}
 gun_grid_sign.tex_coords               = tex_coord_gen(0,0,1024,1024,1024,1024)
@@ -160,3 +160,51 @@ gun_grid_sign.h_clip_relation          = h_clip_relations.COMPARE
 gun_grid_sign.level                    = HUD_BASE_DEFAULT_LEVEL
 gun_grid_sign.parent_element	        = "hud_base_clip"
 Add(gun_grid_sign)
+
+local gun_ccip = CreateElement "ceMeshPoly"
+gun_ccip.name = create_guid_string()
+set_circle(gun_ccip, 0.07, 0.06, 360,64)
+gun_ccip.init_pos                 = {0, 0}
+gun_ccip.init_rot		            = {0, 0, default_hud_rot_offset}
+gun_ccip.material        = "HUD_DAY_COLOR"
+gun_ccip.parent_element  = "hud_base_clip"
+gun_ccip.element_params           = {"GUN_CCIP_DIS_ENABLE","GUN_CCIP_Y","GUN_CCIP_X"} --, "D_GUNSIGHT_VISIBLE"
+gun_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+gun_ccip.h_clip_relation = h_clip_relations.COMPARE
+gun_ccip.level           = HUD_BASE_DEFAULT_LEVEL
+gun_ccip.isdraw          = true
+gun_ccip.collimated      = true
+gun_ccip.isvisible       = true
+Add(gun_ccip)
+
+local rocket_ccip = CreateElement "ceMeshPoly"
+rocket_ccip.name = create_guid_string()
+set_circle(rocket_ccip, 0.07, 0.06, 360,64)
+rocket_ccip.init_pos                 = {0, 0}
+rocket_ccip.init_rot		            = {0, 0, default_hud_rot_offset}
+rocket_ccip.material        = "HUD_DAY_COLOR"
+rocket_ccip.parent_element  = "hud_base_clip"
+rocket_ccip.element_params           = {"ROCKET_CCIP_DIS_ENABLE","ROCKET_CCIP_Y","ROCKET_CCIP_X"} --, "D_GUNSIGHT_VISIBLE"
+rocket_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+rocket_ccip.h_clip_relation = h_clip_relations.COMPARE
+rocket_ccip.level           = HUD_BASE_DEFAULT_LEVEL
+rocket_ccip.isdraw          = true
+rocket_ccip.collimated      = true
+rocket_ccip.isvisible       = true
+Add(rocket_ccip)
+
+local bomb_ccip = CreateElement "ceMeshPoly"
+bomb_ccip.name = create_guid_string()
+set_circle(bomb_ccip, 0.07, 0.06, 360,64)
+bomb_ccip.init_pos                 = {0, 0}
+bomb_ccip.init_rot		            = {0, 0, default_hud_rot_offset}
+bomb_ccip.material        = "HUD_DAY_COLOR"
+bomb_ccip.parent_element  = "hud_base_clip"
+bomb_ccip.element_params           = {"BOMB_CCIP_DIS_ENABLE","BOMB_CCIP_Y","BOMB_CCIP_X"} --, "D_GUNSIGHT_VISIBLE"
+bomb_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+bomb_ccip.h_clip_relation = h_clip_relations.COMPARE
+bomb_ccip.level           = HUD_BASE_DEFAULT_LEVEL
+bomb_ccip.isdraw          = true
+bomb_ccip.collimated      = true
+bomb_ccip.isvisible       = true
+Add(bomb_ccip)

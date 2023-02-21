@@ -37,7 +37,7 @@ local gear_state_share = get_param_handle("GEAR_SHARE")
 gear_system:listen_command(gear_switch)
 gear_system:listen_command(gear_up)
 gear_system:listen_command(gear_down)
-gear_system:listen_command(click_cmd.GearLevel)
+gear_system:listen_command(Click_cmd.GearLevel)
 gear_system:listen_command(120)
 
 local n_gear_status
@@ -78,7 +78,7 @@ end
 
 local move_ability = 1;
 function SetCommand(command,value)
-    if (command == click_cmd.GearLevel) then
+    if (command == Click_cmd.GearLevel) then
         dispatch_action(nil, 68) --Reset command to default landing gear command
     elseif (command == gear_switch) then
         nose_gear_status = 1 - nose_gear_status

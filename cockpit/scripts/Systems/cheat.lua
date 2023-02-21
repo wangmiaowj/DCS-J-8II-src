@@ -12,12 +12,14 @@ make_default_activity(update_time_step)
 local cheat = GetSelf()
 cheat:listen_command(Keys.autoStart)
 cheat:listen_command(Keys.autoStop)
+cheat:listen_command(Keys.ShowParamList)
 
 local sensor_data = get_base_data()
 
 local time = 0
 local status = false --false未启动,true已启动
 local action = 0 --0中立，1启动，-1关机
+local ShowParamList = false
 
 local motorRPM_handle = get_param_handle('MOTOR_RPM')
 function post_initialize()
@@ -35,6 +37,9 @@ function SetCommand(command,value)
         print_message_to_user('start of autostart',3)
     elseif command == Keys.autoStart then
         action = -1
+    elseif command == Keys.ShowParamList then
+        ShowParamList = not ShowParamList
+        show_param_handles_list(ShowParamList)
     end
 end
 
@@ -94,7 +99,7 @@ local function autoStart()
         interactive(_('After Burn Switch'),Keys.afterBurn,devices.ENGINE,1)
     elseif get_cockpit_arg_val(1146) == 0 then
         interactive(_('Motor Starter'),Keys.Starter,devices.ENGINE,1)
-        print_message_to_user('wait motor start',15)
+        print_message_to_user(_('wait motor start'),15)
     elseif motorRPM > 99 and sensor_data.getEngineLeftRPM() <= 0 then
         interactive(_('Left Engine Start/Stop'),Keys.LeftEngineStart,devices.ENGINE,1)
     elseif motorRPM > 99 and sensor_data.getEngineRightRPM() <= 0 and sensor_data.getEngineLeftRPM() > 55 then
@@ -155,7 +160,7 @@ local function autoStart()
         interactive(_('Canopy Open/Close'),Keys.PlaneFonar,devices.CPT,0)
     elseif motorRPM > 99 and sensor_data.getEngineLeftRPM() > 55 and sensor_data.getEngineRightRPM() > 55 and get_cockpit_arg_val(181) == 0 then
         interactive(_('Motor Starter'),Keys.Starter,devices.ENGINE,0)
-        print_message_to_user('end of autostart',3)
+        print_message_to_user(_('end of autostart'),3)
         action = 0
     end
 end

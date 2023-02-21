@@ -385,7 +385,7 @@ return {
         { down = Keys.ToAAMIr,                                                                                       name = _('ir AAM'),                                    category = _('Weapons') },
         { down = Keys.ToAAMRdr,                                                                                      name = _('radar AAM'),                                 category = _('Weapons') },
         -- debug
-        --{down = 5005,	name = _('DEBUG RECORD'),		category = _('Debugs')},
+        {down = Keys.ShowParamList,	name = _('DEBUG RECORD'),		category = _('Debugs')},
 
         --Multicrew Control
         { combos = { { key = 'J' } },                                                                                down = iCommandNetCrewRequestControl,                  name = _('Request Aircraft Control'),                        category = _('Flight Control') },

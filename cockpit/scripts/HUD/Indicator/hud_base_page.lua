@@ -39,8 +39,8 @@ speed_move_clip.h_clip_relation         = h_clip_relations.INCREASE_IF_LEVEL--CO
 speed_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 speed_move_clip.change_opacity          = false
 speed_move_clip.collimated 		        = true
-speed_move_clip.element_params          = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
-speed_move_clip.controllers             = {{"opacity_using_parameter",0}}
+speed_move_clip.element_params          = {"HUD_DIS_ENABLE","HUD_DETAIL_DATA_DIS"}
+speed_move_clip.controllers             = {{"opacity_using_parameter",0},{"parameter_in_range",1,0.5,1.1}}
 speed_move_clip.isvisible		        = SHOW_MASKS
 --speed_move_clip.parent_element	       = "hud_base_data_clip"
 Add(speed_move_clip)
@@ -57,8 +57,8 @@ altitude_move_clip.h_clip_relation          = h_clip_relations.INCREASE_IF_LEVEL
 altitude_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 altitude_move_clip.change_opacity           = false
 altitude_move_clip.collimated 		        = true
-altitude_move_clip.element_params           = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
-altitude_move_clip.controllers              = {{"opacity_using_parameter",0}}
+altitude_move_clip.element_params          = {"HUD_DIS_ENABLE","HUD_DETAIL_DATA_DIS"}
+altitude_move_clip.controllers             = {{"opacity_using_parameter",0},{"parameter_in_range",1,0.5,1.1}}
 altitude_move_clip.isvisible		        = SHOW_MASKS
 Add(altitude_move_clip)
 

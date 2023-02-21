@@ -23,22 +23,46 @@ local A2A_r = {
 local iCommandPlaneFire = 84
 local iCommandPlaneFireOff = 85
 
--- 获取锁定状态
--- 是否锁定
-local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")
--- 锁定的目标的高程和方向
-local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")
-local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
+local gun_piper_available = get_param_handle('WS_GUN_PIPER_AVAILABLE')
+local gun_piper_az = get_param_handle('WS_GUN_PIPER_AZIMUTH')
+local gun_piper_el = get_param_handle('WS_GUN_PIPER_ELEVATION')
+local gun_piper_span = get_param_handle('WS_GUN_PIPER_SPAN')
 
-local hud_lock_test_sign = get_param_handle("PULLUP_FLASH")
+local rocket_piper_available = get_param_handle('WS_ROCKET_PIPER_AVAILABLE')
+local rocket_piper_az = get_param_handle('WS_ROCKET_PIPER_AZIMUTH')
+local rocket_piper_el = get_param_handle('WS_ROCKET_PIPER_ELEVATION')
+
+local target_range = get_param_handle('WS_TARGET_RANGE')
+local target_span = get_param_handle('WS_TARGET_SPAN')
+
+local dlz_min = get_param_handle('WS_DLZ_MIN')
+local dlz_authorized = get_param_handle('WS_DLZ_AUTHORIZED')
+local dlz_max = get_param_handle('WS_DLZ_MAX')
+
+local gun_ccip_dis_enable = get_param_handle('GUN_CCIP_DIS_ENABLE')
+local gun_ccip_x = get_param_handle('GUN_CCIP_X')
+local gun_ccip_y = get_param_handle('GUN_CCIP_Y')
+
+local rocket_ccip_dis_enable = get_param_handle('ROCKET_CCIP_DIS_ENABLE')
+local rocket_ccip_x = get_param_handle('ROCKET_CCIP_X')
+local rocket_ccip_y = get_param_handle('ROCKET_CCIP_Y')
+
+local bomb_ccip_dis_enable = get_param_handle('BOMB_CCIP_DIS_ENABLE')
+local bomb_ccip_x = get_param_handle('BOMB_CCIP_X')
+local bomb_ccip_y = get_param_handle('BOMB_CCIP_Y')
+
+-- 获取红外弹目标锁定状态
+local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")-- 是否锁定
+local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")-- 锁定的目标的高程
+local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")-- 锁定的目标的方向
+
+--红外弹引导头相关
+local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")-- 红外弹引导头高程
+local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")-- 红外弹引导头方向
+
+local params_count = get_param_handle('WS_PARAMS_COUNT')
 
 local weaponPwrSwitch = get_param_handle('PNT_1011')
-
--- 似乎是设置预设锁定方向？
--- 方位角
-local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")
--- 高程
-local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")
 
 local target_round_dis = get_param_handle('TARGET_ROUND_DIS_ENABLE')
 local target_round_x = get_param_handle('TARGET_ROUND_X')
@@ -104,7 +128,6 @@ local INTERVAL_SET = 0
 local QUANTITY_SET = 0
 local MULT_SET = 0
 local MANUAL_RELEASE_SIGNAL = 0
-local STEP_SIGNAL = 0
 local FIREHOLD = 0
 local isFire = 0
 
@@ -1092,6 +1115,42 @@ function update_ir_msl_status()
     end
 end
 
+local function update_cannon_track()
+    if LAUNCH_MODE == 3 then
+        gun_ccip_dis_enable:set(1)
+        gun_ccip_x:set(gun_piper_az:get())
+        gun_ccip_y:set(gun_piper_el:get())
+    else
+        gun_ccip_dis_enable:set(0)
+        gun_ccip_x:set(0)
+        gun_ccip_y:set(0)
+    end
+end
+
+local function update_rocket_track()
+    if LAUNCH_MODE == 4 and USING_PYLON_DATA[2] ~= -1 then
+        rocket_ccip_dis_enable:set(1)
+        rocket_ccip_x:set(rocket_piper_az:get())
+        rocket_ccip_y:set(rocket_piper_el:get())
+    else
+        rocket_ccip_dis_enable:set(0)
+        rocket_ccip_x:set(0)
+        rocket_ccip_y:set(0)
+    end
+end
+
+local function update_bomb_track()
+    if LAUNCH_MODE == 5 and USING_PYLON_DATA[2] ~= -1 then
+        gun_ccip_dis_enable:set(1)
+        gun_ccip_x:set(gun_piper_az:get())
+        gun_ccip_y:set(gun_piper_el:get())
+    else
+        gun_ccip_dis_enable:set(0)
+        gun_ccip_x:set(0)
+        gun_ccip_y:set(0)
+    end
+end
+
 function update()
     -- WeaponSystem:emergency_jettison(i-1)
     -- WeaponSystem:launch_station(pylonSelected - 1)
@@ -1115,6 +1174,7 @@ function update()
         update_ir_msl_status()--更新红外弹参数 
         update_launch_selection()--更新发射状态
         update_display_light()--更新挂架选择灯
+        update_rocket_track()
     end
     
     if c > 1 then

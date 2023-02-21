@@ -2,5 +2,5 @@ model = {
 	lods = {
 		{"J-8II.edm",50000.000000};
 	};
-	collision_shell = "J-8II_collision.EDM";
+	collision_shell = "J-8II_collision_SFM.EDM";
 }

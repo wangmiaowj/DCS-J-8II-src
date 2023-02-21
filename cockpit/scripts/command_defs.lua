@@ -1,4 +1,4 @@
-start_custom_command   = 10000
+local start_custom_command   = 10000
 local __count_custom = start_custom_command-1
 local function __custom_counter()
 	__count_custom = __count_custom + 1
@@ -737,6 +737,7 @@ Keys =
 	
 	autoStart = __custom_counter(),
 	autoStop = __custom_counter(),
+	ShowParamList = __custom_counter(),
     --起落架手柄 5001// 5050 EFM - 6000 for EFM
 	
     NoseWheelSteeringOn = 5050,
@@ -852,7 +853,7 @@ Keys =
 }
 
 --从5000开始递增点击指令
-start_command   = 5000
+local start_command   = 5000
 local __count_click = start_command-1
 local function __click_counter()
 	__count_click = __count_click + 1
@@ -860,7 +861,7 @@ local function __click_counter()
 end
 
 
-click_cmd =
+Click_cmd =
 {
     GearLevel = __click_counter(), --起落架手柄
 }
