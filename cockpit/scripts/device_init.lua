@@ -31,7 +31,7 @@ creators[devices.RADAR_RAW]		  ={"avSimpleRadar"			,LockOn_Options.script_path..
 -- RWR
 creators[devices.RWR]		  ={"avSimpleRWR"			,LockOn_Options.script_path.."avRwr/Device/Rwr_init.lua"}
 -- hud Display processor
-creators[devices.HUD_DCMS]        ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/dcms_hud.lua"}
+creators[devices.HUD]        ={"avLuaDevice"           ,LockOn_Options.script_path.."HUD/device/hud.lua"}
 -- Basic instrument, including an array that I encapsulated to process instrument animation and update function can simplify basic flight instrument drawing
 creators[devices.BASIC_FLIGHT_INS]={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/basic_flight_instru.lua"}
 -- 时钟系统，包含读取系统时间（游戏内任务时间
@@ -57,17 +57,20 @@ creators[devices.CHEAT]  ={"avLuaDevice"           ,LockOn_Options.script_path..
 
 -- 定义显示器
 indicators = {}
-indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."HUD/Indicator/hud_init.lua",nil,{{"HUD_C","HUD_D","HUD_R"}}}
-indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRadar/Indicator/init.lua",nil,{{"RDR_C","RDR_D","RDR_R"}}}
-indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRwr/Indicator/init.lua",nil,{{"RWR_C","RWR_D","RWR_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."HUD/Indicator/hud_init.lua",devices.HUD,{{"HUD_C","HUD_D","HUD_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRadar/Indicator/init.lua",devices.RADAR_RAW,{{"RDR_C","RDR_D","RDR_R"}}}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."avRwr/Indicator/init.lua",devices.RWR,{{"RWR_C","RWR_D","RWR_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."UHF/Radio_init.lua",nil,{{"UHF_C","UHF_D","UHF_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/1/Indicator/init.lua",nil,{{"Warning_1_C","Warning_1_D","Warning_1_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/2/Indicator/init.lua",nil,{{"Warning_2_C","Warning_2_D","Warning_2_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/3/Indicator/init.lua",nil,{{"Warning_3_C","Warning_3_D","Warning_3_R"}}}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warningPanel/4/Indicator/init.lua",nil,{{"Warning_4_C","Warning_4_D","Warning_4_R"}}}
 
-indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Rod/Indicator/init.lua",nil,nil}
+indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Rod/Indicator/init.lua",devices.ROD,nil}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Helmet/Indicator/init.lua",nil,nil}
+
+indicators[#indicators + 1] = {"ccChart",     LockOn_Options.common_script_path.."dbg_chart.lua"  ,nil,nil}
+indicators[#indicators + 1] = {"ccChart",     LockOn_Options.common_script_path.."dbg_output.lua"  ,nil,nil}
 --show_param_handles_list()
 -- Enable KneeBoard for Test
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/declare_kneeboard_device.lua")

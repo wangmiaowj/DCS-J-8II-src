@@ -14,6 +14,46 @@ local count = 0
 dev:listen_command(Keys.HK_L_Down)
 dev:listen_command(Keys.HK_L_Up)
 
+local hud_limit = {
+    x= math.rad(6),
+    y = math.rad(6)
+}
+
+local function limit_xy(x, y, limit_x, limit_y, limit_x_down, limit_y_down) 
+    limit_x_down = limit_x_down or -limit_x
+    limit_y_down = limit_y_down or -limit_y
+
+    local limited_x = false
+    local limited_y = false
+
+    if (x > limit_x) and (y <= limit_y / limit_x * x) and (y >= limit_y_down / limit_x * x) then 
+        y = y * limit_x / x
+        x = limit_x
+        limited_x = true
+    end
+    
+    if (x < limit_x_down)  and (y <= limit_y / limit_x_down * x) and (y >= limit_y_down / limit_x_down * x) then 
+        y = y * limit_x_down / x
+        x = limit_x_down 
+        limited_x = true
+    end
+
+    if (y > limit_y) and (x < limit_x / limit_y * y) and (x > limit_x_down / limit_y * y) then 
+        x = x * limit_y / y
+        y = limit_y
+        limited_y = true
+    end
+    
+    if (y < limit_y_down) and (x < limit_x / limit_y_down * y) and (x > limit_x_down / limit_y_down * y) then 
+        x = x * limit_y_down / y
+        y = limit_y_down 
+        limited_y = true
+    end
+    
+    local limited = (limited_x or limited_y) and 1 or 0
+    return x, y, limited, limited_x, limited_y
+end
+
 local hud_warning = get_param_handle("WARNING_FLASH")
 local hud_danger = get_param_handle("DANGER_FLASH")
 local hud_denied = get_param_handle("WARNING_FLASH")
@@ -260,10 +300,36 @@ function SetCommand(command,value)
 	end
 end
 
+function calFPM()
+	local v_x, v_y, v_z = sensor_data:getSelfVelocity()
+	local v = math.sqrt( v_x * v_x + v_y * v_y + v_z * v_z)
+	local v_hdg = math.atan2(v_z, v_x)
+	local v_pitch = 0
+
+    if v ~= 0 then
+        v_pitch = math.asin(v_y / v)
+    end
+	local p_pitch, p_roll, p_hdg
+    p_pitch = sensor_data.getPitch()
+	p_roll = sensor_data:getRoll()
+    p_hdg = 2*math.pi - sensor_data:getHeading()
+	local dif_hdg = (v_hdg - p_hdg) % (2*math.pi)
+	if dif_hdg > math.pi then
+		dif_hdg = dif_hdg - 2 * math.pi
+	end
+	local fpm_x = (dif_hdg) * math.cos(p_roll) - (-p_pitch + v_pitch) * math.sin(p_roll)
+    local fpm_y = (-p_pitch + v_pitch) * math.cos(p_roll) + (dif_hdg) * math.sin(p_roll)
+	local fpm_cross = 0
+	fpm_x,fpm_y,fpm_cross = limit_xy(fpm_x,fpm_y,hud_limit.x,hud_limit.y*1.3)
+	hud_FD_x:set(fpm_x)
+	hud_FD_y:set(fpm_y)
+end
+
 local c = 0
 function update()
 	update_switch_status()
 	update_flight_mode()
+	calFPM()
 	local heading = sensor_data.getHeading()*RAD_TO_DEGREE
 	if heading > 160 then
 		hud_hdg_move:set(-(360-heading) * 0.008)

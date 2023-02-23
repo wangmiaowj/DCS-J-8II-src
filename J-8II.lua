@@ -129,9 +129,9 @@ local function make_J_8II(rewrite_settings)
 				scan_volume =
 				{
 					azimuth = { -30.0, 30.0 },
-					elevation = { -1.5, 16.0 },
+					elevation = { -30.0, 30.0 },
 				},
-				max_measuring_distance = 60000.0,
+				max_measuring_distance = 74080.0,
 				centered_scan_volume =
 				{
 					azimuth_sector = 20.0,
@@ -176,18 +176,9 @@ local function make_J_8II(rewrite_settings)
 
 		mapclasskey = "P0091000024",
 
-		--[[
-	Countries = { 
-	"Russia","Ukraine","Germany","USA","Italy",
-	"UK","Turkey","Canada","France","Spain","Belgium","The Netherlands","Norway",
-	"Denmark","Georgia","Israel","Australia","Abkhazia",
-	
-	"USAF Aggressors","Switzerland","Austria","Belarus","Bulgaria","Czech Republic",
-	"China","Croatia","Egypt","Finland","Greece","Hungary","India","Iran","Iraq","Japan",
-	"Kazakhstan","North Korea","Pakistan","Poland","Romania","Saudi Arabia","Serbia",
-	"Slovakia","South Korea","Sweden","Syria",
-	},
-	]]
+		---[[
+	Countries = {"USA","China"},
+	--]]
 
 		--************************************************************
 
@@ -378,7 +369,6 @@ local function make_J_8II(rewrite_settings)
 			{ id = 'SOPLO_FAILURE_PARTIAL', label = _('Engine Nozzle'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 }, -- 9
 			{ id = 'RADAR_FAILURE_TOTAL', label = _('Radar'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 }, -- 10
 			{ id = 'KPP_FAILURE_PARTIAL', label = _('Kpp'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 }, -- 11
-
 			{ id = 'LANDING_LIGHTS_FAILURE', label = _('Landing lights failure'), enable = false, hh = 0, mm = 0, mmint = 1,
 				prob = 100 }, -- 12, 03. Dec 2014
 		},

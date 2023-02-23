@@ -50,9 +50,14 @@ electric_system:listen_command(Keys.apkPwr)
 electric_system:listen_command(Keys.batteryHeating)
 electric_system:listen_command(Keys.lidSow_Hide)
 
+electric_system:listen_event('GroundPowerOn')
+electric_system:listen_event('GroundPowerOff')
+
 local SWITCH_OFF = 0
 local SWITCH_ON = 1
 local SWITCH_TEST = -1
+
+local gndPwr = 0
 
 local switch_count = 0
 local function _switch_counter()
@@ -317,30 +322,36 @@ local function handlePwrLoad()
 end
 
 function update_elec_state() --更新电力总线状态
-    if (electric_system:get_AC_Bus_1_voltage() > 0 or electric_system:get_AC_Bus_2_voltage() > 0) then
-        -- 主发电机状态正常（双备份）
+    if gndPwr == 1 then
         elec_charging_status:set(1)
-    else
-        elec_charging_status:set(0)
-    end
-
-    if electric_system:get_DC_Bus_1_voltage() > 0 or electric_system:get_DC_Bus_2_voltage() > 0 then
-        if elec_battery_status:get() == 0 then
-            -- elec_dc_status:set(0)
-            -- problem here, when bus has power, dc electric should be on
-            elec_dc_status:set(0)
-        else
-            elec_dc_status:set(1)
-        end
-    else
-        elec_dc_status:set(0)
-    end
-
-    if get_elec_dc_status() and
-        (display_target_status[left_inverter_switch][2] == 1 or display_target_status[right_inverter_switch][2] == 1) then
+        elec_dc_status:set(1)
         elec_ac_status:set(1)
     else
-        elec_ac_status:set(0)
+        if (electric_system:get_AC_Bus_1_voltage() > 0 or electric_system:get_AC_Bus_2_voltage() > 0) then
+            -- 主发电机状态正常（双备份）
+            elec_charging_status:set(1)
+        else
+            elec_charging_status:set(0)
+        end
+    
+        if electric_system:get_DC_Bus_1_voltage() > 0 or electric_system:get_DC_Bus_2_voltage() > 0 then
+            if elec_battery_status:get() == 0 then
+                -- elec_dc_status:set(0)
+                -- problem here, when bus has power, dc electric should be on
+                elec_dc_status:set(0)
+            else
+                elec_dc_status:set(1)
+            end
+        else
+            elec_dc_status:set(0)
+        end
+    
+        if get_elec_dc_status() and
+            (display_target_status[left_inverter_switch][2] == 1 or display_target_status[right_inverter_switch][2] == 1) then
+            elec_ac_status:set(1)
+        else
+            elec_ac_status:set(0)
+        end
     end
     local pwrLoad = power_load:get()
     if (get_elec_dc_status() and elec_charging_status:get() == 0) then
@@ -556,6 +567,15 @@ function update() --刷新状态
     drawingWarningPanel()
 end
 
+function CockpitEvent(event, val)
+    if event == "GroundPowerOn" then
+        gndPwr = SWITCH_ON
+        print_message_to_user('地面电源已开启')
+    elseif event == "GroundPowerOff" then
+        gndPwr = SWITCH_OFF
+        print_message_to_user('地面电源已关闭')
+    end
+end
 --[[
 From DLL exports inspection, these are the methods support by avSimpleElectricSystem:
 AC_Generator_1_on   <- pass true or false to this to enable or disable
