@@ -359,7 +359,7 @@ elements = {}
 
 
 --elements["PNT_003"] = default_2_position_tumb(_("Landing Gear Handle"), devices.GEAR_SYSTEM, click_cmd.GearLevel, 3)
-elements["PNT_083"] = default_2_position_tumb(_("Landing Gear Handle"), devices.GEAR_SYSTEM, Click_cmd.GearLevel, 83, 4)
+-- elements["PNT_083"] = default_2_position_tumb(_("Landing Gear Handle"), devices.GEAR_SYSTEM, Click_cmd.GearLevel, 83, 4)
 
 -- Power Systems
 -- elements["PNT_107"] = default_2_position_tumb(_("Battry Swith"), devices.ELECTRIC_SYSTEM, Keys.BatteryPower, 107)
@@ -368,51 +368,51 @@ elements["PNT_083"] = default_2_position_tumb(_("Landing Gear Handle"), devices.
 
 
 -- Engine system
-elements["PNT_109"] = default_multi_position_tumb(_("Left Speed Drive Switch"), devices.ENGINE, Keys.LeftSpeedDriveUP, Keys.LeftSpeedDriveDOWN, 109)
-elements["PNT_110"] = default_multi_position_tumb(_("Right Speed Drive Switch"), devices.ENGINE, Keys.RightSpeedDriveUP, Keys.RightSpeedDriveDOWN, 110)
+-- elements["PNT_109"] = default_multi_position_tumb(_("Left Speed Drive Switch"), devices.ENGINE, Keys.LeftSpeedDriveUP, Keys.LeftSpeedDriveDOWN, 109)
+-- elements["PNT_110"] = default_multi_position_tumb(_("Right Speed Drive Switch"), devices.ENGINE, Keys.RightSpeedDriveUP, Keys.RightSpeedDriveDOWN, 110)
 
-elements["PNT_112"] = default_2_position_tumb(_("Left Fuel Master"), devices.ENGINE, Keys.FuelMasterLeft, 112)
-elements["PNT_113"] = default_2_position_tumb(_("Right Fuel Master"), devices.ENGINE, Keys.FuelMasterRight, 113)
+-- elements["PNT_112"] = default_2_position_tumb(_("Left Fuel Master"), devices.ENGINE, Keys.FuelMasterLeft, 112)
+-- elements["PNT_113"] = default_2_position_tumb(_("Right Fuel Master"), devices.ENGINE, Keys.FuelMasterRight, 113)
 
-elements["PNT_114"] = default_2_position_tumb(_("NWW Switch"), devices.ENGINE, Keys.NWWSwitch, 114)
-elements["PNT_115"] = default_2_position_tumb(_("CSD/S Switch"), devices.ENGINE, Keys.CSDSwitch, 115)
-elements["PNT_116"] = default_2_position_tumb(_("AirCondition Switch"), devices.ENGINE, Keys.AirCondSwitch, 116)
-elements["PNT_117"] = default_2_position_tumb(_("Bleed System Cover"), devices.ENGINE, Keys.BleedHoldCover, 117)
+-- elements["PNT_114"] = default_2_position_tumb(_("NWW Switch"), devices.ENGINE, Keys.NWWSwitch, 114)
+-- elements["PNT_115"] = default_2_position_tumb(_("CSD/S Switch"), devices.ENGINE, Keys.CSDSwitch, 115)
+-- elements["PNT_116"] = default_2_position_tumb(_("AirCondition Switch"), devices.ENGINE, Keys.AirCondSwitch, 116)
+-- elements["PNT_117"] = default_2_position_tumb(_("Bleed System Cover"), devices.ENGINE, Keys.BleedHoldCover, 117)
 
-elements["PNT_150"] = default_button(_("Left Engine Crank"), devices.ENGINE, Keys.LeftEngineCrank, Keys.LeftEngineCrankUP, 150)
-elements["PNT_151"] = default_button(_("Right Engine Crank"), devices.ENGINE, Keys.RightEngineCrank, Keys.RightEngineCrankUP, 151)
+-- elements["PNT_150"] = default_button(_("Left Engine Crank"), devices.ENGINE, Keys.LeftEngineCrank, Keys.LeftEngineCrankUP, 150)
+-- elements["PNT_151"] = default_button(_("Right Engine Crank"), devices.ENGINE, Keys.RightEngineCrank, Keys.RightEngineCrankUP, 151)
 
-elements["PNT_LTHRO"] = default_2_position_tumb(_("Left ENGINE IDLE"), devices.ENGINE, Keys.LeftEngineIDLEPOS, 41)
-elements["PNT_RTHRO"] = default_2_position_tumb(_("Right Engine IDLE"), devices.ENGINE, Keys.RightEngineIDLEPOS, 42)
+-- elements["PNT_LTHRO"] = default_2_position_tumb(_("Left ENGINE IDLE"), devices.ENGINE, Keys.LeftEngineIDLEPOS, 41)
+-- elements["PNT_RTHRO"] = default_2_position_tumb(_("Right Engine IDLE"), devices.ENGINE, Keys.RightEngineIDLEPOS, 42)
 
 -- 
-elements["PNT_279"] = default_multi_position_tumb(_("Flap handle"), devices.FLAP_SYSTEM, Keys.FlapUp, Keys.FlapDown, 43, 5.0)
+-- elements["PNT_279"] = default_multi_position_tumb(_("Flap handle"), devices.FLAP_SYSTEM, Keys.FlapUp, Keys.FlapDown, 43, 5.0)
 
-elements["PARKING_BREAK"] = default_2_position_tumb(_("Parking Break"), devices.BREAK_SYSTEM, Keys.ParkingBrakes, 50)
+-- elements["PARKING_BREAK"] = default_2_position_tumb(_("Parking Break"), devices.BREAK_SYSTEM, Keys.ParkingBrakes, 50)
 
-elements["PNT_118"] = default_button(_("Boost Pump Test"), devices.FUEL_SYSTEM, Keys.BoostPumpTestUP, Keys.BoostPumpTestDOWN, 118)
+-- elements["PNT_118"] = default_button(_("Boost Pump Test"), devices.FUEL_SYSTEM, Keys.BoostPumpTestUP, Keys.BoostPumpTestDOWN, 118)
 
-elements["PNT_405"] = default_button(_("Left Engine Motor Starter"), devices.HUD_DCMS, Keys.L_STARTER_PRESS, Keys.L_STARTER_RELEASE, 405, SOUND_DEFAULT_2_WAY_SWITCH )
-elements["PNT_407"] = default_button(_("Right Engine Motor Starter"), devices.HUD_DCMS, Keys.R_STARTER_PRESS, Keys.R_STARTER_RELEASE, 407, SOUND_DEFAULT_2_WAY_SWITCH )
+-- elements["PNT_405"] = default_button(_("Left Engine Motor Starter"), devices.HUD_DCMS, Keys.L_STARTER_PRESS, Keys.L_STARTER_RELEASE, 405, SOUND_DEFAULT_2_WAY_SWITCH )
+-- elements["PNT_407"] = default_button(_("Right Engine Motor Starter"), devices.HUD_DCMS, Keys.R_STARTER_PRESS, Keys.R_STARTER_RELEASE, 407, SOUND_DEFAULT_2_WAY_SWITCH )
 
-elements["PNT_557"] = default_button(_("UHF Radio TAKE Press"), devices.UHF_RADIO, Keys.UHF_TAKE_Button_Press, Keys.UHF_TAKE_Button_Release, 557)
+-- elements["PNT_557"] = default_button(_("UHF Radio TAKE Press"), devices.UHF_RADIO, Keys.UHF_TAKE_Button_Press, Keys.UHF_TAKE_Button_Release, 557)
 
 multi_tumb_click_list = {
     -- Engine Control
-    {"PNT_418", _("Left Low Pressure Fuel Pump"), devices.HUD_DCMS, 418, SOUND_DEFAULT_2_WAY_SWITCH , Keys.L_LP_PUMP},
-    {"PNT_420", _("Right Low Pressure Fuel Pump"), devices.HUD_DCMS, 420, SOUND_DEFAULT_2_WAY_SWITCH , Keys.R_LP_PUMP},
-    {"PNT_406", _("Left Main Fuel Pump"), devices.HUD_DCMS, 406, SOUND_DEFAULT_2_WAY_SWITCH , Keys.L_HP_PUMP},
-    {"PNT_408", _("Right Main Fuel Pump"), devices.HUD_DCMS, 408, SOUND_DEFAULT_2_WAY_SWITCH , Keys.R_HP_PUMP},
-    {"PNT_604", _("Left Throttle Idle"), devices.HUD_DCMS, 604, nil, Keys.L_THROTTLE_IDLE},
-    {"PNT_605", _("Right Throttle Idle"), devices.HUD_DCMS, 605, nil, Keys.R_THROTTLE_IDLE},
+    -- {"PNT_418", _("Left Low Pressure Fuel Pump"), devices.HUD_DCMS, 418, SOUND_DEFAULT_2_WAY_SWITCH , Keys.L_LP_PUMP},
+    -- {"PNT_420", _("Right Low Pressure Fuel Pump"), devices.HUD_DCMS, 420, SOUND_DEFAULT_2_WAY_SWITCH , Keys.R_LP_PUMP},
+    -- {"PNT_406", _("Left Main Fuel Pump"), devices.HUD_DCMS, 406, SOUND_DEFAULT_2_WAY_SWITCH , Keys.L_HP_PUMP},
+    -- {"PNT_408", _("Right Main Fuel Pump"), devices.HUD_DCMS, 408, SOUND_DEFAULT_2_WAY_SWITCH , Keys.R_HP_PUMP},
+    -- {"PNT_604", _("Left Throttle Idle"), devices.HUD_DCMS, 604, nil, Keys.L_THROTTLE_IDLE},
+    -- {"PNT_605", _("Right Throttle Idle"), devices.HUD_DCMS, 605, nil, Keys.R_THROTTLE_IDLE},
 
     {"PNT_1197", _("Taxi/Landing Light"), devices.LIGHT_SYSTEM, 1197, SOUND_DEFAULT_2_WAY_SWITCH , Keys.LightTaxiUP, Keys.LightTaxiDOWN},
     {"PNT_1112", _("Anti-Collision Light"), devices.LIGHT_SYSTEM, 1112, SOUND_DEFAULT_2_WAY_SWITCH , Keys.LightStrobeUP, Keys.LightStrobeDOWN},
     {"PNT_1110", _("Navigation Light"), devices.LIGHT_SYSTEM, 1110, SOUND_DEFAULT_2_WAY_SWITCH , Keys.LightNaviWingUP,Keys.LightNaviWingDOWN},
     
-    {"PNT_125", _("Taxi/Probe Light"), devices.LIGHT_SYSTEM, 125, nil, Keys.LightTaxi},
+    --{"PNT_125", _("Taxi/Probe Light"), devices.LIGHT_SYSTEM, 125, nil, Keys.LightTaxi},
     {"PNT_1111", _("Tail Navigation Light"), devices.LIGHT_SYSTEM, 1111, nil, Keys.LightNaviTailUP, Keys.LightNaviTailDOWN},
-    {"PNT_130", _("Formation Light"), devices.LIGHT_SYSTEM, 130, nil, Keys.LightFormationUP, Keys.LightFormationDOWN},
+    --{"PNT_130", _("Formation Light"), devices.LIGHT_SYSTEM, 130, nil, Keys.LightFormationUP, Keys.LightFormationDOWN},
     --{"PNT_1061", _("Flood Light"), devices.LIGHT_SYSTEM, 1061, nil, Keys.LightFloodUP, Keys.LightFloodDOWN},
 
     -- Electric Power Switches
@@ -467,7 +467,7 @@ multi_tumb_click_list = {
 	{"L_ENG_IDLE", _("Left Engine Start/Stop"), devices.ENGINE, 103, SOUND_DEFAULT_2_WAY_SWITCH , Keys.LeftEngineStart, Keys.LeftEngineStop},
 
     
-    {"PNT_414", _("A/G mode"), devices.WEAPON_SYSTEM, 414, SOUND_DEFAULT_2_WAY_SWITCH , Keys.WeaponAirGroundChange},
+    -- {"PNT_414", _("A/G mode"), devices.WEAPON_SYSTEM, 414, SOUND_DEFAULT_2_WAY_SWITCH , Keys.WeaponAirGroundChange},
 
 	--火控台
 	
@@ -490,21 +490,21 @@ multi_tumb_click_list = {
     {"PNT_1216", _("Radar Max Range"), devices.RADAR_RAW, 1216, SOUND_DEFAULT_2_WAY_SWITCH, Keys.RadarMaxRange},
 
     -- GNS430
-    {"PNT_513", _("VLOC/COM Focus Change"), devices.HUD_DCMS, 513, nil, Keys.Freq_Knob_Push},
-    {"PNT_514", _("COM frequency Flip-flop"), devices.HUD_DCMS, 514, nil, Keys.COM_Freq_Swap},
-    {"PNT_515", _("VLOC frequency Flip-flop"), devices.HUD_DCMS, 515, nil, Keys.VLOC_Freq_Swap},
-    {"PNT_516", _("Change CDI"), devices.HUD_DCMS, 516, nil, Keys.Nav_CDI},
-    {"PNT_517", _("OBS"), devices.HUD_DCMS, 517, nil, Keys.Nav_OBS},
-    {"PNT_518", _("Message"), devices.HUD_DCMS, 518, nil, Keys.Nav_MSG},
-    {"PNT_519", _("Flight Plan"), devices.HUD_DCMS, 519, nil, Keys.Nav_FPL},
-    {"PNT_520", _("Process"), devices.HUD_DCMS, 520, nil, Keys.Nav_PROC},
-    {"PNT_521", _("Range decrease"), devices.HUD_DCMS, 521, nil, Keys.Nav_Map_range_decrease},
-    {"PNT_522", _("Range increase"), devices.HUD_DCMS, 522, nil, Keys.Nav_Map_range_increse},
-    {"PNT_523", _("Direct To"), devices.HUD_DCMS, 523, nil, Keys.Nav_Direct_to},
-    {"PNT_524", _("Menu"), devices.HUD_DCMS, 524, nil, Keys.Nav_Menu},
-    {"PNT_525", _("Clear"), devices.HUD_DCMS, 525, nil, Keys.Nav_Clear},
-    {"PNT_526", _("Enter"), devices.HUD_DCMS, 526, nil, Keys.Nav_Ent},
-    {"PNT_529", _("Select Input"), devices.HUD_DCMS, 529, nil, Keys.Nav_Right_Knob_Push},
+    -- {"PNT_513", _("VLOC/COM Focus Change"), devices.HUD_DCMS, 513, nil, Keys.Freq_Knob_Push},
+    -- {"PNT_514", _("COM frequency Flip-flop"), devices.HUD_DCMS, 514, nil, Keys.COM_Freq_Swap},
+    -- {"PNT_515", _("VLOC frequency Flip-flop"), devices.HUD_DCMS, 515, nil, Keys.VLOC_Freq_Swap},
+    -- {"PNT_516", _("Change CDI"), devices.HUD_DCMS, 516, nil, Keys.Nav_CDI},
+    -- {"PNT_517", _("OBS"), devices.HUD_DCMS, 517, nil, Keys.Nav_OBS},
+    -- {"PNT_518", _("Message"), devices.HUD_DCMS, 518, nil, Keys.Nav_MSG},
+    -- {"PNT_519", _("Flight Plan"), devices.HUD_DCMS, 519, nil, Keys.Nav_FPL},
+    -- {"PNT_520", _("Process"), devices.HUD_DCMS, 520, nil, Keys.Nav_PROC},
+    -- {"PNT_521", _("Range decrease"), devices.HUD_DCMS, 521, nil, Keys.Nav_Map_range_decrease},
+    -- {"PNT_522", _("Range increase"), devices.HUD_DCMS, 522, nil, Keys.Nav_Map_range_increse},
+    -- {"PNT_523", _("Direct To"), devices.HUD_DCMS, 523, nil, Keys.Nav_Direct_to},
+    -- {"PNT_524", _("Menu"), devices.HUD_DCMS, 524, nil, Keys.Nav_Menu},
+    -- {"PNT_525", _("Clear"), devices.HUD_DCMS, 525, nil, Keys.Nav_Clear},
+    -- {"PNT_526", _("Enter"), devices.HUD_DCMS, 526, nil, Keys.Nav_Ent},
+    -- {"PNT_529", _("Select Input"), devices.HUD_DCMS, 529, nil, Keys.Nav_Right_Knob_Push},
 
     -- R&S GB6500
     -- {"PNT_554", _("UHF Volume Change"), devices.UHF_RADIO, 554, Keys.UHF_Vol_Up, Keys.UHF_Vol_Down},
@@ -524,7 +524,7 @@ multi_tumb_click_list = {
     {"PNT_1030", _("UHF Key 0 (Preset)"), devices.UHF_RADIO, nil, 1030, Keys.UHF_Key_0},
     {"PNT_1051", _("UHF Key > (Enter)"), devices.UHF_RADIO, nil, 1051, Keys.UHF_Key_ENT},
 
-    {"PNT_601", _("Canopy Handle"), devices.CANOPY, 601, nil, 71}, -- iCommandPlaneCanopy
+    -- {"PNT_601", _("Canopy Handle"), devices.CANOPY, 601, nil, 71}, -- iCommandPlaneCanopy
 }
 
 for k,v in pairs(multi_tumb_click_list) do
@@ -558,45 +558,45 @@ elements["PNT_1214"] = default_axis(_("B Lightness"), devices.RADAR_RAW, Keys.Ra
 --elements["PNT_1215"] = default_3_position_tumb('Radar OFF/STBY/ON',devices.RADAR_RAW,Keys.RadarMode, 1215,false,false,SOUND_DEFAULT_2_WAY_SWITCH,0.1)
 
 elements["PNT_1061"] = default_axis(_("Flood Light"), devices.LIGHT_SYSTEM, Keys.LightFlood, 1061, 0, 0.1,true,true)
-elements["PNT_132"] = default_axis(_("Instrument Light"), devices.LIGHT_SYSTEM, Keys.LightInstruBRT, 1132, 0, 0.1)
-elements["PNT_131"] = default_axis(_("Console Light"), devices.LIGHT_SYSTEM, Keys.LightConsoleBRT, 1133, 0, 0.1)
-elements["PNT_134"] = default_axis(_("Approach Index Light"), devices.LIGHT_SYSTEM, Keys.LightApproIndexBRT, 1134, 0, 0.1)
+-- elements["PNT_132"] = default_axis(_("Instrument Light"), devices.LIGHT_SYSTEM, Keys.LightInstruBRT, 1132, 0, 0.1)
+-- elements["PNT_131"] = default_axis(_("Console Light"), devices.LIGHT_SYSTEM, Keys.LightConsoleBRT, 1133, 0, 0.1)
+-- elements["PNT_134"] = default_axis(_("Approach Index Light"), devices.LIGHT_SYSTEM, Keys.LightApproIndexBRT, 1134, 0, 0.1)
 
-elements["PNT_211"] = default_axis(_("Auto Temperature Control"), devices.ECS_SYSTEM, Keys.AircondTemp, 1134, 0, 0.1)
-elements["PNT_213"] = default_axis(_("Defog Airflow"), devices.ECS_SYSTEM, Keys.AircondDefog, 1134, 0, 0.1)
+-- elements["PNT_211"] = default_axis(_("Auto Temperature Control"), devices.ECS_SYSTEM, Keys.AircondTemp, 1134, 0, 0.1)
+-- elements["PNT_213"] = default_axis(_("Defog Airflow"), devices.ECS_SYSTEM, Keys.AircondDefog, 1134, 0, 0.1)
 -- UHF
-elements["PNT_178"] = default_axis(_("UHF Mode Selection"), devices.RADIO_SYSTEM, Keys.UHFMode, 1134, 0, 0.1)
-elements["PNT_183"] = default_axis(_("UHF Volume"), devices.RADIO_SYSTEM, Keys.UHFVolume, 1134, 0, 0.1)
+-- elements["PNT_178"] = default_axis(_("UHF Mode Selection"), devices.RADIO_SYSTEM, Keys.UHFMode, 1134, 0, 0.1)
+-- elements["PNT_183"] = default_axis(_("UHF Volume"), devices.RADIO_SYSTEM, Keys.UHFVolume, 1134, 0, 0.1)
 -- TACAN
-elements["PNT_184"] = default_axis(_("TACAN Mode Selection"), devices.RADIO_SYSTEM, Keys.TACANMode, 1134, 0, 0.1)
-elements["PNT_185"] = default_axis(_("TACAN Channel x10"), devices.RADIO_SYSTEM, Keys.TACANChanA, 1134, 0, 0.1)
-elements["PNT_186"] = default_axis(_("TACAN Channel x1"), devices.RADIO_SYSTEM, Keys.TACANChanB, 1134, 0, 0.1)
+-- elements["PNT_184"] = default_axis(_("TACAN Mode Selection"), devices.RADIO_SYSTEM, Keys.TACANMode, 1134, 0, 0.1)
+-- elements["PNT_185"] = default_axis(_("TACAN Channel x10"), devices.RADIO_SYSTEM, Keys.TACANChanA, 1134, 0, 0.1)
+-- elements["PNT_186"] = default_axis(_("TACAN Channel x1"), devices.RADIO_SYSTEM, Keys.TACANChanB, 1134, 0, 0.1)
 
 -- EHSI SANDEL SN3500
-elements["PNT_534"] = default_axis(_("Course Selection Knob"), devices.HUD_DCMS, Keys.Nav_Course_Sel, 1134, 0, 0.1)
-elements["PNT_541"] = default_axis(_("Heading Selection Knob"), devices.HUD_DCMS, Keys.Nav_Heading_Sel, 1134, 0, 0.1)
+-- elements["PNT_534"] = default_axis(_("Course Selection Knob"), devices.HUD_DCMS, Keys.Nav_Course_Sel, 1134, 0, 0.1)
+-- elements["PNT_541"] = default_axis(_("Heading Selection Knob"), devices.HUD_DCMS, Keys.Nav_Heading_Sel, 1134, 0, 0.1)
 
 -- GNS430 Unit
-elements["PNT_509"] = default_axis(_("Vol/PWR Knob"), devices.HUD_DCMS, Keys.Nav_Vol_PWR, 1134, 0, 0.1)
-elements["PNT_510"] = default_axis(_("Vol Knob"), devices.HUD_DCMS, Keys.Nav_Vol, 1134, 0, 0.1)
-elements["PNT_511"] = default_axis(_("Freqency MHz Knob"), devices.HUD_DCMS, Keys.Freq_Num, 1134, 0, 0.1)
-elements["PNT_512"] = default_axis(_("Freqency kHz Knob"), devices.HUD_DCMS, Keys.Freq_Degi, 1134, 0, 0.1)
-elements["PNT_527"] = default_axis(_("Right Large Knob"), devices.HUD_DCMS, Keys.Nav_Right_Knob_L, 1134, 0, 0.1)
-elements["PNT_528"] = default_axis(_("Right Small Knob"), devices.HUD_DCMS, Keys.Nav_Right_Knob_S, 1134, 0, 0.1)
+-- elements["PNT_509"] = default_axis(_("Vol/PWR Knob"), devices.HUD_DCMS, Keys.Nav_Vol_PWR, 1134, 0, 0.1)
+-- elements["PNT_510"] = default_axis(_("Vol Knob"), devices.HUD_DCMS, Keys.Nav_Vol, 1134, 0, 0.1)
+-- elements["PNT_511"] = default_axis(_("Freqency MHz Knob"), devices.HUD_DCMS, Keys.Freq_Num, 1134, 0, 0.1)
+-- elements["PNT_512"] = default_axis(_("Freqency kHz Knob"), devices.HUD_DCMS, Keys.Freq_Degi, 1134, 0, 0.1)
+-- elements["PNT_527"] = default_axis(_("Right Large Knob"), devices.HUD_DCMS, Keys.Nav_Right_Knob_L, 1134, 0, 0.1)
+-- elements["PNT_528"] = default_axis(_("Right Small Knob"), devices.HUD_DCMS, Keys.Nav_Right_Knob_S, 1134, 0, 0.1)
 
 --RWR
 elements["PNT_1311"] = default_axis(_("RWR Lightness"), devices.RWR, Keys.RwrLightness, 1311, 0, 0.1,true,true)
 elements["PNT_1312"] = default_axis(_("RWR Volume"), devices.RWR, Keys.RwrVolume, 1312, 0, 0.1,true,true)
 
 -- UHF R&S GB6500
-elements["PNT_554"] = default_axis(_("UHF Volume"), devices.UHF_RADIO, Keys.UHF_Vol, 1134, 0, 0.1)
+-- elements["PNT_554"] = default_axis(_("UHF Volume"), devices.UHF_RADIO, Keys.UHF_Vol, 1134, 0, 0.1)
 
 -- Baro
-elements["ALT_down"] = default_axis(_("Baro Setting"), devices.HUD_DCMS, Keys.EALT_BARO, 1134, 0, 0.1)
+-- elements["ALT_down"] = default_axis(_("Baro Setting"), devices.HUD_DCMS, Keys.EALT_BARO, 1134, 0, 0.1)
 
-elements["PNT_179"] = springloaded_3_pos_tumb(_("UHF tens of Mega hertz"), devices.RADIO_SYSTEM, Keys.UHFFreqAUP, Keys.UHFFreqASTOP, Keys.UHFFreqADOWN, Keys.UHFFreqASTOP, 1134)
-elements["PNT_180"] = springloaded_3_pos_tumb(_("UHF Mega hertz"), devices.RADIO_SYSTEM, Keys.UHFFreqBUP, Keys.UHFFreqBSTOP, Keys.UHFFreqBDOWN, Keys.UHFFreqBSTOP, 1134)
-elements["PNT_181"] = springloaded_3_pos_tumb(_("UHF hundreds and tens of Kilo hertz"), devices.RADIO_SYSTEM, Keys.UHFFreqCUP, Keys.UHFFreqCSTOP, Keys.UHFFreqCDOWN, Keys.UHFFreqCSTOP, 1134)
+-- elements["PNT_179"] = springloaded_3_pos_tumb(_("UHF tens of Mega hertz"), devices.RADIO_SYSTEM, Keys.UHFFreqAUP, Keys.UHFFreqASTOP, Keys.UHFFreqADOWN, Keys.UHFFreqASTOP, 1134)
+-- elements["PNT_180"] = springloaded_3_pos_tumb(_("UHF Mega hertz"), devices.RADIO_SYSTEM, Keys.UHFFreqBUP, Keys.UHFFreqBSTOP, Keys.UHFFreqBDOWN, Keys.UHFFreqBSTOP, 1134)
+-- elements["PNT_181"] = springloaded_3_pos_tumb(_("UHF hundreds and tens of Kilo hertz"), devices.RADIO_SYSTEM, Keys.UHFFreqCUP, Keys.UHFFreqCSTOP, Keys.UHFFreqCDOWN, Keys.UHFFreqCSTOP, 1134)
 
 
 --for i,o in pairs(elements) do

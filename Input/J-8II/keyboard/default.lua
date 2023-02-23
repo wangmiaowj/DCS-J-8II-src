@@ -224,8 +224,8 @@ return {
         { down = iCommandPlaneKneeboardJumpBookmark,                                                                 value_down = 7,                                        name = _('Kneeboard Jump To Shortcut  8'),                   category = _('Kneeboard') },
         { down = iCommandPlaneKneeboardJumpBookmark,                                                                 value_down = 8,                                        name = _('Kneeboard Jump To Shortcut  9'),                   category = _('Kneeboard') },
         { down = iCommandPlaneKneeboardJumpBookmark,                                                                 value_down = 9,                                        name = _('Kneeboard Jump To Shortcut 10'),                   category = _('Kneeboard') },
-        { combos = { { key = '1' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 1,                                              name = _('Occupy Seat 1'),                  category = _('View Cockpit') },
-        { combos = { { key = '2' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 2,                                              name = _('Occupy Seat 2'),                  category = _('View Cockpit') },
+        -- { combos = { { key = '1' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 1,                                              name = _('Occupy Seat 1'),                  category = _('View Cockpit') },
+        -- { combos = { { key = '2' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 2,                                              name = _('Occupy Seat 2'),                  category = _('View Cockpit') },
 
         -- Autopilot
         { combos = { { key = 'A' }, { key = '1', reformers = { 'LAlt' } } },                                         down = iCommandPlaneAutopilot,                         name = _('Autopilot - Attitude Hold'),                       category = _('Autopilot') },
@@ -387,29 +387,25 @@ return {
         -- debug
         {down = Keys.ShowParamList,	name = _('DEBUG RECORD'),		category = _('Debugs')},
 
-        --Multicrew Control
-        { combos = { { key = 'J' } },                                                                                down = iCommandNetCrewRequestControl,                  name = _('Request Aircraft Control'),                        category = _('Flight Control') },
-        { combos = { { key = '1' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 1,                                              name = _('Occupy Seat 1'),                  category = _('View Cockpit') },
-        { combos = { { key = '2' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 2,                                              name = _('Occupy Seat 2'),                  category = _('View Cockpit') },
 
         --HOTAS
         { down = Keys.Flap_Pos_Up,                                                                                   up = Keys.Flap_Pos_Half,                               name = _('HOTAS Flap Up Position'),                          category = _('HOTAS') },
         { down = Keys.Flap_Pos_Down,                                                                                 up = Keys.Flap_Pos_Half,                               name = _('HOTAS Flap Down Position'),                        category = _('HOTAS') },
 
         -- special functions
-        { down = Keys.SpecialSence,                                                                                  name = _('Tjena Hejsan'),                              category = _('Special Function') },
-        { down = Keys.Custom_Menu,                                                                                   name = _('Trigger on Screen Menu'),                    category = _('Special Function') },
-        { down = Keys.Custom_Menu_Enter,                                                                             name = _('Menu Enter'),                                category = _('Special Function') },
+        -- { down = Keys.SpecialSence,                                                                                  name = _('Tjena Hejsan'),                              category = _('Special Function') },
+        -- { down = Keys.Custom_Menu,                                                                                   name = _('Trigger on Screen Menu'),                    category = _('Special Function') },
+        -- { down = Keys.Custom_Menu_Enter,                                                                             name = _('Menu Enter'),                                category = _('Special Function') },
 
-        -- Music Player
-        { down = Keys.MusicPauseOrPlay,                                                                              name = _('Music Pause/Play'),                          category = _('Music Player') },
-        { down = Keys.MusicVolUp,                                                                                    name = _('Music Volume Up'),                           category = _('Music Player') },
-        { down = Keys.MusicVolDown,                                                                                  name = _('Music Volume Down'),                         category = _('Music Player') },
-        { down = Keys.MusicNext,                                                                                     name = _('Music Play Next'),                           category = _('Music Player') },
-        { down = Keys.MusicLast,                                                                                     name = _('Music Play Last'),                           category = _('Music Player') },
-        { down = Keys.MusicFastForward,                                                                              name = _('Music Play Fast Forward'),                   category = _('Music Player') },
-        { down = Keys.MusicFastBack,                                                                                 name = _('Music Play Fast Backward'),                  category = _('Music Player') },
-        { down = Keys.MusicLrcViewTrigger,                                                                           name = _('Music Display Lyrics'),                      category = _('Music Player') },
+        -- -- Music Player
+        -- { down = Keys.MusicPauseOrPlay,                                                                              name = _('Music Pause/Play'),                          category = _('Music Player') },
+        -- { down = Keys.MusicVolUp,                                                                                    name = _('Music Volume Up'),                           category = _('Music Player') },
+        -- { down = Keys.MusicVolDown,                                                                                  name = _('Music Volume Down'),                         category = _('Music Player') },
+        -- { down = Keys.MusicNext,                                                                                     name = _('Music Play Next'),                           category = _('Music Player') },
+        -- { down = Keys.MusicLast,                                                                                     name = _('Music Play Last'),                           category = _('Music Player') },
+        -- { down = Keys.MusicFastForward,                                                                              name = _('Music Play Fast Forward'),                   category = _('Music Player') },
+        -- { down = Keys.MusicFastBack,                                                                                 name = _('Music Play Fast Backward'),                  category = _('Music Player') },
+        -- { down = Keys.MusicLrcViewTrigger,                                                                           name = _('Music Display Lyrics'),                      category = _('Music Player') },
 
         { combos = { { key = 'X', reformers = { 'LShift' } } },                                                      down = Keys.ToGun,                                     value_down = 1.0,                                            name = _('Select Gun'),                     category = { _('Stick'), _('HOTAS') } },
         { combos = { { key = 'D', reformers = { 'LShift' } } },                                                      down = Keys.ToAAMRdr,                                  value_down = 1.0,                                            name = _('Select AMRAAM'),                  category = { _('Stick'), _('HOTAS') } },
