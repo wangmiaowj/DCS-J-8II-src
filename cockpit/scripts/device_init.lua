@@ -69,8 +69,8 @@ indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."warni
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Rod/Indicator/init.lua",devices.ROD,nil}
 indicators[#indicators + 1] = {"ccIndicator", LockOn_Options.script_path.."Helmet/Indicator/init.lua",nil,nil}
 
-indicators[#indicators + 1] = {"ccChart",     LockOn_Options.common_script_path.."dbg_chart.lua"  ,nil,nil}
-indicators[#indicators + 1] = {"ccChart",     LockOn_Options.common_script_path.."dbg_output.lua"  ,nil,nil}
+--indicators[#indicators + 1] = {"ccChart",     LockOn_Options.common_script_path.."dbg_chart.lua"  ,nil,nil}
+--indicators[#indicators + 1] = {"ccChart",     LockOn_Options.common_script_path.."dbg_output.lua"  ,nil,nil}
 --show_param_handles_list()
 -- Enable KneeBoard for Test
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/declare_kneeboard_device.lua")
