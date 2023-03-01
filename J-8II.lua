@@ -239,7 +239,7 @@ local function make_J_8II(rewrite_settings)
 
 
 
-		tanker_type = 0,
+		tanker_type = 4,
 
 		wing_area                 = 23.0, --机翼面积㎡
 		wing_span                 = 9.318, --翼展,米
@@ -258,7 +258,7 @@ local function make_J_8II(rewrite_settings)
 		main_gear_wheel_diameter  = 1.636, --主轮直径
 		brakeshute_name           = 3,
 		is_tanker                 = false,
-		air_refuel_receptacle_pos = { 0, 0, 0 },
+		air_refuel_receptacle_pos = { 8.109, 0.731, -0.882 },
 		engines_count             = 2,
 
 		engines_nozzles = {

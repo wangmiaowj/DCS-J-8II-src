@@ -12,6 +12,72 @@ function J_8II:createEngines()
 	end
 end
 
+function J_8II:createAPU(APUin, APUhost)
+	aircraft:createAPU(APUin,APUhost)
+	-- self.APU.item = APUin
+	-- self.APU.item:create(APUhost)
+	-- self.APU.initialized = true
+end
+
+function J_8II:createAPUcpt(APUhostCpt, path)
+	aircraft:createAPUcpt(APUhostCpt, path)
+	-- if self.APU.initialized then
+	-- 	self.APU.item:createCpt(APUhostCpt, path)
+	-- end
+end
+
+function J_8II:createEnginesCpt(hostCpt)
+	aircraft:createEnginesCpt(hostCpt)
+	-- for k, v in pairs(self.engines) do
+	-- 	v:createSoundsCpt(hostCpt)
+	-- end
+end
+
+function J_8II:destroyEnginesCpt()
+	aircraft:destroyEnginesCpt()
+	-- for k, v in pairs(self.engines) do
+	-- 	v:destroySoundsCpt()
+	-- end
+end
+
+function J_8II:createCockpit()
+	aircraft:createCockpit()
+	--J_8II:createAPUcpt(self.cockpit.host, "Aircrafts/A-10/APU/")
+	J_8II:createCanopyCpt()
+end
+
+function J_8II:releaseCockpit()
+	aircraft:releaseCockpit()
+	-- self:destroyEnginesCpt()
+	
+	-- ED_AudioAPI.destroyHost(self.cockpit.host)
+	-- ED_AudioAPI.destroyHost(self.cockpit.hostHeadphones)
+	-- ED_AudioAPI.destroyHost(self.cockpit.hostCpt2D)
+	-- self.cockpit.initialized = false
+end
+
+--local gBreathActive = false
+
+function J_8II:updateGbreath(params)
+	aircraft:updateGbreath(params)
+	-- if params.GbreathEnabled == 1 then
+	-- 	if not gBreathActive and params.pilotGforceFiltered > 3.9 then
+	-- 		ED_AudioAPI.playSourceLooped(self.cockpit.sndGbreath)
+	-- 		gBreathActive = true
+	-- 	elseif gBreathActive and params.pilotGforceFiltered < 3.5 then
+	-- 		ED_AudioAPI.stopSource(self.cockpit.sndGbreath)
+	-- 		ED_AudioAPI.playSourceOnce(self.cockpit.sndGbreathEnd)
+	-- 		gBreathActive = false
+	-- 	end
+	-- end
+end
+
+function J_8II:onInit(params)
+	aircraft:onInit(params)
+	-- params.GbreathEnabled = 0
+	-- params.pilotGforceFiltered = 1
+end
+
 function J_8II:createCanopy()
 	self.CanopyHost = ED_AudioAPI.createHost(ED_AudioAPI.ContextWorld, "canopyPos")
 	self.CanopyHostPos = { 5.461, 0.312, 0.0 }
@@ -80,11 +146,6 @@ function J_8II:createCanopyCpt()
 	ED_AudioAPI.linkSource(self.sndCanopyEnd, self.cockpit.sndCanopyEnd)
 end
 
-function J_8II:createCockpit()
-	aircraft:createCockpit()
-	J_8II:createAPUcpt(self.cockpit.host, "Aircrafts/A-10/APU/")
-	J_8II:createCanopyCpt()
-end
 function J_8II:testFunction()
 	if self.testCount == 0 then
 		ED_AudioAPI.playSourceLooped(self.sndTest)

@@ -11,7 +11,7 @@ local sensor_data = get_base_data()
 
 local fmt = '%.2f'
 
-local air_brake_state
+local air_brake_state=0
 local air_brake_pos = 0
 
 local air_brake_pos_ind = get_param_handle("AIRBRAKE_IND")
@@ -21,15 +21,8 @@ local parking_brake_handle = get_param_handle("PARKINGBREAK_HANDLE")
 
 -- 减速伞工作情况
 local drag_chute_target_state = 0 -- 0为关闭，1为打开，2为抛离
-local drag_chute_pos
+local drag_chute_pos = 0
 
-local Airbrake  = 73 -- 默认空气刹车的按键输入
-local DragParachute  = 73 -- 默认减速伞的按键输入
-local AirbrakeOn = 147
-local AirbrakeOff = 148
-
-local iCommandPlaneWheelBrakeOn = 74 --原装的机轮刹车
-local iCommandPlaneWheelBrakeOff = 75
 
 local gear_state_share = get_param_handle("GEAR_SHARE")
 
@@ -39,73 +32,34 @@ local parking_brake_target = 0
 local parking_brake_applied = 0
 
 function post_initialize()
-    air_brake_state = 0
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" then
-        parking_brake_target = 1
+        
     elseif birth=="AIR_HOT" then
-        parking_brake_target = 0
+        
     elseif birth=="GROUND_COLD" then
-        parking_brake_target = 1
+        set_aircraft_draw_argument_value(23,1)
     end
-    parking_brake_handle:set(parking_brake_target)
 end
 
--- 监听轮子刹车
-Breaks:listen_command(Keys.BrakesOn)
-Breaks:listen_command(Keys.BrakesOff)
--- 监听空气刹车
-Breaks:listen_command(Airbrake)
-Breaks:listen_command(AirbrakeOn)
-Breaks:listen_command(AirbrakeOff)
--- 监听停机刹车
-Breaks:listen_command(Keys.ParkingBrakesOn)
-Breaks:listen_command(Keys.ParkingBrakesOff)
-Breaks:listen_command(Keys.ParkingBrakes)
-
 Breaks:listen_command(72)
+Breaks:listen_command(Keys.PlaneParachute)
 Breaks:listen_command(145)
 Breaks:listen_command(146)
-
-
 -- listen to flap
 Breaks:listen_command(Keys.Flap_Pos_Up)
 Breaks:listen_command(Keys.Flap_Pos_Half)
 Breaks:listen_command(Keys.Flap_Pos_Down)
+Breaks:listen_event("WheelChocksOn")
+Breaks:listen_event("WheelChocksOff")
+Breaks:listen_event("Repair")
+Breaks:listen_event("WeaponRearmFirstStep")
 
 Flap_Target = 0
 Flap_Current = 0
 
 function SetCommand(command,value)
-    if (command == Keys.BrakesOn) and (parking_brake_target == 0) then
-        dispatch_action(nil,iCommandPlaneWheelBrakeOn)
-    elseif (command == Keys.BrakesOff) and (parking_brake_target == 0) then
-        dispatch_action(nil,iCommandPlaneWheelBrakeOff)
-    elseif (command == Airbrake) then
-        if (air_brake_state == 0) then
-            air_brake_state =1 
-        elseif (air_brake_state == 1) then
-            air_brake_state = 0
-        end
-    elseif (command == AirbrakeOn) then
-        air_brake_state = 1
-    elseif (command == AirbrakeOff) then
-       air_brake_state = 0
-    elseif (command == Keys.ParkingBrakesOn) then
-        print_message_to_user("pb on")
-        dispatch_action(nil,iCommandPlaneWheelBrakeOn)
-        parking_brake_target = 1
-    elseif (command == Keys.ParkingBrakesOff) then
-        dispatch_action(nil,iCommandPlaneWheelBrakeOff)
-        parking_brake_target = 0
-    elseif (command == Keys.ParkingBrakes) then
-        parking_brake_target = 1 - parking_brake_target
-        if (parking_brake_target == 1) then
-            dispatch_action(nil,iCommandPlaneWheelBrakeOn)
-        elseif (parking_brake_target == 0) then
-            dispatch_action(nil,iCommandPlaneWheelBrakeOff)
-        end
-    elseif (command == 146) then
+    if (command == 146) then
         if (Flap_Target > 0.1 and Flap_Target <= 0.7) then
             Flap_Target = 0
         elseif Flap_Target >= 0.8 then
@@ -147,11 +101,42 @@ function SetCommand(command,value)
         Flap_Target = 0.5
     elseif (command == Keys.Flap_Pos_Down) then
         Flap_Target = 1
+    elseif command == Keys.PlaneParachute then
+        local speed = sensor_data.getIndicatedAirSpeed()
+        speed = speed * 3.6
+        local is_on_ground = get_aircraft_draw_argument_value(1) > 0 or get_aircraft_draw_argument_value(4) > 0 or get_aircraft_draw_argument_value(6) > 0
+        if is_on_ground then
+            print_message_to_user('1')
+            print_message_to_user(speed)
+            print_message_to_user(drag_chute_target_state)
+            print_message_to_user(drag_chute_pos)
+        else
+
+        end
+        if is_on_ground and speed>60 and speed <400 and drag_chute_target_state==0 then
+            drag_chute_target_state = 1
+        elseif drag_chute_target_state == 1 and drag_chute_pos >0.9 then
+            drag_chute_target_state = 2--丢弃伞
+        end
     end
 end
 
+function update_chute()
+    drag_chute_pos = get_aircraft_draw_argument_value(35)
+    if drag_chute_target_state == 1 and drag_chute_pos < 0.5 then
+        drag_chute_pos = drag_chute_pos + update_time_step*0.5 --拉伞
+    elseif drag_chute_target_state == 1 and drag_chute_pos >= 0.5 and drag_chute_pos < 1 then
+        drag_chute_pos = 1 --放伞
+    elseif drag_chute_target_state == 2 and drag_chute_pos >= 0.98 then
+        drag_chute_pos = 0.1 --丢伞
+    elseif drag_chute_pos >= 0.08 and drag_chute_pos < 0.12 and drag_chute_target_state == 0 then
+        drag_chute_pos = 0 --重新装填伞
+    end
+    set_aircraft_draw_argument_value(35,drag_chute_pos)
+end
+
 function update()
-    air_brake_pos = tonumber(string.format(fmt, air_brake_pos))
+    update_chute()
     if (air_brake_pos < air_brake_state) then
 		air_brake_pos = air_brake_pos + 0.02
     elseif (air_brake_pos > air_brake_state) then
@@ -184,7 +169,6 @@ function update()
     set_aircraft_draw_argument_value(10,Flap_Current)
     set_aircraft_draw_argument_value(13,Flap_Current)
     set_aircraft_draw_argument_value(14,Flap_Current)
-	set_aircraft_draw_argument_value(21, air_brake_pos)
     if get_elec_ac_status() or get_elec_dc_status() then
 		flap_pos_ind:set(Flap_Current)
 		air_brake_pos_ind:set(air_brake_pos)
@@ -193,6 +177,18 @@ function update()
 		air_brake_pos_ind:set(0)
 	end
 end
-
+function CockpitEvent(event, val)
+    if event == "WheelChocksOn" then
+        set_aircraft_draw_argument_value(23,1)
+        print_message_to_user('轮档放置')
+    elseif event == "WheelChocksOff" then
+        print_message_to_user('轮档移除')
+        set_aircraft_draw_argument_value(23,0)
+    elseif event == "Repair" then
+        drag_chute_target_state = 0
+    elseif event == "WeaponRearmFirstStep" then
+        drag_chute_target_state = 0
+    end
+end
 --不关闭该lua
 need_to_be_closed = false

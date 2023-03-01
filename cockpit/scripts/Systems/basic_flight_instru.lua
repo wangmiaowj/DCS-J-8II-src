@@ -25,7 +25,7 @@ function _gauge_counter()
     return gauge_count
 end
 
-local airspeed_ind = _gauge_counter()
+--local airspeed_ind = _gauge_counter()
 local mach_ind = _gauge_counter()
 local current_g_ind = _gauge_counter()
 local aoa_ind = _gauge_counter()
@@ -41,13 +41,13 @@ local QNH_set_x1 = _gauge_counter()
 local Baro_power = _gauge_counter()
 local gyro_roll = _gauge_counter()
 local gyro_pitch= _gauge_counter()
-local climb_rate_ind = _gauge_counter()
+--local climb_rate_ind = _gauge_counter()
 local slide_rate_ind = _gauge_counter()
 local HSI_compass_ind = _gauge_counter()
 local ADI_pitch = _gauge_counter()
 local ADI_roll = _gauge_counter()
 Gauge_display_state = { -- last parameter define if it is unneed from 9 to zero
-    {airspeed_ind, 0, 0, get_param_handle("AIRSPEED_IND"), 1, 0.04},
+    --{airspeed_ind, 0, 0, get_param_handle("AIRSPEED_IND"), 1, 0.04},
     {mach_ind, 0, 0, get_param_handle("MACH_IND"), 1, 0.04},
     {current_g_ind, 0, 0, get_param_handle("G_METER"), 1, 0.04},
     {aoa_ind, 0, 0, get_param_handle("AOA_METER"), 1, 0.04},
@@ -63,7 +63,7 @@ Gauge_display_state = { -- last parameter define if it is unneed from 9 to zero
     {Baro_power, 0, 0, get_param_handle("BARO_POWER"), 1, 0.005},
     {gyro_roll, 0, 0, get_param_handle("GYRO_ROLL"), 2, 0.04},
     {gyro_pitch, 0, 0, get_param_handle("GYRO_PITCH"), 2, 0.04},
-    {climb_rate_ind, 0, 0, get_param_handle("CLIMB_RATE"), 1, 0.04},
+    --{climb_rate_ind, 0, 0, get_param_handle("CLIMB_RATE"), 1, 0.04},
     {slide_rate_ind, 0, 0, get_param_handle("SLIDE_IND"), 1, 0.04},
     {HSI_compass_ind, 0, 0, get_param_handle("HSI_HEADING"), 3, 0.04},
 	{ADI_pitch, 0, 0, get_param_handle("ADI_PITCH"), 3, 0.04},
@@ -88,11 +88,11 @@ function Airspeed_Gauge_AOA_G_Cal()
         Gauge_display_state[airspeed_ind][2] = 0.95
     end
 	--]]
-	if(current_speed >= 100 and current_speed < 400) then
-		Gauge_display_state[airspeed_ind][2] = (current_speed-100) / 1350
-	elseif current_speed >= 400 then
-		Gauge_display_state[airspeed_ind][2] = (current_speed+200) / 2700
-	end	
+	-- if(current_speed >= 100 and current_speed < 400) then
+	-- 	Gauge_display_state[airspeed_ind][2] = (current_speed-100) / 1350
+	-- elseif current_speed >= 400 then
+	-- 	Gauge_display_state[airspeed_ind][2] = (current_speed+200) / 2700
+	-- end	
     if vertical_acc > 0 then
         Gauge_display_state[current_g_ind][2] = vertical_acc/8
     else
@@ -137,12 +137,12 @@ end
 
 function calculate_Climb_Slide()
     if (get_elec_dc_status() == true) then
-        local climb_rate = sensor_data.getVerticalVelocity() / 40
+        -- local climb_rate = sensor_data.getVerticalVelocity() / 40
         local slide_rate = sensor_data.getRateOfYaw() * RAD_TO_DEGREE / 90
-        Gauge_display_state[climb_rate_ind][2] = climb_rate
+        -- Gauge_display_state[climb_rate_ind][2] = climb_rate
         Gauge_display_state[slide_rate_ind][2] = slide_rate
     else
-        Gauge_display_state[climb_rate_ind][2] = 0
+        -- Gauge_display_state[climb_rate_ind][2] = 0
         Gauge_display_state[slide_rate_ind][2] = 0
     end
 end

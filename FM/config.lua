@@ -2,14 +2,14 @@
 J8II_FM = 
 {
     disable_built_in_oxygen_system = true,
-    center_of_mass    = { 0.0, 0.0, 0.0},
+    center_of_mass    = { 0.05, 0.0, 0.0},
     moment_of_inertia = {12793.0, 82531.8, 75190, 1081.0},
     suspension = {
         {
-            wheel_radius = 0.2795,
+            wheel_radius = 0.25,
             damper_coeff = 300.0,
             filter_yaw   = false,
-            yaw_limit    = math.rad(45.0),
+            yaw_limit    = math.rad(32.0),
             moment_limit = 750.0,
             
             allowable_hard_contact_length = 0.15,
@@ -42,7 +42,7 @@ J8II_FM =
         },
         {
             mass         = 200,
-            wheel_radius = 0.409,
+            wheel_radius = 0.33,
             wheel_static_friction_factor  = 0.7 ,
             wheel_side_friction_factor    = 0.65 ,
             wheel_roll_friction_factor    = 0.04 ,
@@ -75,7 +75,7 @@ J8II_FM =
         },
         {
             mass         = 200,
-            wheel_radius = 0.409,
+            wheel_radius = 0.33,
             wheel_static_friction_factor  = 0.7 ,
             wheel_side_friction_factor    = 0.65 ,
             wheel_roll_friction_factor    = 0.04 ,

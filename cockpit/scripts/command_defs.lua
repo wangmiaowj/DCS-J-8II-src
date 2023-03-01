@@ -445,9 +445,9 @@ Keys =
 
     DragParachute = __custom_counter(), --自定义减速伞释放
 
-    --PlaneFlapsStop = __custom_counter(),      --目前屏蔽手动缝翼
-    --PlaneFlapsUpHotas = __custom_counter(),   --
-    --PlaneFlapsDownHotas = __custom_counter(), --
+    PlaneFlapsStop = __custom_counter(),      --目前屏蔽手动缝翼
+    PlaneFlapsUpHotas = __custom_counter(),   --
+    PlaneFlapsDownHotas = __custom_counter(), --
     
     SpoilersArmToggle = __custom_counter(),
     SpoilersArmOn = __custom_counter(),
@@ -850,6 +850,13 @@ Keys =
     SND_ELECTRIC = 6004,
     SND_GEAR   = 6005,
     SND_BEACON_ROT = 6006,
+	SND_MOTOR_START = 6007,
+	SND_MOTOR_STOP = 6008,
+	--
+	PlaceWheelChocks = 6101,
+	RemoveWheelChocks = 6102,
+	InstallProbe = 6103,
+	UninstallProbe = 6104,
 }
 
 --从5000开始递增点击指令

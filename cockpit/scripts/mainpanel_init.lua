@@ -78,8 +78,8 @@ animation_list = {
     {"ALT_METER_IN", 11,{0,30000},{0,1},controllers.base_gauge_BarometricAltitude},
     {"L_ENG_TMP", 12, {-70,150}, {0,1}, controllers.base_gauge_EngineLeftTemperatureBeforeTurbine},
     {"R_ENG_TMP", 14, {-70,150}, {0,1}, controllers.base_gauge_EngineRightTemperatureBeforeTurbine},
-    {"L_RPM", 16, {0,110}, {0,1}},
-    {"R_RPM", 17, {0,110}, {0,1}},
+    {"L_RPM", 16, {0,1.1}, {0,1}},
+    {"R_RPM", 17, {0,1.1}, {0,1}},
     {"CLOCK_M", 18},
     {"CLOCK_H", 19},
     {"CLOCK_S",21},
@@ -103,8 +103,8 @@ animation_list = {
     {"FLAP_IND", 42, {0,0.1}, {0,1}},
     {"AIRBRAKE_IND", 44, {0,0.1}, {0,1}},
     {"LANDING_WARNING_LIGHT", 46},
-    {"STICK_PITCH", 71,{-100,100},{-1,1},controllers.base_gauge_StickPitchPosition},
-    {"STICK_ROLL", 74,{-100,100},{-1,1},controllers.base_gauge_StickRollPosition},
+    {"STICK_PITCH", 71,{-100,100},{-1,1}},
+    {"STICK_ROLL", 74,{-100,100},{-1,1}},
     {"ADI_PITCH", 81,{-160,160},{-1,1}},
 	{"LDG_Handle", 83,{0,1},{0,1}},
     {"ADI_PITCH_KNOB", 84},
@@ -136,7 +136,7 @@ animation_list = {
 	{"HSI_HDG_x1", 303},
     {"OXY_ELEMENT", 317},
     {"AIRBRAKE_BTN", 339},
-    {"RUDDER_PADEL", 500,{-85,85},{-1,1},controllers.base_gauge_RudderPosition},
+    {"RUDDER_PADEL", 500,{-85,85},{-1,1}},
 	
 	--右侧板1
     {"PNT_1001", 1001},
@@ -320,8 +320,8 @@ animation_list = {
 	{"BATTERY_CAPACITY", 1227,{0,1000},{0,1}},
 	
 	--右下角集成仪表
-	{"EXHAUST_GAS_TMP_L", 1231, {300,900}, {0,1}, controllers.base_gauge_EngineLeftTemperatureBeforeTurbine},
-	{"EXHAUST_GAS_TMP_R", 1232, {300,900}, {0,1}, controllers.base_gauge_EngineRightTemperatureBeforeTurbine},
+	{"EXHAUST_GAS_TMP_L", 1231, {300,900}, {0,1}},
+	{"EXHAUST_GAS_TMP_R", 1232, {300,900}, {0,1}},
 	{"UNKNOW_METER_002_L", 1233},
 	{"UNKNOW_METER_002_R", 1234},
 	{"UNKNOW_METER_003_L", 1235},

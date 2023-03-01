@@ -31,6 +31,8 @@ function post_initialize()
     -- center panel
     sndhost_cockpit_center          = create_sound_host("COCKPIT_CDP","3D",0.3,-0.3,0.3) 
     snd_center_panel_switch         = sndhost_cockpit_center:create_sound("Aircrafts/Cockpits/Switch2")
+    snd_motor_start = sndhost_cockpit_center:create_sound("Aircrafts/ASU")
+    snd_motor_stop = sndhost_cockpit_center:create_sound("Aircrafts/ASU_End")
     -- center panel
     sndhost_cockpit_right           = create_sound_host("COCKPIT_RDP","3D",0.3,-0.3,0.9) 
     snd_right_panel_switch          = sndhost_cockpit_right:create_sound("Aircrafts/Cockpits/Switch1")
@@ -45,6 +47,8 @@ SoundSystem:listen_command(Keys.SND_CENTER_PANEL)
 SoundSystem:listen_command(Keys.SND_RIGHT_PANEL)
 SoundSystem:listen_command(Keys.SND_ELECTRIC)
 SoundSystem:listen_command(Keys.SND_GEAR)
+SoundSystem:listen_command(Keys.SND_MOTOR_START)
+SoundSystem:listen_command(Keys.SND_MOTOR_STOP)
 
 local snd_main_elec_play = 0
 
@@ -70,6 +74,12 @@ function SetCommand(command, value)
         end
     elseif command == Keys.SND_GEAR then
         snd_gear_action:play_once()
+    elseif command == Keys.SND_MOTOR_START then
+        snd_motor_stop:stop()
+        snd_motor_start:play_continue()
+    elseif command == Keys.SND_MOTOR_STOP then
+        snd_motor_start:stop()
+        snd_motor_stop:play_once()
     end
 end
 

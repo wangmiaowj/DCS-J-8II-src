@@ -15,7 +15,6 @@ local CANOPY_ANI_INSIDE = get_param_handle("CPT_COVER")
 local Eject_pwr1 = get_param_handle("PNT_1014")
 local Eject_pwr2 = get_param_handle("PNT_1015")
 local Eject_pwr3 = get_param_handle("PNT_1016")
-local canopy_handle = get_param_handle('CANOPY')
 
 local CanoStatus = 0
 local EjectStatus = 0
@@ -101,11 +100,6 @@ function update()
 		end
     end
     set_aircraft_draw_argument_value(38,CanoStatus)
-	if get_elec_dc_status() then
-		canopy_handle:set(CanoStatus)
-	else
-		canopy_handle:set(0)
-	end
     CANOPY_ANI_INSIDE:set(CanoStatus)
 	if EjectStatus == 1 then
 		for i=0,2,1 do

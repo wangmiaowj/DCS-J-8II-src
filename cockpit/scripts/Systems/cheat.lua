@@ -30,7 +30,8 @@ function post_initialize()
         status = false
     end
 end
-
+local dbg=0
+local dbg_h = get_param_handle("DBG_INFO_S/H")
 function SetCommand(command,value)
     if command == Keys.autoStart then
         action = 1
@@ -40,6 +41,7 @@ function SetCommand(command,value)
     elseif command == Keys.ShowParamList then
         ShowParamList = not ShowParamList
         show_param_handles_list(ShowParamList)
+        dbg = 1 - dbg
     end
 end
 
@@ -179,4 +181,5 @@ function update()
         end
         time = 0
     end
+    dbg_h:set(dbg)
 end

@@ -180,88 +180,6 @@ local dis_play_current_status  = {
     { lid,                      SWITCH_ON,  SWITCH_ON,  0,      false },
 }
 
-local warning_panel_4_count    = 0
-local function warning_panel_counter()
-    warning_panel_4_count = warning_panel_4_count + 1
-    return warning_panel_4_count
-end
-
-local l_gen = warning_panel_counter()
-local r_gen = warning_panel_counter()
-local l_inv = warning_panel_counter()
-local r_inv = warning_panel_counter()
-local batt = warning_panel_counter()
-local dc_ok = warning_panel_counter()
-local ac_ok = warning_panel_counter()
-local gen_inter = warning_panel_counter()
-local eject_system = warning_panel_counter()
-local batt_color = warning_panel_counter()
-
-local warning_panel_status = {
-    { l_gen,         SWITCH_OFF, get_param_handle('L_GEN') },
-    { r_gen,         SWITCH_OFF, get_param_handle('R_GEN') },
-    { l_inv,         SWITCH_OFF, get_param_handle('L_INV') },
-    { r_inv,         SWITCH_OFF, get_param_handle('R_INV') },
-    { batt,          SWITCH_OFF, get_param_handle('BATT') },
-    { dc_ok,         SWITCH_OFF, get_param_handle('DC') },
-    { ac_ok,         SWITCH_OFF, get_param_handle('AC') },
-    { gen_inter,     SWITCH_OFF, get_param_handle('GEN_INTER') },
-    { eject_system,  SWITCH_OFF, get_param_handle('EJECT_SYSTEM') },
-    { batt_color,    SWITCH_OFF, get_param_handle('BATT_COLOR') }
-}
-
-local function drawingWarningPanel()
-    for k, v in pairs(warning_panel_status) do
-        v[3]:set(v[2])
-    end
-end
-
-local function updateWarningPanel()
-    warning_panel_status[dc_ok][2] = SWITCH_ON
-    if dis_play_current_status[battery_capacity][2] < 300 then
-        warning_panel_status[batt_color][2] = 0
-    elseif dis_play_current_status[battery_capacity][2] < 500 then
-        warning_panel_status[batt_color][2] = 1
-    elseif dis_play_current_status[battery_capacity][2] <= 1000 then
-        warning_panel_status[batt_color][2] = 2
-    end
-    if not get_elec_ac_status() or dis_play_current_status[battery_capacity][2] < 1000 then
-        warning_panel_status[batt][2] = SWITCH_ON
-    else
-        warning_panel_status[batt][2] = SWITCH_OFF
-    end
-    if elec_charging_status:get() == 0 or dis_play_current_status[left_real_gen_switch][2] == SWITCH_OFF or sensor_data.getEngineLeftRPM() < 50 then
-        warning_panel_status[l_gen][2] = SWITCH_ON
-    else
-        warning_panel_status[l_gen][2] = SWITCH_OFF
-    end
-    if elec_charging_status:get() == 0 or dis_play_current_status[right_real_gen_switch][2] == SWITCH_OFF or sensor_data.getEngineRightRPM() < 50 then
-        warning_panel_status[r_gen][2] = SWITCH_ON
-    else
-        warning_panel_status[r_gen][2] = SWITCH_OFF
-    end
-    if dis_play_current_status[left_inverter_switch][2] == SWITCH_OFF then
-        warning_panel_status[l_inv][2] = SWITCH_ON
-    else
-        warning_panel_status[l_inv][2] = SWITCH_OFF
-    end
-    if dis_play_current_status[right_inverter_switch][2] == SWITCH_OFF then
-        warning_panel_status[r_inv][2] = SWITCH_ON
-    else
-        warning_panel_status[r_inv][2] = SWITCH_OFF
-    end
-    if get_elec_ac_status() then
-        warning_panel_status[ac_ok][2] = SWITCH_ON
-    else
-        warning_panel_status[ac_ok][2] = SWITCH_OFF
-    end
-    if not get_elec_ac_status() or dis_play_current_status[eject_pwr1][2] == SWITCH_OFF or dis_play_current_status[eject_pwr2][2] == SWITCH_OFF or dis_play_current_status[eject_pwr3][2] == SWITCH_OFF then
-        warning_panel_status[eject_system][2] = SWITCH_ON
-    else
-        warning_panel_status[eject_system][2] = SWITCH_OFF
-    end
-end
-
 local snd_count = 0
 local function _snd_counter()
     snd_count = snd_count + 1
@@ -325,7 +243,8 @@ function update_elec_state() --更新电力总线状态
     if gndPwr == 1 then
         elec_charging_status:set(1)
         elec_dc_status:set(1)
-        elec_ac_status:set(1)
+        elec_ac1_status:set(1)
+        elec_ac2_status:set(1)
     else
         if (electric_system:get_AC_Bus_1_voltage() > 0 or electric_system:get_AC_Bus_2_voltage() > 0) then
             -- 主发电机状态正常（双备份）
@@ -346,11 +265,20 @@ function update_elec_state() --更新电力总线状态
             elec_dc_status:set(0)
         end
     
-        if get_elec_dc_status() and
-            (display_target_status[left_inverter_switch][2] == 1 or display_target_status[right_inverter_switch][2] == 1) then
-            elec_ac_status:set(1)
+        if get_elec_dc_status() then
+            if display_target_status[left_inverter_switch][2] == 1 then
+                elec_ac1_status:set(1)
+            else
+                elec_ac1_status:set(0)
+            end
+            if display_target_status[right_inverter_switch][2] == 1 then
+                elec_ac2_status:set(1)
+            else
+                elec_ac2_status:set(0)
+            end
         else
-            elec_ac_status:set(0)
+            elec_ac1_status:set(0)
+            elec_ac2_status:set(0)
         end
     end
     local pwrLoad = power_load:get()
@@ -557,14 +485,6 @@ function update() --刷新状态
     update_snd()
     update_click_view()
     handlePwrLoad()
-    if get_elec_dc_status() or get_elec_ac_status() then
-        updateWarningPanel()
-    else
-        for k, v in pairs(warning_panel_status) do
-            v[2]=SWITCH_OFF
-        end
-    end
-    drawingWarningPanel()
 end
 
 function CockpitEvent(event, val)

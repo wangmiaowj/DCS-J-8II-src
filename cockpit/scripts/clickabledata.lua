@@ -352,6 +352,21 @@ function default_button_2(hint_, device_, command1_, command2_, arg_)
         use_release_message = {true, true}
     }
 end
+function default_button_4(hint_, device_, command1_, command2_,command3_, command4_, arg_)
+    return {
+        class               = {class_type.BTN, class_type.BTN,class_type.BTN, class_type.BTN},
+        hint                = hint_,
+        device              = device_,
+        action              = {command1_, command3_},
+        stop_action         = {command2_, command4_},
+        arg                 = {arg_, arg_},
+        arg_value           = {-1, 1},
+        arg_lim             = {{-1, 0}, {0, 1}},
+        updatable           = true,
+        use_OBB             = true,
+        use_release_message = {true, true}
+    }
+end
 
 elements = {}
 
@@ -462,7 +477,7 @@ multi_tumb_click_list = {
 	{"PNT_1148", _("Start Unit"), devices.ENGINE, 1148, SOUND_DEFAULT_2_WAY_SWITCH , Keys.startUnit},
 	{"PNT_1149", _("Generator Oil Pressure"), devices.ENGINE, 1149, SOUND_DEFAULT_2_WAY_SWITCH , Keys.genOilPress},
 	{"PNT_1150", _("After Burn Switch"), devices.ENGINE, 1150, SOUND_DEFAULT_2_WAY_SWITCH , Keys.afterBurn},
-	{"PNT_1151", _(""), devices.ENGINE, 1151, SOUND_DEFAULT_2_WAY_SWITCH , Keys.groupSwitch02},
+	--{"PNT_1151", _(""), devices.ENGINE, 1151, SOUND_DEFAULT_2_WAY_SWITCH , Keys.groupSwitch02},
 	{"R_ENG_IDLE", _("Right Engine Start/Stop"), devices.ENGINE, 102, SOUND_DEFAULT_2_WAY_SWITCH , Keys.RightEngineStart, Keys.RightEngineStop},
 	{"L_ENG_IDLE", _("Left Engine Start/Stop"), devices.ENGINE, 103, SOUND_DEFAULT_2_WAY_SWITCH , Keys.LeftEngineStart, Keys.LeftEngineStop},
 
@@ -521,7 +536,7 @@ multi_tumb_click_list = {
     {"PNT_1039", _("UHF Key 8 (C)"), devices.UHF_RADIO, 1039, nil, Keys.UHF_Key_8},
     {"PNT_1040", _("UHF Key 9 (T)"), devices.UHF_RADIO, 1040, nil, Keys.UHF_Key_9},
     {"PNT_1052", _("UHF Key < (Manual)"), devices.UHF_RADIO, nil, 1052, Keys.UHF_Key_MAN},
-    {"PNT_1030", _("UHF Key 0 (Preset)"), devices.UHF_RADIO, nil, 1030, Keys.UHF_Key_0},
+    {"PNT_1031", _("UHF Key 0 (Preset)"), devices.UHF_RADIO, nil, 1031, Keys.UHF_Key_0},
     {"PNT_1051", _("UHF Key > (Enter)"), devices.UHF_RADIO, nil, 1051, Keys.UHF_Key_ENT},
 
     -- {"PNT_601", _("Canopy Handle"), devices.CANOPY, 601, nil, 71}, -- iCommandPlaneCanopy
@@ -537,9 +552,10 @@ for k,v in pairs(multi_tumb_click_list) do
     end
 end
 
-elements["PNT_1145"] = default_button(_(""), devices.ENGINE, Keys.groupSwitch01Down, Keys.groupSwitch01Up, 1145, SOUND_DEFAULT_2_WAY_SWITCH)
-elements["PNT_1151"] = default_button(_(""), devices.ENGINE, Keys.groupSwitch02Down, Keys.groupSwitch02Up, 1151, SOUND_DEFAULT_2_WAY_SWITCH)
+elements["PNT_1145"] = default_button(_(""), devices.ENGINE, Keys.groupSwitch01Up, Keys.groupSwitch01Down, 1145, SOUND_DEFAULT_2_WAY_SWITCH)
+elements["PNT_1151"] = default_button(_(""), devices.ENGINE, Keys.groupSwitch02Up, Keys.groupSwitch02Down, 1151, SOUND_DEFAULT_2_WAY_SWITCH)
 
+elements["PNT_1124"] = default_button_4(_("Engine Start Selector"), devices.ENGINE,Keys.L_STARTER_PRESS,Keys.L_STARTER_RELEASE,Keys.R_STARTER_PRESS,Keys.R_STARTER_RELEASE,1124)
 elements["PNT_1294"] = default_button_2(_("Release Quantity x10"), devices.WEAPON_SYSTEM,Keys.QuantityTumbWheel10_UP,Keys.QuantityTumbWheel10_DN,1294)
 elements["PNT_1295"] = default_button_2(_("Release Quantity x1"), devices.WEAPON_SYSTEM,Keys.QuantityTumbWheel_UP,Keys.QuantityTumbWheel_DN,1295)
 elements["PNT_1297"] = default_button_2(_("Release Multitude x10"), devices.WEAPON_SYSTEM,Keys.MultTumbWheel10_UP,Keys.MultTumbWheel10_DN,1297)

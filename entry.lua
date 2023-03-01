@@ -14,7 +14,7 @@ state		 = "installed",
 info		 = _("J-8II Info"),
 developerName	= _("shenHaiSanXi"),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
---binaries     = {'avSimplest','CustomFM'},
+binaries     = {'J8IIFM'},
 Skins =
 {
 	{
@@ -66,11 +66,11 @@ local cfg_path = current_mod_path .. '/FM/config.lua'
 dofile(cfg_path)
 
 J8II_FM[1]           = self_ID
-J8II_FM[2]           = 'CustomFM'
-J8II_FM.config_path  = cfg_path
+J8II_FM[2]           = 'J8IIFM'
+--J8II_FM.config_path  = cfg_path
 --J-8II_FM.user_options = ac_name
 
-make_flyable('J-8II', current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua') 
+make_flyable('J-8II', current_mod_path..'/Cockpit/Scripts/', J8II_FM, current_mod_path..'/comm.lua') 
 make_view_settings('J-8II', ViewSettings, SnapViews) 
 ---------------------------------------------------------
 
