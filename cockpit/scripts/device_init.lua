@@ -50,6 +50,7 @@ creators[devices.ROD]  ={"avLuaDevice"           ,LockOn_Options.script_path.."R
 creators[devices.TEST]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/empty.lua"}
 creators[devices.FLIR]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Helmet/device/init.lua"}
 creators[devices.CHEAT]  ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/cheat.lua"}
+creators[devices.EFM_HELP] ={"avLuaDevice",LockOn_Options.script_path.."Systems/EFM_help.lua"}
 -- ipad controller
 --creators[devices.IPAD_SYSTEM]     ={"avLuaDevice"           ,LockOn_Options.script_path.."Systems/ipad_ctrl.lua"} 
 -- menu controller

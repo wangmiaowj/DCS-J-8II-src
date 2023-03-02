@@ -857,6 +857,8 @@ Keys =
 	RemoveWheelChocks = 6102,
 	InstallProbe = 6103,
 	UninstallProbe = 6104,
+	gndPwrOn = 6015,
+	gndPwrOff = 6016,
 }
 
 --从5000开始递增点击指令
