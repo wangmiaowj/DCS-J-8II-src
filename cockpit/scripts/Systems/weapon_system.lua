@@ -1,8 +1,11 @@
+local gettext = require("i_18n")
+local _ = gettext.translate
 local WeaponSystem = GetSelf()
 dofile(LockOn_Options.common_script_path .. "devices_defs.lua")
 --dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path .. "command_defs.lua")
 dofile(LockOn_Options.script_path .. "Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path .. "utils.lua")
 -- load wstype database to identify the weapon
 dofile(LockOn_Options.common_script_path .. "../../../Database/wsTypes.lua")
 
@@ -12,6 +15,36 @@ make_default_activity(update_time_step)
 local cannonAmmo = 200
 local unlimit_weapon = false
 
+local weaponNameData = {}
+weaponNameData["{UB-16_S5M}"] = _("UB-16UM - 16 S-5M")
+
+weaponNameData["DIS_RKT_90_UG"] = _("UG_90MM")
+weaponNameData["DIS_BRM1_90"] = _("BRM-1_90MM")
+weaponNameData["{FB3CE165-BF07-4979-887C-92B87F13276B}"] = _("FAB-100")
+weaponNameData["{3C612111-C7AD-476E-8A8E-2485812F4E5C}"] = _("FAB-250")
+weaponNameData["{4203753F-8198-4E85-9924-6F8FF679F9FF}"] = _("RBK-250 PTAB-2.5M")
+weaponNameData["{D5435F26-F120-4FA3-9867-34ACE562EF1B}"] = _("RBK-500-255 PTAB-10-5")
+weaponNameData["{37DCC01E-9E02-432F-B61D-10C166CA2798}"] = _("FAB-500 M62")
+weaponNameData["{35B698AC-9FEF-4EC4-AD29-484A0085F62B}"] = _("BetAB-500")
+weaponNameData["{BD289E34-DF84-4C5E-9220-4B14C346E79D}"] = _("BetAB-500ShP")
+weaponNameData["{08164777-5E9C-4B08-B48E-5AA7AFB246E2}"] = _("BL755")
+weaponNameData["{FAB-250-M54-TU}"] = _("FAB-250 M54")
+weaponNameData["{0511E528-EA28-4caf-A212-00D1408DF10A}"] = _("SAB-100")
+weaponNameData["{Aspide_MK1}"] = _("Aspide MK1")
+weaponNameData["DIS_PL-5EII"] = _('PL-5EII')
+weaponNameData["DIS_PL-8A"] = _("PL-8A")
+weaponNameData["DIS_PL-12"] = _("PL-12")
+weaponNameData["DIS_LD-10"] = _("LD-10")
+weaponNameData["DIS_LD-10_DUAL_L"] = _('LD-10 x 2')
+weaponNameData["DIS_C-802AK"] = _("C802AK")
+weaponNameData["{RN-24}"] = _("RN 24")
+weaponNameData["{RN-28}"] = _("RN 28")
+weaponNameData["{LSWM_AA}"] = _("LSWM AA")
+weaponNameData["{LSWM_AS}"] = _("LSWM AS")
+weaponNameData["{LSWM_AG}"] = _("LSWM AG")
+weaponNameData["{UB-32_S5M}"] = _("UB-32M - 32 S-5M")
+weaponNameData["{FAB-100-4}"] = _("FAB-100 x 4")
+
 local A2A_dg = {
     "{R-13M}", "{R-13M1}", "{R-3S}", "{R-60}", "{R-60M}", "{R-60M 2L}", "{R-60M 2R}", "{R-60 2L}", "{R-60 2R}", "{R-55}",
     "DIS_PL-5EII", "DIS_PL-8A",
@@ -19,6 +52,10 @@ local A2A_dg = {
 local A2A_r = {
     "{R-3R}", "{Aspide_MK1}", "DIS_PL-12", "{AIM-7F}","{LSWM_AA}"
 }
+
+local weapon_group={}
+local weapon_group_indexes = {}
+local current_weapon_index =nil
 
 local iCommandPlaneFire = 84
 local iCommandPlaneFireOff = 85
@@ -71,6 +108,9 @@ local hud_dis=get_param_handle("HUD_DIS_ENABLE")
 local gun_grid = get_param_handle('GUN_GRID')
 local ecmHandle = get_param_handle('ECM')
 
+local weapon_name_str = get_param_handle('WEAPON_NAME')
+local weapon_name_dis = get_param_handle('WEAPON_NAME_DIS')
+
 local dbg_param = { 
     get_param_handle("WeaponSystemDebug_INV"), 
     get_param_handle("WeaponSystemDebug_QTY"),
@@ -118,6 +158,7 @@ WeaponSystem:listen_command(Keys.ToAAMRdr)
 WeaponSystem:listen_command(Keys.PlaneDropSnarOnce)
 WeaponSystem:listen_command(Keys.PlaneDropFlareOnce)
 WeaponSystem:listen_command(Keys.PlaneDropChaffOnce)
+WeaponSystem:listen_command(Keys.NextWeapon)
 
 local c = 0
 
@@ -432,7 +473,7 @@ end
 
 --[[
 local tablePrinted = {}
-local file = io.open("e:\\00_00_00_海外组_学习\\挂架.txt", "w")
+local file = io.open("e:\\00_00_00_海外组_学习\\test.txt", "w")
 assert(file)
 function printTableItem(k, v, level)
     for i = 1, level do
@@ -761,6 +802,14 @@ function SetCommand(command, value)
         if target_status[master_arm_switch][2] == SWITCH_ON then
             drop_chaff()
         end
+    elseif command == Keys.NextWeapon then
+        if #weapon_group_indexes ~=0 then
+            if current_weapon_index == nil or current_weapon_index == #weapon_group_indexes then
+                current_weapon_index = 1
+            else
+                current_weapon_index = current_weapon_index + 1
+            end 
+        end
     end
 
     if target_status[master_arm_switch][2] == SWITCH_OFF then
@@ -823,9 +872,6 @@ function get_tumb_wheel_set()
         num_target[atk_mult_ammos_10][2] = math.floor(MULT_SET * 0.1) * 0.1
         num_target[atk_mult_ammos_1][2] = math.floor(MULT_SET % 10) * 0.1
     end
-    dbg_param[1]:set(INTERVAL_SET)
-    dbg_param[2]:set(QUANTITY_SET)
-    dbg_param[3]:set(MULT_SET)
 end
 
 USING_PYLON_DATA = { -1, nil, 0 }
@@ -959,7 +1005,51 @@ local function resetReleaseProgram()
     num_target[atk_int_ammos_1][2]=0.2
 end
 
-function update_launch_mode()
+local function fillWeaponGroup(i,pylonData,mode)
+    if weapon_group[pylonData.CLSID] == nil then
+        weapon_group_indexes[#weapon_group_indexes+1] = pylonData.CLSID
+        if weapon_group_indexes == 1 then
+            current_weapon_index = 1
+        end
+        weapon_group[pylonData.CLSID] = {}
+    end
+    for k, v in pairs(weapon_group[pylonData.CLSID]) do
+        if v[1] == i then
+            return
+        end
+    end
+    table.insert(weapon_group[pylonData.CLSID],{i,pylonData,mode})
+end
+
+local function update_use_pylon()
+    for i = 1, 7, 1 do
+        SELECTED_LIST[i][1] = SWITCH_OFF
+    end
+    if current_weapon_index == nil then
+        weapon_name_dis:set(0)
+        return
+    end
+    weapon_name_dis:set(1)
+    
+    local weaponQty = 0
+    for k, v in pairs(weapon_group[weapon_group_indexes[current_weapon_index]]) do
+        SELECTED_LIST[v[1]][1] = SWITCH_ON
+        weaponQty = weaponQty + v[2].count
+        if USING_PYLON_DATA[1] == -1 or USING_PYLON_DATA[2].CLSID ~= v[2].CLSID or
+            ((FIREHOLD == 0 or LAUNCH_MODE==4 or LAUNCH_MODE ==5) and USING_PYLON_DATA[1] ~= v[1] and USING_PYLON_DATA[2].count < v[2].count) then
+            WeaponSystem:select_station(v[1] - 1)
+            --print_message_to_user(v[2].CLSID)
+            USING_PYLON_DATA = v
+        end
+    end
+    dbg_param[1]:set(current_weapon_index) --inv==1
+    dbg_param[2]:set(#weapon_group_indexes) --qty==3
+    dbg_param[3]:set(#weapon_group)--mult==0
+    dbg_param[4]:set(GetTableLength(weapon_group))
+    weapon_name_str:set(weaponNameData[USING_PYLON_DATA[2].CLSID]..' X '..weaponQty)
+end
+
+local function update_launch_mode()
     if LAUNCH_MODE == 0 or not get_elec_ac_status() then
         for k, v in pairs(SELECTED_LIST) do
             v[1]=SWITCH_OFF
@@ -969,6 +1059,9 @@ function update_launch_mode()
     if USING_PYLON_DATA[3] ~= LAUNCH_MODE then
         --模式切换
         USING_PYLON_DATA = { -1, nil, LAUNCH_MODE }
+        current_weapon_index = nil
+        weapon_group = {}
+        weapon_group_indexes = {}
         --重置投放程序
         resetReleaseProgram()
     end
@@ -997,24 +1090,11 @@ function update_launch_mode()
                     isInTbl(pylonData.CLSID, A2A_dg) then
                     --A2A IR
                     --target_status[i+1][2]=SWITCH_ON
-                    SELECTED_LIST[i][1] = SWITCH_ON
-
-                    if USING_PYLON_DATA[1] == -1 or
-                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                        WeaponSystem:select_station(i - 1)
-
-                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                    end
+                    fillWeaponGroup(i,pylonData,LAUNCH_MODE)
                 elseif LAUNCH_MODE == 2 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 7 and
                     isInTbl(pylonData.CLSID, A2A_r) then
                     --target_status[i+1][2]=SWITCH_ON
-                    SELECTED_LIST[i][1] = SWITCH_ON
-                    if USING_PYLON_DATA[1] == -1 or
-                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                        WeaponSystem:select_station(i - 1)
-
-                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                    end
+                    fillWeaponGroup(i,pylonData,LAUNCH_MODE)
                     --A2a_r
                 elseif LAUNCH_MODE == 3 then
                     --机炮
@@ -1023,44 +1103,23 @@ function update_launch_mode()
                 elseif LAUNCH_MODE == 4 and wsType.level1 == 4 and wsType.level2 == 7 and wsType.level3 == 33 then
                     --火箭弹
                     --target_status[i+1][2]=SWITCH_ON
-                    SELECTED_LIST[i][1] = SWITCH_ON
-                    if USING_PYLON_DATA[1] == -1 or
-                        (USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                        WeaponSystem:select_station(i - 1)
-                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                    end
+                    fillWeaponGroup(i,pylonData,LAUNCH_MODE)
                 elseif LAUNCH_MODE == 5 and wsType.level1 == 4 and wsType.level2 == 5 then
                     --炸弹
                     --target_status[i+1][2]=SWITCH_ON
-                    SELECTED_LIST[i][1] = SWITCH_ON
-                    if USING_PYLON_DATA[1] == -1 or
-                        (USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                        WeaponSystem:select_station(i - 1)
-                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                    end
+                    fillWeaponGroup(i,pylonData,LAUNCH_MODE)
                 elseif LAUNCH_MODE == 6 and wsType.level1 == 4 and wsType.level2 == 4 and wsType.level3 == 8 then
                     --A2G弹
                     --target_status[i+1][2]=SWITCH_ON
-                    SELECTED_LIST[i][1] = SWITCH_ON
-                    if USING_PYLON_DATA[1] == -1 or
-                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                        WeaponSystem:select_station(i - 1)
-
-                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                    end
-                elseif LAUNCH_MODE == 7 and wsType.level1 == 4 and wsType.level2 == 15 and wsType.level3 == 50 then
-                    SELECTED_LIST[i][1] = SWITCH_ON
-                    if USING_PYLON_DATA[1] == -1 or
-                        (FIREHOLD == 0 and USING_PYLON_DATA[1] ~= i and USING_PYLON_DATA[2].count < pylonData.count) then
-                        WeaponSystem:select_station(i - 1)
-
-                        USING_PYLON_DATA = { i, pylonData, LAUNCH_MODE }
-                    end
+                    fillWeaponGroup(i,pylonData,LAUNCH_MODE)
                 else
                     SELECTED_LIST[i][1] = SWITCH_OFF
                 end
             end
         until true
+    end
+    if current_weapon_index == nil and #weapon_group_indexes > 0 then
+        current_weapon_index = 1
     end
 end
 
@@ -1171,6 +1230,7 @@ function update()
         bomb_launch() --炸弹投放程序
         rocket_launch() --火箭弹射击程序
         update_launch_mode()--更新发射模式以及下一个该发射的挂架
+        update_use_pylon()
         update_ir_msl_status()--更新红外弹参数 
         update_launch_selection()--更新发射状态
         update_display_light()--更新挂架选择灯

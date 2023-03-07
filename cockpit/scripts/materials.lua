@@ -132,7 +132,7 @@ fontdescription["font_UTF"] = font_unicode(IndicationFontPath.."Font_UTF.dds")
 	fonts["unicode_cn_red"]		= {fontdescription["font_UTF"], 10, materials.DBG_RED }
 	fonts["unicode_cn_green"]		= {fontdescription["font_UTF"], 10, materials.DBG_GREEN }
 	fonts["unicode_cn_yellow"]		= {fontdescription["font_UTF"], 10, materials.DBG_YELLOW }
-
+	fonts["unicode_cn_hud"]		= {fontdescription["font_UTF"], 10, materials.HUD_DAY_COLOR }
 -- force preload resources to avoid freeze on start (list of texture files)
 --[[
 preload_texture =

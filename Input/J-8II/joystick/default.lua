@@ -524,6 +524,10 @@ return {
         { down = Keys.MusicFastForward, name = _('Music Play Fast Forward'), category = _('Music Player') },
         { down = Keys.MusicFastBack, name = _('Music Play Fast Backward'), category = _('Music Player') },
         { down = Keys.MusicLrcViewTrigger, name = _('Music Display Lyrics'), category = _('Music Player') },
+        { down = Keys.ToGun, value_down = 1.0, name = _('Select Gun'), category = { _('Stick'), _('HOTAS') } },
+        { down = Keys.ToAAMRdr, value_down = 1.0, name = _('Select AMRAAM'), category = { _('Stick'), _('HOTAS') } },
+        { down = Keys.ToAAMIr, value_down = 1.0, name = _('Select Sidewinder'), category = { _('Stick'), _('HOTAS') } },
+        { down = Keys.NextWeapon,value_down = 1.0,name = _('Next Weapon'),category = { _('Stick'), _('HOTAS') } },
     },
 
     -- joystick axes
@@ -558,9 +562,6 @@ return {
 
         -- trim
         { action = iCommandPlaneTrimPitch, name = _('Elevator Trim') },
-        { down = Keys.ToGun, value_down = 1.0, name = _('Select Gun'), category = { _('Stick'), _('HOTAS') } },
-        { down = Keys.ToAAMRdr, value_down = 1.0, name = _('Select AMRAAM'), category = { _('Stick'), _('HOTAS') } },
-        { down = Keys.ToAAMIr, value_down = 1.0, name = _('Select Sidewinder'), category = { _('Stick'), _('HOTAS') } },
     },
 
 }

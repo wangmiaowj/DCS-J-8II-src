@@ -26,10 +26,10 @@ J8II_FM =
             amortizer_direct_damper_force_factor = 40000.0,
             amortizer_back_damper_force_factor   = 20000.0,
             
-            wheel_static_friction_factor = 0.75,
-            wheel_side_friction_factor   = 0.35 ,
+            wheel_static_friction_factor = 0.85,
+            wheel_side_friction_factor   = 0.65 ,
             wheel_roll_friction_factor   = 0.12 ,
-            wheel_glide_friction_factor  = 0.35 ,
+            wheel_glide_friction_factor  = 0.65 ,
             wheel_damage_force_factor    = 450.0,
             wheel_damage_speed           = 102,
             wheel_damage_speedX          = 102,

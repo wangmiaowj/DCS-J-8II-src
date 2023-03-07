@@ -738,6 +738,7 @@ Keys =
 	autoStart = __custom_counter(),
 	autoStop = __custom_counter(),
 	ShowParamList = __custom_counter(),
+	NextWeapon = __custom_counter(),
     --起落架手柄 5001// 5050 EFM - 6000 for EFM
 	
     NoseWheelSteeringOn = 5050,
