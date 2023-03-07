@@ -49,3 +49,5 @@ Add(Base_Indication_clip)
 dofile(LockOn_Options.script_path.."HUD/Indicator/hud_warning_sign.lua")
 -- 加载导航标记
 dofile(LockOn_Options.script_path.."HUD/Indicator/hud_nav_page.lua")
+-- 加载武器作战相关页面
+dofile(LockOn_Options.script_path.."HUD/Indicator/hud_weapon_page.lua")

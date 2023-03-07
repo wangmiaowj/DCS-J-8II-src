@@ -410,6 +410,7 @@ return {
         { combos = { { key = 'X', reformers = { 'LShift' } } },                                                      down = Keys.ToGun,                                     value_down = 1.0,                                            name = _('Select Gun'),                     category = { _('Stick'), _('HOTAS') } },
         { combos = { { key = 'D', reformers = { 'LShift' } } },                                                      down = Keys.ToAAMRdr,                                  value_down = 1.0,                                            name = _('Select AMRAAM'),                  category = { _('Stick'), _('HOTAS') } },
         { combos = { { key = 'S', reformers = { 'LShift' } } },                                                      down = Keys.ToAAMIr,                                   value_down = 1.0,                                            name = _('Select Sidewinder'),              category = { _('Stick'), _('HOTAS') } },
+        { combos = { { key = 'D' } },                                                      down = Keys.NextWeapon,                                   value_down = 1.0,                                            name = _('Next Weapon'),              category = { _('Stick'), _('HOTAS') } },
 
         ------------------------------------------
         -- Cheat ------------------------------------
