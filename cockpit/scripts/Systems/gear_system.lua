@@ -68,9 +68,7 @@ function post_initialize()
         --gear_system:performClickableAction(click_cmd.GearLevel, 1, false)
     end
 
-    set_aircraft_draw_argument_value(0, nose_gear_status)
-    set_aircraft_draw_argument_value(3, r_main_gear_status)
-    set_aircraft_draw_argument_value(5, l_main_gear_status)
+    
     gear_level:set(1 - nose_gear_status)
     gear_state_share:set(nose_gear_status)
     gear_level_pos = 1 - nose_gear_status

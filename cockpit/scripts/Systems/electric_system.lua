@@ -11,45 +11,6 @@ make_default_activity(update_time_step)
 
 local sensor_data = get_base_data()
 
-
-local power_load = get_param_handle("PWR_LOAD")
-power_load:set( -0.01) --默认电源负载0.01
-
-electric_system:listen_command(Keys.InverterLeft)
-electric_system:listen_command(Keys.InverterRight)
-electric_system:listen_command(Keys.BatteryPower)
-electric_system:listen_command(Keys.ElecPowerDCGenL)
-electric_system:listen_command(Keys.ElecPowerDCGenR)
-electric_system:listen_command(Keys.ADIPwr)
-electric_system:listen_command(Keys.HSIPwr)
-electric_system:listen_command(Keys.RadioAltPwr)
-electric_system:listen_command(Keys.OilPressIndPwr)
-electric_system:listen_command(Keys.EmergConverter)
-electric_system:listen_command(Keys.WeaponPwr)
-electric_system:listen_command(Keys.HUDPwr)
-electric_system:listen_command(Keys.RWRPwr)
-electric_system:listen_command(Keys.EjectPwr1)
-electric_system:listen_command(Keys.EjectPwr2)
-electric_system:listen_command(Keys.EjectPwr3)
-electric_system:listen_command(Keys.UnknownSwitch1)
-electric_system:listen_command(Keys.UnknownSwitch2)
-electric_system:listen_command(Keys.CameraGunPwrSwitch)
-electric_system:listen_command(Keys.MissileWarmingSwitch)
-electric_system:listen_command(Keys.MissileFilamentSwitch)
-electric_system:listen_command(Keys.MissileLaunchSwitch)
-electric_system:listen_command(Keys.pylon1Pwr)
-electric_system:listen_command(Keys.pylon2Pwr)
-electric_system:listen_command(Keys.pylon3Pwr)
-electric_system:listen_command(Keys.pylon4Pwr)
-electric_system:listen_command(Keys.pylon5Pwr)
-electric_system:listen_command(Keys.pylon6Pwr)
-electric_system:listen_command(Keys.pylon7Pwr)
-electric_system:listen_command(Keys.blackBoxPwr)
-electric_system:listen_command(Keys.rspPwr)
-electric_system:listen_command(Keys.apkPwr)
-electric_system:listen_command(Keys.batteryHeating)
-electric_system:listen_command(Keys.lidSow_Hide)
-
 electric_system:listen_event('GroundPowerOn')
 electric_system:listen_event('GroundPowerOff')
 
@@ -71,7 +32,26 @@ end
 local main_power_switch        = _switch_counter() --蓄电池
 local left_real_gen_switch     = _switch_counter() --左发电机
 local right_real_gen_switch    = _switch_counter() --右发电机
+local left_inverter_switch     = _switch_counter() --逆变器左
+local right_inverter_switch    = _switch_counter() --逆变器右
 local battery_capacity         = _switch_counter() --电池容量
+local adi_pwr                  = _switch_counter() --姿态仪供电
+local hsi_pwr                  = _switch_counter() --罗盘供电
+local radio_alt_pwr            = _switch_counter() --无线电高度表供电
+local oil_hyd_pwr              = _switch_counter() --滑油压力表供电
+local converter_emerg_converse = _switch_counter() --变流机应急转换
+local weapon_pwr               = _switch_counter() --武器供电
+local hud_pwr                  = _switch_counter() --HUD供电
+local rwr_pwr                  = _switch_counter() --RWR供电
+local eject_pwr1               = _switch_counter() --弹射逃生系统供电1
+local eject_pwr2               = _switch_counter() --弹射逃生系统供电2
+local eject_pwr3               = _switch_counter() --弹射逃生系统供电3
+local unknow1                  = _switch_counter()
+local unknow2                  = _switch_counter()
+local camera_gun               = _switch_counter() --照相枪供电
+local msl_warming              = _switch_counter() --导弹加温供电
+local msl_filament             = _switch_counter() --导弹灯丝
+local msl_launch               = _switch_counter() --导弹发射
 
 local pylon1_pwr               = _switch_counter() --1号挂架电源
 local pylon2_pwr               = _switch_counter() --2号挂架电源
@@ -90,7 +70,26 @@ local display_target_status    = {
     { main_power_switch,        SWITCH_OFF, get_param_handle("PNT_1001"),         "PNT_1001" },
     { left_real_gen_switch,     SWITCH_OFF, get_param_handle("PNT_1002"),         "PNT_1002" },
     { right_real_gen_switch,    SWITCH_OFF, get_param_handle("PNT_1003"),         "PNT_1003" },
+    { left_inverter_switch,     SWITCH_OFF, get_param_handle("PNT_1004"),         "PNT_1004" },
+    { right_inverter_switch,    SWITCH_OFF, get_param_handle("PNT_1005"),         "PNT_1005" },
     { battery_capacity,         1000,       get_param_handle("BATTERY_CAPACITY"), nil },
+    { adi_pwr,                  SWITCH_OFF, get_param_handle("PNT_1006"),         "PNT_1006" },
+    { hsi_pwr,                  SWITCH_OFF, get_param_handle("PNT_1007"),         "PNT_1007" },
+    { radio_alt_pwr,            SWITCH_OFF, get_param_handle("PNT_1008"),         "PNT_1008" },
+    { oil_hyd_pwr,              SWITCH_OFF, get_param_handle("PNT_1009"),         "PNT_1009" },
+    { converter_emerg_converse, SWITCH_OFF, get_param_handle("PNT_1010"),         "PNT_1010" },
+    { weapon_pwr,               SWITCH_OFF, get_param_handle("PNT_1011"),         "PNT_1011" },
+    { hud_pwr,                  SWITCH_OFF, get_param_handle("PNT_1012"),         "PNT_1012" },
+    { rwr_pwr,                  SWITCH_OFF, get_param_handle("PNT_1013"),         "PNT_1013" },
+    { eject_pwr1,               SWITCH_OFF, get_param_handle("PNT_1014"),         "PNT_1014" },
+    { eject_pwr2,               SWITCH_OFF, get_param_handle("PNT_1015"),         "PNT_1015" },
+    { eject_pwr3,               SWITCH_OFF, get_param_handle("PNT_1016"),         "PNT_1016" },
+    { unknow1,                  SWITCH_OFF, get_param_handle("PNT_1017"),         "PNT_1017" },
+    { unknow2,                  SWITCH_OFF, get_param_handle("PNT_1018"),         "PNT_1018" },
+    { camera_gun,               SWITCH_OFF, get_param_handle("PNT_1019"),         "PNT_1019" },
+    { msl_warming,              SWITCH_OFF, get_param_handle("PNT_1020"),         "PNT_1020" },
+    { msl_filament,             SWITCH_OFF, get_param_handle("PNT_1021"),         "PNT_1021" },
+    { msl_launch,               SWITCH_OFF, get_param_handle("PNT_1022"),         "PNT_1022" },
     { pylon1_pwr,               SWITCH_OFF, get_param_handle("PNT_1081"),         "PNT_1081" },
     { pylon2_pwr,               SWITCH_OFF, get_param_handle("PNT_1082"),         "PNT_1082" },
     { pylon3_pwr,               SWITCH_OFF, get_param_handle("PNT_1083"),         "PNT_1083" },
@@ -116,6 +115,17 @@ local sndhost = create_sound_host("COCKPIT", "3D", 0, 0, 0)
 local snd_list = {
     { avionics_AC_snd, sndhost:create_sound("Aircrafts/Cockpits/Avionics_AC_400Hz") },
 }
+
+local function update_switch_status()
+    for k, v in pairs(display_target_status) do
+        display_target_status[k][2] = display_target_status[k][3]:get()
+        if display_target_status[k][4] ~= nil then
+            local temp_switch_ref = get_clickable_element_reference(display_target_status[k][4])
+            temp_switch_ref:update()
+        end
+        -- print_message_to_user(k)
+    end
+end
 
 local function update_elec_state() --更新电力总线状态
     if display_target_status[main_power_switch][3]:get() > 0.5 and display_target_status[battery_capacity][3]:get() > 0 and (electric_system:get_DC_Bus_1_voltage() <= 0 or electric_system:get_DC_Bus_2_voltage() <= 0) then
@@ -196,6 +206,7 @@ local function update_click_view()
 end
 
 function update() --刷新状态
+    update_switch_status()
     update_elec_state()
     update_snd()
     update_click_view()
