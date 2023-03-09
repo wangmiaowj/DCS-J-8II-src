@@ -98,6 +98,8 @@ LightSystem:listen_command(Keys.LightInstruBRT)
 LightSystem:listen_command(Keys.LightConsoleBRT)
 LightSystem:listen_command(Keys.LightApproIndexBRT)
 LightSystem:listen_command(Keys.SpecialSence)
+LightSystem:listen_command(Keys.PlaneHeadLightOnOff)
+LightSystem:listen_command(Keys.Planelight)
 
 local special_display_status = 0;
 local special_display_current = 0;
