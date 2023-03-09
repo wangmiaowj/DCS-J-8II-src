@@ -428,7 +428,8 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon001", arg = 309, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon001", arg = 309, arg_value = 0.5 },
 
-					{ CLSID = "<CLEAN>", connector = "pylon001", arg = 309, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon001", arg = 309, arg_value = 0.0,
+						required = { { station = 7, loadout = { "<CLEAN>" } } } },
 				}
 			),
 
@@ -499,7 +500,8 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon002", arg = 310, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon002", arg = 310, arg_value = 0.5 },
 
-					{ CLSID = "<CLEAN>", connector = "pylon002", arg = 310, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon002", arg = 310, arg_value = 0.0,
+						required = { { station = 6, loadout = { "<CLEAN>" } } } },
 				}
 			),
 			pylon(3, 1, 0, 0, 0,
@@ -565,7 +567,8 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon003", arg = 311, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon003", arg = 311, arg_value = 0.5 },
 
-					{ CLSID = "<CLEAN>", connector = "pylon003", arg = 311, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon003", arg = 311, arg_value = 0.0 ,
+					required = { { station = 5, loadout = { "<CLEAN>" } } } }
 				}
 			),
 			pylon(4, 1, 0, 0, 0,
@@ -657,7 +660,8 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon005", arg = 313, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon005", arg = 313, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon005", arg = 313, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon005", arg = 313, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon005", arg = 313, arg_value = 0.0,
+					required = { { station = 3, loadout = { "<CLEAN>" } } }  },
 
 				}
 			),
@@ -727,7 +731,8 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon006", arg = 314, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon006", arg = 314, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon006", arg = 314, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon006", arg = 314, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon006", arg = 314, arg_value = 0.0 ,
+					required = { { station = 2, loadout = { "<CLEAN>" } } } },
 
 				}
 			),
@@ -776,7 +781,8 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon007", arg = 315, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon007", arg = 315, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon007", arg = 315, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon007", arg = 315, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon007", arg = 315, arg_value = 0.0 ,
+					required = { { station = 1, loadout = { "<CLEAN>" } } } },
 				}
 			)
 

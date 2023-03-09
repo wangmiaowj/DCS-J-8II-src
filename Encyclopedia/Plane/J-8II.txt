@@ -2,39 +2,38 @@ J-8II
 Plane/J-8II.png
 J-8II
 
-Length: 21,59m (with Pitot tube)
-Height: 5,41m
-Wingspan: 9,34m
-Wing area: 26m2
-Max.speed: 2.350km/h TAS / 1.300km/h IAS / 2.05M
-Max. climb rate: 200m/s
-Service ceiling: 17.500m
-Cruise speed: 800km/h TAS
-Take-off speed: 360km/h IAS
-Landing speed: 280-300km/h IAS
-Max range: 1.850km
-Normal takeoff weight: 8725kg
-Max. takeoff weight: 10.400kg
-Powerplant: Tumansky R25-300
-static thrust 41kN / 70kN
+Length: 21.59m (with Pitot tube)
+Height: 5.41m
+Wingspan: 9.34m
+Wing area: 21m²
+Max speed: 2350km/h TAS / 1300km/h IAS / 2.2M
+Max climb rate: 200m/s
+Service ceiling: 20000m
+Cruise speed: 980km/h / 0.8M TAS
+Take-off distance: 670m
+Landing distance: 1000m
+Max range: 2200km
+Empty weight: 9820kg
+Normal takeoff weight: 13850kg
+Max takeoff weight: 17800kg
+Powerplant: WP-7A
+static thrust 76.4kN / 112.6kN (2 Engine)
 
 Fuel capacity:
-Main: 2850l = 2280kg
-Wings drop tanks: 2 x 490l = 780kg
-Ventral drop tank: 800l = 640kg
+Main: 5225l = 4050kg
+Wings drop tanks: 2 x 1419l = 2200kg
+Ventral drop tank: 1032l = 800kg
 
 Armament:
 GSh-23L 23mm gun, 250 rounds
 	Air to Air missiles:
-RS-2US Semi-active radar homing
-R-3S Infra Red Homing
-R-3R Semi-active radar homing
-R-13M and M1 Infra Red Homing
-R-60A Infra Red Homing
-R-60M Infra Red Homing
+PL-11 radar  Homing
+Aspide MK1 Semi-active radar
+PL-8A red homing
+PL-5EII red homing
 	Rockets:
 S-24A and B
 UB-32-57 (S-5)
 UB-16-57 (S-5)
 	Bombs:
-100-500kg
+FAB 100-500kg

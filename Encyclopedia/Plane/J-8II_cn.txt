@@ -1,40 +1,39 @@
-J-8II
+歼-8II
 Plane/J-8II.png
-J-8II
+歼-8II
 
-Length: 21,59m (with Pitot tube)
-Height: 5,41m
-Wingspan: 9,34m
-Wing area: 26m2
-Max.speed: 2.350km/h TAS / 1.300km/h IAS / 2.05M
-Max. climb rate: 200m/s
-Service ceiling: 17.500m
-Cruise speed: 800km/h TAS
-Take-off speed: 360km/h IAS
-Landing speed: 280-300km/h IAS
-Max range: 1.850km
-Normal takeoff weight: 8725kg
-Max. takeoff weight: 10.400kg
-Powerplant: Tumansky R25-300
-static thrust 41kN / 70kN
+长度：21.59m（带皮托管）
+高度：5.41m
+臂展：9.34m
+翼面积：21m²
+最大速度：2350km/h 真速1300km/h 表速2.2M
+最大爬升率：200m/s
+实用升限：20000m
+巡航速度：980km/h /0.8M 真速
+起飞距离：670m
+着陆距离：1000m
+最大航程：2200km
+空重：9820kg
+正常起飞重量：13850kg
+最大起飞重量：17800kg
+动力装置：WP-7A
+静态推力 76.4kN /112.6kN（2 台发动机）
 
-Fuel capacity:
-Main: 2850l = 2280kg
-Wings drop tanks: 2 x 490l = 780kg
-Ventral drop tank: 800l = 640kg
+燃料容量：
+内油：5225升 = 4050公斤
+机翼副油箱：2 x 1419升 = 2200公斤
+腹侧副油箱：1032升 = 800公斤
 
-Armament:
-GSh-23L 23mm gun, 250 rounds
-	Air to Air missiles:
-RS-2US Semi-active radar homing
-R-3S Infra Red Homing
-R-3R Semi-active radar homing
-R-13M and M1 Infra Red Homing
-R-60A Infra Red Homing
-R-60M Infra Red Homing
-	Rockets:
-S-24A and B
+武器：
+GSh-23L 23毫米火炮，250 发子弹
+空空导弹：
+PL-11雷达制导
+Aspide MK1 半主动雷达制导
+PL-8A 红外制导
+PL-5EII 红外制导
+火箭弹：
+S-24A 和 B
 UB-32-57 (S-5)
 UB-16-57 (S-5)
-	Bombs:
-100-500kg
+炸弹：
+FAB 100-500kg
