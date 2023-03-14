@@ -60,7 +60,9 @@ local current_status = {
 
 function post_initialize()
     local birth = LockOn_Options.init_conditions.birth_place
-    if birth == "GROUND_HOT" then
+    local current_time_in_second = get_absolute_model_time()
+    local current_hour = current_time_in_second / 3600
+    if birth == "GROUND_HOT" or birth == "AIR_HOT" then
         target_status = {
             { strobe_light_switch, SWITCH_ON, get_param_handle("PNT_1112"), "PNT_1112" },
             { taxi_light_switch, 0.5, get_param_handle("PNT_1197"), "PNT_1197" },
@@ -70,16 +72,10 @@ function post_initialize()
             { instrument_light_switch, SWITCH_ON, get_param_handle("PNT_1062"), "PNT_1062" },
             { console_light_switch, 0.3, get_param_handle("PTN_131"), "PTN_131" },
         }
-    elseif birth == "AIR_HOT" then
-        target_status = {
-            { strobe_light_switch, SWITCH_ON, get_param_handle("PNT_1112"), "PNT_1112" },
-            { taxi_light_switch, 0.5, get_param_handle("PNT_1197"), "PNT_1197" },
-            { wing_navi_switch, SWITCH_ON, get_param_handle("PNT_1110"), "PNT_1110" },
-            { formation_switch, SWITCH_OFF, get_param_handle("PTN_130"), "PTN_130" },
-            { flood_light_switch, SWITCH_OFF, get_param_handle("PNT_1061"), "PNT_1061" },
-            { instrument_light_switch, SWITCH_ON, get_param_handle("PNT_1062"), "PNT_1062" },
-            { console_light_switch, 0.3, get_param_handle("PTN_131"), "PTN_131" },
-        }
+        if !(current_hour > 8 and current_hour < 18) then
+            target_status[flood_light_switch][2] = SWITCH_ON
+            target_status[console_light_switch][2] = SWITCH_ON
+        end
     end
 end
 
