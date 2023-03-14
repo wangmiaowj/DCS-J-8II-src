@@ -723,9 +723,9 @@ local LSWM_AG = {
 		march_start = 0.021,
 	},
 	march                  = {
-		impulse                         = 205,
-		fuel_mass                       = 7000,
-		work_time                       = 600,
+		impulse                         = 240,
+		fuel_mass                       = 1000,
+		work_time                       = 60,
 		boost_time                      = 0,
 		boost_factor                    = 0,
 		nozzle_position                 = { { -1.74, -0.11, 0 } },
@@ -749,7 +749,7 @@ local LSWM_AG = {
 		Sw         = 0.85,
 		dCydA      = { 0.07, 0.036 },
 		A          = 0.36,
-		maxAoa     = 0.88,
+		maxAoa     = 1.57,
 		finsTau    = 0.1,
 
 		Ma_x       = 0.001,
@@ -836,11 +836,11 @@ declare_loadout({
 
 declare_loadout({
 	CLSID             = '{LSWM_AA}',
-	category          = CAT_AIR_TO_AIR,
+	category          = LSWM_AA.category,
 	Picture           = "AGM154.png",
 	PictureBlendColor = "0xffffffff",
 	displayName       = LSWM_AA.user_name,
-	Weight            = LSWM_AA.mass,
+	Weight            = 100,
 	attribute         = LSWM_AA.wsTypeOfWeapon,
 	Elements          =
 	{

@@ -3,7 +3,7 @@
 
 local function make_J_8II(rewrite_settings)
 
-	local rewrite_settings = rewrite_settings or { Name = 'J-8II', DisplayName = 'J-8II', }
+	local rewrite_settings = rewrite_settings or { Name = 'J-8II', DisplayName = _('J-8II'), }
 
 	local base_J_8II = {
 
@@ -124,8 +124,7 @@ local function make_J_8II(rewrite_settings)
 			---[[
 			RADAR =
 			{
-				clsid = "RP-22SM_Sapfir",
-				type = RADAR_AS,
+				type = RADAR_MULTIROLE,
 				scan_volume =
 				{
 					azimuth = { -30.0, 30.0 },
