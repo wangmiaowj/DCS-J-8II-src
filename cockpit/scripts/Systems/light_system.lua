@@ -72,7 +72,7 @@ function post_initialize()
             { instrument_light_switch, SWITCH_ON, get_param_handle("PNT_1062"), "PNT_1062" },
             { console_light_switch, 0.3, get_param_handle("PTN_131"), "PTN_131" },
         }
-        if !(current_hour > 8 and current_hour < 18) then
+        if not (current_hour > 8 and current_hour < 18) then
             target_status[flood_light_switch][2] = SWITCH_ON
             target_status[console_light_switch][2] = SWITCH_ON
         end
