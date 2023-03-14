@@ -28,11 +28,11 @@ function update()
 	set_aircraft_draw_argument_value(16, PITCH_STATE) -- left canard
 
 	local RUDDER_STATE = sensor_data:getRudderPosition() / 100
-	if sensor_data:getNoseLandingGearDown() == 1 then
-		set_aircraft_draw_argument_value(2, -RUDDER_STATE)
-	else
-		set_aircraft_draw_argument_value(2, 0)
-	end
+	-- if sensor_data:getNoseLandingGearDown() == 1 then
+	-- 	set_aircraft_draw_argument_value(2, -RUDDER_STATE)
+	-- else
+	-- 	set_aircraft_draw_argument_value(2, 0)
+	-- end
     set_aircraft_draw_argument_value(17, -RUDDER_STATE)
     set_aircraft_draw_argument_value(18, -RUDDER_STATE)
 	
