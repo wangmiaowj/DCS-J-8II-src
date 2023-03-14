@@ -40,18 +40,7 @@ GUI = {
 local current_freq = 256E6
 
 dev:listen_command(Keys.RadioUpdate)
-dev:listen_command(Keys.UHF_Key_0)
-dev:listen_command(Keys.UHF_Key_1)
-dev:listen_command(Keys.UHF_Key_2)
-dev:listen_command(Keys.UHF_Key_3)
-dev:listen_command(Keys.UHF_Key_4)
-dev:listen_command(Keys.UHF_Key_5)
-dev:listen_command(Keys.UHF_Key_6)
-dev:listen_command(Keys.UHF_Key_7)
-dev:listen_command(Keys.UHF_Key_8)
-dev:listen_command(Keys.UHF_Key_9)
-dev:listen_command(Keys.UHF_Key_ENT)
-dev:listen_command(Keys.UHF_Key_MAN)
+dev:listen_command(Keys.UHF_PIT)
 
 function check_frequency_change()
 	-- check if override by efm radio system
@@ -103,6 +92,7 @@ end
 
 
 function SetCommand(command,value)
+	print_message_to_user(command)
 	check_frequency_change()
 	
 end

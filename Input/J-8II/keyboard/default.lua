@@ -43,6 +43,7 @@ return {
         { combos = { { key = 'B', reformers = { 'LWin' } } },                                                        down = iCommandPlane_EngageBandits,                    name = _('Flight - Engage Bandits'),                         category = _('Communications') },
         { combos = { { key = '\\' } },                                                                               down = iCommandToggleCommandMenu,                      name = _('Communication menu'),                              category = _('Communications') },
         { combos = { { key = '\\', reformers = { 'LShift' } } },                                                     down = ICommandSwitchDialog,                           name = _('Switch dialog'),                                   category = _('Communications') },
+        { combos = { { key = '\\', reformers = { 'RAlt' } } },                                                     down = Keys.UHF_PIT,                           name = _('UHF Pit'),                                   category = _('Communications') },
         { combos = { { key = '\\', reformers = { 'LCtrl' } } },                                                      down = ICommandSwitchToCommonDialog,                   name = _('Switch to main menu'),                             category = _('Communications') },
 
         -- View
