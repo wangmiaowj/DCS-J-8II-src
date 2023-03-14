@@ -40,14 +40,13 @@ GUI = {
 local current_freq = 256E6
 
 dev:listen_command(Keys.RadioUpdate)
-dev:listen_command(Keys.UHF_PIT)
 
 function check_frequency_change()
 	-- check if override by efm radio system
 	local freq_efm_signal = get_param_handle("RADIO_EFM_CHANGED")
 	local freq_uplink_signal = get_param_handle("RADIO_2EFM_CHANGED")
 	local freqency_EFM_exchange = get_param_handle("RADIO_UHF_FREQ_EXC")
-	dprintf("current Freq:"..dev:get_frequency())
+	-- dprintf(sprintf("current Freq: %d", dev:get_frequency()))
 	-- check if override by simple radio system
 	if (dev:get_frequency() ~= current_freq) then
 		-- send to efm, change display
@@ -92,9 +91,7 @@ end
 
 
 function SetCommand(command,value)
-	print_message_to_user(command)
 	check_frequency_change()
-	
 end
 
 function update()
