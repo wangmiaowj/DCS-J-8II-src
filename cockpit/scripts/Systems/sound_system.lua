@@ -27,15 +27,15 @@ function post_initialize()
     -- initial the sound
     -- center panel
     sndhost_cockpit_left            = create_sound_host("COCKPIT_LDP","3D",0.3,-0.3,-0.3) 
-    snd_left_panel_switch           = sndhost_cockpit_left:create_sound("Aircrafts/Cockpits/Switch1")
+    snd_left_panel_switch           = sndhost_cockpit_left:create_sound("Aircrafts/Cockpits/SwitchDefault")
     -- center panel
     sndhost_cockpit_center          = create_sound_host("COCKPIT_CDP","3D",0.3,-0.3,0.3) 
-    snd_center_panel_switch         = sndhost_cockpit_center:create_sound("Aircrafts/Cockpits/Switch2")
     snd_motor_start = sndhost_cockpit_center:create_sound("Aircrafts/ASU")
     snd_motor_stop = sndhost_cockpit_center:create_sound("Aircrafts/ASU_End")
+    snd_center_panel_switch         = sndhost_cockpit_center:create_sound("Aircrafts/Cockpits/SwitchDefault")
     -- center panel
     sndhost_cockpit_right           = create_sound_host("COCKPIT_RDP","3D",0.3,-0.3,0.9) 
-    snd_right_panel_switch          = sndhost_cockpit_right:create_sound("Aircrafts/Cockpits/Switch1")
+    snd_right_panel_switch          = sndhost_cockpit_right:create_sound("Aircrafts/Cockpits/SwitchDefault")
     -- electrical power
     sndhost_electrical              = create_sound_host("ELECTRIC_UNIT", "3D", -0.5, 0, 0)
     snd_main_electric_invert        = sndhost_electrical:create_sound("Aircrafts/Cockpits/Avionics_AC_400Hz")
