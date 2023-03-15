@@ -122,5 +122,5 @@ function J_8II:onUpdate(params)
 end
 
 J_8II:createEngines()
-J_8II:createAPU(BasicAPU:new(), host)
+aircraft:createAPU(BasicAPU:new(), host)
 J_8II:createCanopy()
