@@ -723,9 +723,9 @@ local LSWM_AG = {
 		march_start = 0.021,
 	},
 	march                  = {
-		impulse                         = 240,
-		fuel_mass                       = 1000,
-		work_time                       = 60,
+		impulse                         = 200,
+		fuel_mass                       = 600,
+		work_time                       = 30,
 		boost_time                      = 0,
 		boost_factor                    = 0,
 		nozzle_position                 = { { -1.74, -0.11, 0 } },
