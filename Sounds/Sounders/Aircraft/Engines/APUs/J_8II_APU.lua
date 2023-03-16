@@ -9,16 +9,16 @@ end
 
 function J_8II_APU:create(APUhost)
 	self.rpm_sub = 0
-	self.sndAPU = ED_AudioAPI.createSource(APUhost, "Aircrafts/Engines/Motor/J8Motor")
-	self.sndAPUbegin = ED_AudioAPI.createSource(APUhost, "Aircrafts/Engines/Motor/J8MotorBegin")
+	self.sndAPU = ED_AudioAPI.createSource(APUhost, "Aircrafts/J-8/Engines/Motor/J8Motor")
+	self.sndAPUbegin = ED_AudioAPI.createSource(APUhost, "Aircrafts/J-8/Engines/Motor/J8MotorBegin")
 	self.sndAPUEnd = ED_AudioAPI.createSource(APUhost, "Aircrafts/ASU_End")
 end
 
 function J_8II_APU:createCpt(APUhostCpt)
-	self.cockpit.sndAPU = ED_AudioAPI.createSource(APUhostCpt, "Aircrafts/Engines/Motor/J8Motor")
+	self.cockpit.sndAPU = ED_AudioAPI.createSource(APUhostCpt, "Aircrafts/J-8/Engines/Motor/J8Motor")
 	ED_AudioAPI.linkSource(self.sndAPU, self.cockpit.sndAPU)
 	
-	self.cockpit.sndAPUbegin = ED_AudioAPI.createSource(APUhostCpt, "Aircrafts/Engines/Motor/J8MotorBegin")
+	self.cockpit.sndAPUbegin = ED_AudioAPI.createSource(APUhostCpt, "Aircrafts/J-8/Engines/Motor/J8MotorBegin")
 	ED_AudioAPI.linkSource(self.sndAPUbegin, self.cockpit.sndAPUbegin)
 
 	self.cockpit.sndAPUEnd = ED_AudioAPI.createSource(APUhostCpt, "Aircrafts/ASU_End")
