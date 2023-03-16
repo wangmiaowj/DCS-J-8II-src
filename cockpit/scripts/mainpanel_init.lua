@@ -124,6 +124,8 @@ animation_list = {
     {"MASTER_CAUTION_RESET", 128},
     {"HSI_L_KNOB", 129},
     {"HSI_LOCK_3", 147},
+	{"CONSOLE_LIGHTING", 178,{0,1},{0,1}},
+	{"IND_LIGHTING", 179,{0,1},{0,1}},
     {"CPT_LIGHTING", 180,{0,1},{0,1}},
     {"CPT_COVER", 181,{0,1},{0,1}},
 	{"CPT_PRESSURE_1", 230},

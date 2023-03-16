@@ -1,0 +1,4 @@
+wave = "Effects/Aircrafts/J-8/Engines/Motor/J8MotorBegin"
+inner_radius = 10
+outer_radius = 200
+gain = 0.5

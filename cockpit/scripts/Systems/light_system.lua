@@ -38,6 +38,8 @@ local console_light_switch = _switch_counter()
 local gear_state_share = get_param_handle("GEAR_SHARE")
 
 local cpt_lighting = get_param_handle("CPT_LIGHTING")
+local ind_lighting = get_param_handle("IND_LIGHTING")
+local console_lighting = get_param_handle("CONSOLE_LIGHTING")
 local target_status = {
     { strobe_light_switch, SWITCH_OFF, get_param_handle("PNT_1112"), "PNT_1112" },
     { taxi_light_switch, 0.5, get_param_handle("PNT_1197"), "PNT_1197" },
@@ -117,12 +119,12 @@ function SetCommand(command, value)
     elseif command == Keys.LightTaxiUP then
         -- print_message_to_user(target_status[taxi_light_switch][2])
         if target_status[taxi_light_switch][2] < 0.8 then
-            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] + 0.5
+            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] + 1
             dispatch_action(devices.SOUND_SYSTEM, Keys.SND_CENTER_PANEL, cockpit_sound.basic_switch)
         end
     elseif command == Keys.LightTaxiDOWN then
-        if target_status[taxi_light_switch][2] > 0.3 then
-            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] - 0.5
+        if target_status[taxi_light_switch][2] > -0.8 then
+            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] - 1
             dispatch_action(devices.SOUND_SYSTEM, Keys.SND_CENTER_PANEL, cockpit_sound.basic_switch)
         end
         -- fit new
@@ -232,6 +234,8 @@ end
 function update_externel_light_status()
     if get_elec_ac_status() == true or get_elec_dc_status() then
         cpt_lighting:set(target_status[flood_light_switch][2])
+        ind_lighting:set(target_status[instrument_light_switch][2])
+        console_lighting:set(target_status[instrument_light_switch][2])
         if get_elec_ac_status() then
             set_aircraft_draw_argument_value(208, taxi_light_base_pos)
             --防撞灯
@@ -277,8 +281,8 @@ function update_externel_light_status()
             if get_aircraft_draw_argument_value(0) > 0.8 then
                 -- when gear is out
                 if taxi_light_base_pos >= 0.95 then
-                    if target_status[taxi_light_switch][2] == 0 or target_status[taxi_light_switch][2] == 1 then
-                        if target_status[taxi_light_switch][2] == 0 then
+                    if target_status[taxi_light_switch][2] == -1 or target_status[taxi_light_switch][2] == 1 then
+                        if target_status[taxi_light_switch][2] == -1 then
                             set_aircraft_draw_argument_value(209, 0.5)
                         elseif target_status[taxi_light_switch][2] == 1 then
                             set_aircraft_draw_argument_value(209, 1)
