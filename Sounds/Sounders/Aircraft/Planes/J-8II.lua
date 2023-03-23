@@ -3,7 +3,7 @@ dofile("Aircraft/Planes/Plane.lua")
 J_8II = plane:new()
 J_8II.CanopyPos = 0
 dofile("Aircraft/Engines/J_8II_Engine.lua")
-dofile("Aircraft/Engines/APUs/BasicAPU.lua")
+dofile("Aircraft/Engines/APUs/J_8II_APU.lua")
 function J_8II:createEngines()
 	for i = 1, 2 do
 		self.engines[i] = J_8II_eng:new()
@@ -146,6 +146,11 @@ function J_8II:createCanopyCpt()
 	ED_AudioAPI.linkSource(self.sndCanopyEnd, self.cockpit.sndCanopyEnd)
 end
 
+function J_8II:createCockpit()
+	aircraft:createCockpit()
+	J_8II:createAPUcpt(self.cockpit.host)
+	J_8II:createCanopyCpt()
+end
 function J_8II:testFunction()
 	if self.testCount == 0 then
 		ED_AudioAPI.playSourceLooped(self.sndTest)
@@ -183,5 +188,5 @@ function J_8II:onUpdate(params)
 end
 
 J_8II:createEngines()
-aircraft:createAPU(BasicAPU:new(), host)
+aircraft:createAPU(J_8II_APU:new(), host)
 J_8II:createCanopy()

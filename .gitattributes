@@ -1,0 +1,2 @@
+textures/J-8II.zip filter=lfs diff=lfs merge=lfs -text
+cockpit/Textures/J-8II_cockpit.zip filter=lfs diff=lfs merge=lfs -text

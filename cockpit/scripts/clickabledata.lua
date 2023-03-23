@@ -574,6 +574,7 @@ elements["PNT_1214"] = default_axis(_("B Lightness"), devices.RADAR_RAW, Keys.Ra
 --elements["PNT_1215"] = default_3_position_tumb('Radar OFF/STBY/ON',devices.RADAR_RAW,Keys.RadarMode, 1215,false,false,SOUND_DEFAULT_2_WAY_SWITCH,0.1)
 
 elements["PNT_1061"] = default_axis(_("Flood Light"), devices.LIGHT_SYSTEM, Keys.LightFlood, 1061, 0, 0.1,true,true)
+elements["PNT_1062"] = default_axis(_("instrument light"), devices.LIGHT_SYSTEM, Keys.LightInstruBRT, 1062, 0, 0.1,true,true)
 -- elements["PNT_132"] = default_axis(_("Instrument Light"), devices.LIGHT_SYSTEM, Keys.LightInstruBRT, 1132, 0, 0.1)
 -- elements["PNT_131"] = default_axis(_("Console Light"), devices.LIGHT_SYSTEM, Keys.LightConsoleBRT, 1133, 0, 0.1)
 -- elements["PNT_134"] = default_axis(_("Approach Index Light"), devices.LIGHT_SYSTEM, Keys.LightApproIndexBRT, 1134, 0, 0.1)

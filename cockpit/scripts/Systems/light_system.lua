@@ -38,6 +38,8 @@ local console_light_switch = _switch_counter()
 local gear_state_share = get_param_handle("GEAR_SHARE")
 
 local cpt_lighting = get_param_handle("CPT_LIGHTING")
+local ind_lighting = get_param_handle("IND_LIGHTING")
+local console_lighting = get_param_handle("CONSOLE_LIGHTING")
 local target_status = {
     { strobe_light_switch, SWITCH_OFF, get_param_handle("PNT_1112"), "PNT_1112" },
     { taxi_light_switch, 0.5, get_param_handle("PNT_1197"), "PNT_1197" },
@@ -69,12 +71,13 @@ function post_initialize()
             { wing_navi_switch, SWITCH_ON, get_param_handle("PNT_1110"), "PNT_1110" },
             { formation_switch, SWITCH_OFF, get_param_handle("PTN_130"), "PTN_130" },
             { flood_light_switch, SWITCH_OFF, get_param_handle("PNT_1061"), "PNT_1061" },
-            { instrument_light_switch, SWITCH_ON, get_param_handle("PNT_1062"), "PNT_1062" },
+            { instrument_light_switch, SWITCH_OFF, get_param_handle("PNT_1062"), "PNT_1062" },
             { console_light_switch, 0.3, get_param_handle("PTN_131"), "PTN_131" },
         }
         if not (current_hour >= 8 and current_hour < 18) then
-            target_status[flood_light_switch][2] = SWITCH_ON
+            target_status[flood_light_switch][2] = 0.5
             target_status[console_light_switch][2] = SWITCH_ON
+            target_status[instrument_light_switch][2] = SWITCH_ON
         end
     end
 end
@@ -117,12 +120,12 @@ function SetCommand(command, value)
     elseif command == Keys.LightTaxiUP then
         -- print_message_to_user(target_status[taxi_light_switch][2])
         if target_status[taxi_light_switch][2] < 0.8 then
-            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] + 0.5
+            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] + 1
             dispatch_action(devices.SOUND_SYSTEM, Keys.SND_CENTER_PANEL, cockpit_sound.basic_switch)
         end
     elseif command == Keys.LightTaxiDOWN then
-        if target_status[taxi_light_switch][2] > 0.3 then
-            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] - 0.5
+        if target_status[taxi_light_switch][2] > -0.8 then
+            target_status[taxi_light_switch][2] = target_status[taxi_light_switch][2] - 1
             dispatch_action(devices.SOUND_SYSTEM, Keys.SND_CENTER_PANEL, cockpit_sound.basic_switch)
         end
         -- fit new
@@ -156,19 +159,15 @@ function SetCommand(command, value)
 			end
 		end
     elseif command == Keys.LightInstruBRT then
-        if value < 0.5 then
-            new_value = -0.1
-        else
-            new_value = 0.1
-        end
-        if target_status[instrument_light_switch][2] <= 1 and target_status[instrument_light_switch][2] >= 0 then
-            --print_message_to_user(new_value)
-            target_status[instrument_light_switch][2] = target_status[instrument_light_switch][2] + new_value
-        elseif target_status[instrument_light_switch][2] < 0 then
-            target_status[instrument_light_switch][2] = 0
-        elseif target_status[instrument_light_switch][2] > 1 then
-            target_status[instrument_light_switch][2] = 1
-        end
+        if target_status[instrument_light_switch][2] >= 0 and target_status[instrument_light_switch][2] <= 1 then
+			if target_status[instrument_light_switch][2] + value > 1 then
+				target_status[instrument_light_switch][2] = 1
+			elseif target_status[instrument_light_switch][2] + value < 0 then
+				target_status[instrument_light_switch][2] = 0
+			else
+				target_status[instrument_light_switch][2] = target_status[instrument_light_switch][2] + value
+			end
+		end
         --print_message_to_user(value)
         --print_message_to_user(target_status[instrument_light_switch][2])
     elseif command == Keys.LightConsoleBRT then
@@ -232,6 +231,8 @@ end
 function update_externel_light_status()
     if get_elec_ac_status() == true or get_elec_dc_status() then
         cpt_lighting:set(target_status[flood_light_switch][2])
+        ind_lighting:set(target_status[instrument_light_switch][2])
+        console_lighting:set(target_status[instrument_light_switch][2])
         if get_elec_ac_status() then
             set_aircraft_draw_argument_value(208, taxi_light_base_pos)
             --防撞灯
@@ -277,8 +278,8 @@ function update_externel_light_status()
             if get_aircraft_draw_argument_value(0) > 0.8 then
                 -- when gear is out
                 if taxi_light_base_pos >= 0.95 then
-                    if target_status[taxi_light_switch][2] == 0 or target_status[taxi_light_switch][2] == 1 then
-                        if target_status[taxi_light_switch][2] == 0 then
+                    if target_status[taxi_light_switch][2] == -1 or target_status[taxi_light_switch][2] == 1 then
+                        if target_status[taxi_light_switch][2] == -1 then
                             set_aircraft_draw_argument_value(209, 0.5)
                         elseif target_status[taxi_light_switch][2] == 1 then
                             set_aircraft_draw_argument_value(209, 1)
