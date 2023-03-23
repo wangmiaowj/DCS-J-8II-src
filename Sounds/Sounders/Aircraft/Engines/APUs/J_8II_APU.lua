@@ -8,7 +8,7 @@ function J_8II_APU:new()
 end
 
 function J_8II_APU:create(APUhost)
-	self.rpm_sub = 0
+	self.last_rpm = 0
 	self.sndAPU = ED_AudioAPI.createSource(APUhost, "Aircrafts/J-8/Engines/Motor/J8Motor")
 	self.sndAPUbegin = ED_AudioAPI.createSource(APUhost, "Aircrafts/J-8/Engines/Motor/J8MotorBegin")
 	self.sndAPUEnd = ED_AudioAPI.createSource(APUhost, "Aircrafts/ASU_End")
@@ -26,7 +26,8 @@ function J_8II_APU:createCpt(APUhostCpt)
 end
 
 function J_8II_APU:update(params)
-	self.rpm_sub = params.APU_RPM - self.rpm_sub
+	local rpm_sub = params.APU_RPM - self.last_rpm
+	self.last_rpm = params.APU_RPM
 	if params.APU_RPM < 0.01 then
 		ED_AudioAPI.stopSource(self.sndAPU)
 		ED_AudioAPI.stopSource(self.sndAPUbegin)
@@ -38,11 +39,10 @@ function J_8II_APU:update(params)
 			ED_AudioAPI.playSourceOnce(self.sndAPUbegin)
 			ED_AudioAPI.playSourceLooped(self.sndAPU)
 		end
-	elseif self.rpm_sub < 0 and not ED_AudioAPI.isSourcePlaying(self.sndAPUEnd) then
-		ED_AudioAPI.stopSource(self.sndAPU)
-		ED_AudioAPI.stopSource(self.sndAPUbegin)
-		ED_AudioAPI.playSourceOnce(self.sndAPUEnd)
-	elseif self.rpm_sub > 0 and ED_AudioAPI.isSourcePlaying(self.sndAPUEnd) then
-		ED_AudioAPI.stopSource(self.sndAPUEnd)
+		if rpm_sub < 0 and not ED_AudioAPI.isSourcePlaying(self.sndAPUEnd) then
+			ED_AudioAPI.playSourceOnce(self.sndAPUEnd)
+		elseif rpm_sub > 0 and ED_AudioAPI.isSourcePlaying(self.sndAPUEnd) then
+			ED_AudioAPI.stopSource(self.sndAPUEnd)
+		end
 	end
 end

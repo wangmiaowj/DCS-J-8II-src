@@ -54,8 +54,10 @@ InputProfiles =
 
 mount_vfs_sound_path(current_mod_path.."/Sounds")
 mount_vfs_model_path(current_mod_path.."/Shapes")
+mount_vfs_model_path(current_mod_path.."/cockpit/Shapes")
 mount_vfs_liveries_path(current_mod_path.."/Liveries")
-mount_vfs_texture_path(current_mod_path.."/Textures")
+mount_vfs_texture_path(current_mod_path.."/Textures/J-8II")
+mount_vfs_texture_path(current_mod_path.."/cockpit/Textures/J-8II_Cockpit")
 
 ---------------------------------------------------------
 dofile(current_mod_path.."/weapon.lua")

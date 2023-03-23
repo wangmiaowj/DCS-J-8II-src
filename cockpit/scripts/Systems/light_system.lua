@@ -71,12 +71,13 @@ function post_initialize()
             { wing_navi_switch, SWITCH_ON, get_param_handle("PNT_1110"), "PNT_1110" },
             { formation_switch, SWITCH_OFF, get_param_handle("PTN_130"), "PTN_130" },
             { flood_light_switch, SWITCH_OFF, get_param_handle("PNT_1061"), "PNT_1061" },
-            { instrument_light_switch, SWITCH_ON, get_param_handle("PNT_1062"), "PNT_1062" },
+            { instrument_light_switch, SWITCH_OFF, get_param_handle("PNT_1062"), "PNT_1062" },
             { console_light_switch, 0.3, get_param_handle("PTN_131"), "PTN_131" },
         }
         if not (current_hour >= 8 and current_hour < 18) then
-            target_status[flood_light_switch][2] = SWITCH_ON
+            target_status[flood_light_switch][2] = 0.5
             target_status[console_light_switch][2] = SWITCH_ON
+            target_status[instrument_light_switch][2] = SWITCH_ON
         end
     end
 end
@@ -158,19 +159,15 @@ function SetCommand(command, value)
 			end
 		end
     elseif command == Keys.LightInstruBRT then
-        if value < 0.5 then
-            new_value = -0.1
-        else
-            new_value = 0.1
-        end
-        if target_status[instrument_light_switch][2] <= 1 and target_status[instrument_light_switch][2] >= 0 then
-            --print_message_to_user(new_value)
-            target_status[instrument_light_switch][2] = target_status[instrument_light_switch][2] + new_value
-        elseif target_status[instrument_light_switch][2] < 0 then
-            target_status[instrument_light_switch][2] = 0
-        elseif target_status[instrument_light_switch][2] > 1 then
-            target_status[instrument_light_switch][2] = 1
-        end
+        if target_status[instrument_light_switch][2] >= 0 and target_status[instrument_light_switch][2] <= 1 then
+			if target_status[instrument_light_switch][2] + value > 1 then
+				target_status[instrument_light_switch][2] = 1
+			elseif target_status[instrument_light_switch][2] + value < 0 then
+				target_status[instrument_light_switch][2] = 0
+			else
+				target_status[instrument_light_switch][2] = target_status[instrument_light_switch][2] + value
+			end
+		end
         --print_message_to_user(value)
         --print_message_to_user(target_status[instrument_light_switch][2])
     elseif command == Keys.LightConsoleBRT then
