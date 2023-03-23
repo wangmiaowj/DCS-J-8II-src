@@ -62,10 +62,10 @@ local function make_J_8II(rewrite_settings)
 	},
 	]]
 		passivCounterm = {
-			CMDS_Edit = false,
-			SingleChargeTotal = 128,
-			chaff = { default = 64, increment = 64, chargeSz = 1 },
-			flare = { default = 64, increment = 64, chargeSz = 1 }
+			CMDS_Edit = true,
+			SingleChargeTotal = 256,
+			chaff = { default = 128, increment = 128, chargeSz = 1 },
+			flare = { default = 128, increment = 128, chargeSz = 1 }
 		},
 
 		Countermeasures = {
@@ -162,12 +162,10 @@ local function make_J_8II(rewrite_settings)
 		},
 
 		HumanRadio = {
-			frequency      = 124.0, -- /N/ onboard radio, default DCSW frequency, chnl 0
+			frequency      = 127.5, -- /N/ onboard radio, default DCSW frequency, chnl 0
 			editable       = true,
-			minFrequency   = 118.000,
-			maxFrequency   = 390.000,
-			rangeFrequency = { { min = 118.0, max = 140.0 },
-				{ min = 220.0, max = 390.0 } },
+			minFrequency   = 100.000,
+			maxFrequency   = 156.000,
 			modulation     = MODULATION_AM
 		},
 
