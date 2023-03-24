@@ -381,12 +381,12 @@ return {
         { down = Keys.YawDamperSwitch,                                                                               name = _('Yaw Damper Engage'),                         category = _('Flight Control') },
         { down = Keys.WingPylonSmokeOn,                                                                              name = _('Smoke Pod On/Off'),                          category = _('Weapons') },
         { down = Keys.NozzleSmokeOn,                                                                                 name = _('Nozzle Smoke On/Off'),                       category = _('Weapons') },
-        { down = Keys.WeaponLaunchOn,                                                                                up = Keys.WeaponLaunchOff,                             name = _('Weapon Fire Trigger'),                             category = _('Weapons') },
-        { down = Keys.ToGun,                                                                                         name = _('Cannon'),                                    category = _('Weapons') },
-        { down = Keys.ToAAMIr,                                                                                       name = _('ir AAM'),                                    category = _('Weapons') },
-        { down = Keys.ToAAMRdr,                                                                                      name = _('radar AAM'),                                 category = _('Weapons') },
+        { down = Keys.WeaponLaunchOn,                                                                                up = Keys.WeaponLaunchOff,                             name = _('Weapon Fire'),                             category = _('Weapons') },
+        { combos = { { key = 'X', reformers = { 'LShift' } } },down = Keys.ToGun,                                                                                         name = _('Cannon'),                                    category = _('Weapons') },
+        { combos = { { key = 'S', reformers = { 'LShift' } } },down = Keys.ToAAMIr,                                                                                       name = _('ir AAM'),                                    category = _('Weapons') },
+        { combos = { { key = 'D', reformers = { 'LShift' } } },down = Keys.ToAAMRdr,                                                                                      name = _('radar AAM'),                                 category = _('Weapons') },
         -- debug
-        {down = Keys.ShowParamList,	name = _('DEBUG RECORD'),		category = _('Debugs')},
+        { combos = { { key = 'D', reformers = { 'LAlt','LShift','LCtrl' } } },down = Keys.ShowParamList,	name = _('DEBUG RECORD'),		category = _('Debugs')},
 
 
         --HOTAS

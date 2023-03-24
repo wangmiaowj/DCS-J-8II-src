@@ -505,7 +505,7 @@ return {
 
         { down = Keys.WingPylonSmokeOn, name = _('Smoke Pod On/Off'), category = _('Weapons') },
         { down = Keys.NozzleSmokeOn, name = _('Nozzle Smoke On/Off'), category = _('Weapons') },
-        { down = Keys.WeaponLaunchOn, up = Keys.WeaponLaunchOff, name = _('Weapon Fire Trigger'), category = _('Weapons') },
+        { down = Keys.WeaponLaunchOn, up = Keys.WeaponLaunchOff, name = _('Weapon Fire'), category = _('Weapons') },
 
         --HOTAS
         { down = Keys.Flap_Pos_Up, up = Keys.Flap_Pos_Half, name = _('HOTAS Flap Up Position'), category = _('HOTAS') },
@@ -516,14 +516,6 @@ return {
         { down = Keys.Custom_Menu_Enter, name = _('Menu Enter'), category = _('Special Function') },
 
         -- Music Player
-        { down = Keys.MusicPauseOrPlay, name = _('Music Pause/Play'), category = _('Music Player') },
-        { down = Keys.MusicVolUp, name = _('Music Volume Up'), category = _('Music Player') },
-        { down = Keys.MusicVolDown, name = _('Music Volume Down'), category = _('Music Player') },
-        { down = Keys.MusicNext, name = _('Music Play Next'), category = _('Music Player') },
-        { down = Keys.MusicLast, name = _('Music Play Last'), category = _('Music Player') },
-        { down = Keys.MusicFastForward, name = _('Music Play Fast Forward'), category = _('Music Player') },
-        { down = Keys.MusicFastBack, name = _('Music Play Fast Backward'), category = _('Music Player') },
-        { down = Keys.MusicLrcViewTrigger, name = _('Music Display Lyrics'), category = _('Music Player') },
         { down = Keys.ToGun, value_down = 1.0, name = _('Select Gun'), category = { _('Stick'), _('HOTAS') } },
         { down = Keys.ToAAMRdr, value_down = 1.0, name = _('Select AMRAAM'), category = { _('Stick'), _('HOTAS') } },
         { down = Keys.ToAAMIr, value_down = 1.0, name = _('Select Sidewinder'), category = { _('Stick'), _('HOTAS') } },
