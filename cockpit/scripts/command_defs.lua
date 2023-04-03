@@ -853,17 +853,3 @@ Keys =
     SND_GEAR   = 6005,
     SND_BEACON_ROT = 6006,
 }
-
---从5000开始递增点击指令
-local start_command   = 5000
-local __count_click = start_command-1
-local function __click_counter()
-	__count_click = __count_click + 1
-	return __count_click
-end
-
-
-Click_cmd =
-{
-    GearLevel = __click_counter(), --起落架手柄
-}

@@ -10,6 +10,7 @@ local parameters = {
 utils.verifyChunk(utils.loadfileIn('Scripts/UI/RadioCommandDialogPanel/Config/LockOnAirplane.lua', getfenv()))(parameters)
 
 -- set the rocket configration
+--[[
 menus['Weapon Config'] = {
 	name = _('Rocket Configuration'),
 	items = {
@@ -44,3 +45,4 @@ menus['Install Gunsight'] = {
 
 menus['Ground Crew'].items[4] = { name = _('Weapon Configuration'), submenu = menus['Weapon Config']}
 menus['Ground Crew'].items[5] = { name = _('Gunsight Installation'), submenu = menus['Install Gunsight']}
+--]]
