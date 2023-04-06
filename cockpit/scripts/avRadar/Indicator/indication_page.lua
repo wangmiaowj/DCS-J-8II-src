@@ -3,8 +3,8 @@ dofile(LockOn_Options.script_path .. "avRadar/Indicator/definitions.lua")
 --local MARK_MATERIAL   = MakeMaterial(nil,{255,120,0,255})
 RS = RADAR_SCALE
 
-ud_scale      = 0.00001 * 0.3 * RS --0.00001
-lr_scale      = 0.095 * 0.3 * 2 * RS --0.2		--0.085
+ud_scale      = 0.00001 * 0.1 * RS --0.00001
+lr_scale      = 0.095 * 0.1 * 2 * RS --0.2		--0.085
 life_time     = 1 --1
 life_time_low = 0
 
@@ -80,10 +80,10 @@ for ia = 1, 900 do
 		--{"move_up_down_using_parameter"		,0,1.0},
 		{ "move_left_right_using_parameter", 1, lr_scale },
 		{ "move_up_down_using_parameter", 2, ud_scale },
-		{ "parameter_in_range", 2, 30, 60000 },
+		{ "parameter_in_range", 2, 30, 120000 },
 		{ "parameter_in_range", 3, life_time_low, life_time },
 		{ "change_color_when_parameter_equal_to_number", 4, 1, 1.0, 1.0, 0.0 },
-		{ "opacity_using_parameter", 5, }
+		{ "parameter_in_range", 5, -1,100}
 	}
 	radar_contact.element_params  = {
 		"RADAR_CONTACT" .. i .. "ELEVATION",

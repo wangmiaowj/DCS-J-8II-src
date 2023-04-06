@@ -33,6 +33,24 @@ target_range.level			 = HUD_BASE_DEFAULT_LEVEL
 target_range.parent_element    = target_box.name  --父节点名字 --可以绑定不在同一层的父节点
 Add(target_range)
 
+target_type             = CreateElement "ceStringPoly" --创建一个字符输出元素 "ceTexPoly"表示创建一个贴图模型
+target_type.material          = "hud_font_base"    --FONT_             --材质类型（注意上面创建的字体材质）
+target_type.init_pos          = {1 + 275 / 2000 , 0 , 0}         -- 这是设置对齐点的坐标【这是当前模型的最大限制(在边角对齐时不要超出)】
+target_type.alignment         = "LeftCenter"       --对齐方式设置：Left/Right/Center; Top/Down/Center
+target_type.stringdefs        = {0.15,0.15, 0, 0}   --{ecrase vertical si inf a 0.01,ecrase lateral * streccth, 0, 0} 第一个值控制宽度，第二个值控制高度
+target_type.formats           = {"%.2fKM","%s"} -- 这里设置输出，类似于C的printf模型 %开头的是输出类型，后面的%s是输入类型
+target_type.element_params    = {"TARGET_TYPE","TARGET_BOX_DIS_ENABLE"}
+target_type.controllers       = {{"text_using_parameter",0},{"opacity_using_parameter",1}}
+target_type.collimated        = true
+target_type.use_mipfilter     = true
+target_type.additive_alpha    = true
+target_type.isvisible		 = true
+target_type.h_clip_relation   = h_clip_relations.COMPARE -- INCREASE_IF_LEVEL-- --REWRITE_LEVEL
+target_type.level			 = HUD_BASE_DEFAULT_LEVEL
+target_type.parent_element    = target_box.name  --父节点名字 --可以绑定不在同一层的父节点
+Add(target_type)
+
+
 -- target_round 				            = CreateElement "ceTexPoly"
 -- target_round.vertices                 = hud_vert_gen(6000,6000)-- {{-106,125},{106,125},{106,-143},{-106,-143}}
 -- target_round.indices                  = {0,1,2,2,3,0}

@@ -73,6 +73,7 @@ local isEnableFire = get_param_handle("PNT_1206")
 
 local target_dis=get_param_handle("TARGET_BOX_DIS_ENABLE")
 local target_range=get_param_handle("TARGET_RANGE")
+local target_type = get_param_handle("TARGET_TYPE")
 local target_x=get_param_handle("TARGET_BOX_X")
 local target_y=get_param_handle("TARGET_BOX_Y")
 local hud_dis=get_param_handle("HUD_DIS_ENABLE")
@@ -283,8 +284,8 @@ function SetCommand(command,value)
 	
 ----------------------------------------------------------------------	
 --print_message_to_user(command)
-	if Radar.tdc_range_h:get() > 60000 then
-		Radar.tdc_range_h:set(60000) -- 目标指示附 距离
+	if Radar.tdc_range_h:get() > 1200000 then
+		Radar.tdc_range_h:set(1200000) -- 目标指示附 距离
 	elseif Radar.tdc_range_h:get() < 0 then
 		Radar.tdc_range_h:set(0)
 	end
