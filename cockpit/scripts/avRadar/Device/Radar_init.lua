@@ -156,7 +156,7 @@ function update_switch_status()
 end
 
 function post_initialize()
-
+	Radar.iff_status_h:set(1)
 	dprintf("Radar - INIT")
 		
 		RadarSystem:listen_command(100)
@@ -328,8 +328,10 @@ local radar_target_tracing_array = {}
 -- 雷达扫描增稳模式状态
 local radar_stable_status = 1
 
+local hk_mode = get_param_handle("HK_MODE")
+
 -- 设置雷达增稳状态
-function setRadarStable(stab_signal)
+local function setRadarStable(stab_signal)
 	if stab_signal == true then
 		-- 增稳打开，用于远程扫描跟踪
 		Radar.opt_pb_stab_h:set(1)
@@ -412,6 +414,12 @@ function update()
 	update_switch_status()
 	updateTargetBox()
 	update_TDC_pos()
+	local hk_mode = hk_mode:get()
+	if hk_mode == 1 or hk_mode == 3 then
+		setRadarStable(false)--增稳关闭
+	else
+		setRadarStable(true)
+	end
 	count = count + update_time_step
 	if count > 1 then
 		

@@ -94,6 +94,10 @@ local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")-- 是否锁
 local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")-- 锁定的目标的高程
 local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")-- 锁定的目标的方向
 
+local stt_azimuth_h 	= get_param_handle("RADAR_STT_AZIMUTH")--雷达STT目标方位
+local stt_elevation_h = get_param_handle("RADAR_STT_ELEVATION")--雷达STT目标高度
+local mode_h 		= get_param_handle("RADAR_MODE")--雷达锁定模式
+
 --红外弹引导头相关
 local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")-- 红外弹引导头高程
 local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")-- 红外弹引导头方向
@@ -108,6 +112,7 @@ local target_round_y = get_param_handle('TARGET_ROUND_Y')
 local hud_dis=get_param_handle("HUD_DIS_ENABLE")
 local gun_grid = get_param_handle('GUN_GRID')
 local ecmHandle = get_param_handle('ECM')
+local hk_mode = get_param_handle("HK_MODE")
 
 local weapon_name_str = get_param_handle('WEAPON_NAME')
 local weapon_name_dis = get_param_handle('WEAPON_NAME_DIS')
@@ -1144,11 +1149,16 @@ function update_ir_msl_status()
                 snd_list[sidewinder_high][2]:play_continue()
             end
         else
-            target_round_dis:set(0)
+            target_round_dis:set(1)
             target_round_x:set(0)
             target_round_y:set(0)
-            ir_missile_des_az_param:set(0)
-            ir_missile_des_el_param:set(0)
+            if mode_h:get() == 3 then
+                ir_missile_des_az_param:set(stt_azimuth_h:get())
+                ir_missile_des_el_param:set(stt_elevation_h:get())
+            else
+                ir_missile_des_az_param:set(0)
+                ir_missile_des_el_param:set(0)
+            end
             if snd_list[sidewinder_high][2]:is_playing() then
                 snd_list[sidewinder_high][2]:stop()
             end
@@ -1214,6 +1224,7 @@ end
 function update()
     -- WeaponSystem:emergency_jettison(i-1)
     -- WeaponSystem:launch_station(pylonSelected - 1)
+    hk_mode:set(LAUNCH_MODE)
     local ECMStatus=WeaponSystem:get_ECM_status()
     if ECMStatus and (get_elec_ac_status() or get_elec_dc_status()) then
         ecmHandle:set(SWITCH_ON)
