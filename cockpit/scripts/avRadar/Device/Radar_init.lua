@@ -55,6 +55,14 @@ local SWITCH_OFF = 0
 local SWITCH_ON = 1
 local SWITCH_TEST = -1
 
+local video_time = -1
+local autoStart_BGM
+local stopBGM_delay = -1
+local bgm_gain = 1
+
+local CHN_LOADING_TIME = get_param_handle('CHN_LOADING_TIME')
+local LOADING_DISPLAY = get_param_handle('LOADING_DISPLAY')
+
 switch_count = 0
 function _switch_counter()
     switch_count = switch_count + 1
@@ -119,6 +127,7 @@ Radar = 	{
 				stt_azimuth_h 	= get_param_handle("RADAR_STT_AZIMUTH"),
 				stt_elevation_h = get_param_handle("RADAR_STT_ELEVATION"),
 				stt_range = get_param_handle("RADAR_STT_RANGE"),
+				stt_name = get_param_handle("RADAR_STT_UNIT_TYPE"),
 				
 				sz_azimuth_h 	= get_param_handle("SCAN_ZONE_ORIGIN_AZIMUTH"),
 				sz_elevation_h 	= get_param_handle("SCAN_ZONE_ORIGIN_ELEVATION"),
@@ -158,57 +167,58 @@ end
 function post_initialize()
 	Radar.iff_status_h:set(1)
 	dprintf("Radar - INIT")
-		
-		RadarSystem:listen_command(100)
-		
-		RadarSystem:listen_command(139)		--scanzone left
-		RadarSystem:listen_command(140)		--scanzone right
-		
-		RadarSystem:listen_command(141)		--scanzone up
-		RadarSystem:listen_command(142)		--scanzone down
-		
-		RadarSystem:listen_command(394)		--change PRF (radar puls freqency)
-	
-		RadarSystem:listen_command(509)		--lock start
-		RadarSystem:listen_command(510)		--lock finish
-		
-		RadarSystem:listen_command(285)		--Change radar mode RWS/TWS 
-		
-		RadarSystem:listen_command(2025)
-		RadarSystem:listen_command(2026)
-		RadarSystem:listen_command(2031)
-		RadarSystem:listen_command(2032)
-		RadarSystem:listen_command(2033)
-		RadarSystem:listen_command(2034)
-		
-		RadarSystem:listen_command(Keys.RadarRangeAxis)
-		RadarSystem:listen_command(Keys.RadarLightA)
-		RadarSystem:listen_command(Keys.RadarLightnessAxis)
-		RadarSystem:listen_command(Keys.RadarLightB)
-		RadarSystem:listen_command(Keys.RadarModeUp)
-		RadarSystem:listen_command(Keys.RadarModeDown)
-		RadarSystem:listen_command(Keys.RadarMaxRange)
-		
 
-		Radar.opt_pb_stab_h:set(1)
-		Radar.opt_pitch_stab_h:set(1)
-		Radar.opt_bank_stab_h:set(1)
-		local birth = LockOn_Options.init_conditions.birth_place
-		if birth=="AIR_HOT" then
-			target_status[radar_lightness][2] = SWITCH_ON
-			target_status[radar_mode][2] = SWITCH_ON
-			target_status[radar_range][2] = SWITCH_ON
-		elseif birth=="GROUND_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
-			target_status[radar_lightness][2] = SWITCH_ON
-			target_status[radar_mode][2] = SWITCH_OFF
-			target_status[radar_range][2] = SWITCH_ON
-		elseif birth=="GROUND_COLD" then
-			target_status[radar_lightness][2] = SWITCH_OFF
-			target_status[radar_mode][2] = SWITCH_OFF
-			target_status[radar_range][2] = SWITCH_OFF
-		end
-		
-	
+	RadarSystem:listen_command(100)
+
+	RadarSystem:listen_command(139) --scanzone left
+	RadarSystem:listen_command(140) --scanzone right
+
+	RadarSystem:listen_command(141) --scanzone up
+	RadarSystem:listen_command(142) --scanzone down
+
+	RadarSystem:listen_command(394) --change PRF (radar puls freqency)
+
+	RadarSystem:listen_command(509) --lock start
+	RadarSystem:listen_command(510) --lock finish
+
+	RadarSystem:listen_command(285) --Change radar mode RWS/TWS
+
+	RadarSystem:listen_command(2025)
+	RadarSystem:listen_command(2026)
+	RadarSystem:listen_command(2031)
+	RadarSystem:listen_command(2032)
+	RadarSystem:listen_command(2033)
+	RadarSystem:listen_command(2034)
+
+	RadarSystem:listen_command(Keys.RadarRangeAxis)
+	RadarSystem:listen_command(Keys.RadarLightA)
+	RadarSystem:listen_command(Keys.RadarLightnessAxis)
+	RadarSystem:listen_command(Keys.RadarLightB)
+	RadarSystem:listen_command(Keys.RadarModeUp)
+	RadarSystem:listen_command(Keys.RadarModeDown)
+	RadarSystem:listen_command(Keys.RadarMaxRange)
+
+
+	Radar.opt_pb_stab_h:set(1)
+	Radar.opt_pitch_stab_h:set(1)
+	Radar.opt_bank_stab_h:set(1)
+	local birth = LockOn_Options.init_conditions.birth_place
+	if birth == "AIR_HOT" then
+		target_status[radar_lightness][2] = SWITCH_ON
+		target_status[radar_mode][2] = SWITCH_ON
+		target_status[radar_range][2] = SWITCH_ON
+	elseif birth == "GROUND_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
+		target_status[radar_lightness][2] = SWITCH_ON
+		target_status[radar_mode][2] = SWITCH_OFF
+		target_status[radar_range][2] = SWITCH_ON
+	elseif birth == "GROUND_COLD" then
+		target_status[radar_lightness][2] = SWITCH_OFF
+		target_status[radar_mode][2] = SWITCH_OFF
+		target_status[radar_range][2] = SWITCH_OFF
+	end
+
+	local sndhost = create_sound_host("COCKPIT_AUTO_START", "HEADPHONES", 0, 0, 0)
+	autoStart_BGM = sndhost:create_sound("Music/A-10C_II")
 end
 
 function update_radar()
@@ -409,7 +419,31 @@ function update_TDC_pos()
 	Radar.tdc_azi_h:set(Radar.tdc_azi_h:get()+tdc_azi_h_v)
 	Radar.tdc_range_h:set(Radar.tdc_range_h:get()+tdc_range_h_v)
 end
+local function playVideo()
+	if current_status[radar_max_range][2]>0.9 then
+		if not autoStart_BGM:is_playing() then
+			autoStart_BGM:play_continue()
+			video_time = 0
+		end
+	else
+		if autoStart_BGM:is_playing() then
+			autoStart_BGM:stop()
+			video_time = -1
+		end
+	end
+	if autoStart_BGM:is_playing() then
+        video_time = video_time + update_time_step
+        if video_time > 154 then
+            video_time = 0
+        end
+    else
+        video_time = -1
+        LOADING_DISPLAY:set(0)
+    end
+	CHN_LOADING_TIME:set(video_time)
+end
 function update()
+	playVideo()
 	update_radar()
 	update_switch_status()
 	updateTargetBox()

@@ -17,9 +17,16 @@ cheat:listen_command(Keys.ShowParamList)
 local sensor_data = get_base_data()
 
 local time = 0
+local video_time = -1
 local status = false --false未启动,true已启动
 local action = 0 --0中立，1启动，-1关机
 local ShowParamList = false
+local autoStart_BGM
+local stopBGM_delay = -1
+local bgm_gain = 1
+
+local CHN_LOADING_TIME = get_param_handle('CHN_LOADING_TIME')
+local LOADING_DISPLAY = get_param_handle('LOADING_DISPLAY')
 
 local motorRPM_handle = get_param_handle('MOTOR_RPM')
 function post_initialize()
@@ -29,6 +36,8 @@ function post_initialize()
     elseif birth=="GROUND_COLD" then
         status = false
     end
+    local sndhost = create_sound_host("COCKPIT_AUTO_START", "HEADPHONES", 0, 0, 0)
+    autoStart_BGM = sndhost:create_sound("Music/ChinaLoading_v3")
 end
 
 function SetCommand(command,value)
@@ -161,6 +170,7 @@ local function autoStart()
     elseif motorRPM > 99 and sensor_data.getEngineLeftRPM() > 55 and sensor_data.getEngineRightRPM() > 55 and get_cockpit_arg_val(181) == 0 then
         interactive(_('Motor Starter'),Keys.Starter,devices.ENGINE,0)
         print_message_to_user(_('end of autostart'),3)
+        stopBGM_delay = 10
         action = 0
     end
 end
@@ -173,10 +183,35 @@ function update()
     time = time + update_time_step
     if time > 0.6 then
         if action == 1 then
+            -- LOADING_DISPLAY:set(1)
+            -- if not autoStart_BGM:is_playing() then
+            --     autoStart_BGM:play_continue()
+            -- end
             autoStart()
         elseif action == -1 then
             autoStop()
         end
         time = 0
     end
+    -- if action == 0 and stopBGM_delay > 0 then
+    --     stopBGM_delay = stopBGM_delay - update_time_step
+    -- elseif action == 0 and stopBGM_delay ~= -1 then
+    --     stopBGM_delay = -1
+    --     autoStart_BGM:stop()
+    --     bgm_gain = 1
+    -- end
+    -- if action == 0 and stopBGM_delay < 6 and stopBGM_delay > 0 then
+    --     bgm_gain = bgm_gain - update_time_step*0.166
+    -- end
+    -- if autoStart_BGM:is_playing() then
+    --     video_time = video_time + update_time_step
+    --     if video_time > 122 then
+    --         video_time = 0
+    --     end
+    -- else
+    --     video_time = -1
+    --     LOADING_DISPLAY:set(0)
+    -- end
+    -- autoStart_BGM:update(nil,bgm_gain,nil)
+    -- CHN_LOADING_TIME:set(video_time)
 end
