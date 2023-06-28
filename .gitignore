@@ -1,1 +1,5 @@
-cockpit/Textures/video
+cockpit/textures/video
+cockpit/scripts/loading
+cockpit/scripts/testScreen
+sounds/effects/music
+sounds/sdef/music
