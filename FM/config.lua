@@ -2,7 +2,7 @@
 J8II_FM = 
 {
     disable_built_in_oxygen_system = true,
-    center_of_mass    = { 0.05, 0.0, 0.0},
+    center_of_mass    = { 0.0, 0.0, 0.0},
     moment_of_inertia = {12793.0, 82531.8, 75190, 1081.0},
     suspension = {
         {
