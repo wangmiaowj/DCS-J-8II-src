@@ -55,6 +55,14 @@ local SWITCH_OFF = 0
 local SWITCH_ON = 1
 local SWITCH_TEST = -1
 
+local video_time = -1
+local autoStart_BGM
+local stopBGM_delay = -1
+local bgm_gain = 1
+
+local CHN_LOADING_TIME = get_param_handle('CHN_LOADING_TIME')
+local LOADING_DISPLAY = get_param_handle('LOADING_DISPLAY')
+
 switch_count = 0
 function _switch_counter()
     switch_count = switch_count + 1
@@ -73,6 +81,7 @@ local isEnableFire = get_param_handle("PNT_1206")
 
 local target_dis=get_param_handle("TARGET_BOX_DIS_ENABLE")
 local target_range=get_param_handle("TARGET_RANGE")
+local target_type = get_param_handle("TARGET_TYPE")
 local target_x=get_param_handle("TARGET_BOX_X")
 local target_y=get_param_handle("TARGET_BOX_Y")
 local hud_dis=get_param_handle("HUD_DIS_ENABLE")
@@ -118,6 +127,7 @@ Radar = 	{
 				stt_azimuth_h 	= get_param_handle("RADAR_STT_AZIMUTH"),
 				stt_elevation_h = get_param_handle("RADAR_STT_ELEVATION"),
 				stt_range = get_param_handle("RADAR_STT_RANGE"),
+				stt_name = get_param_handle("RADAR_STT_UNIT_TYPE"),
 				
 				sz_azimuth_h 	= get_param_handle("SCAN_ZONE_ORIGIN_AZIMUTH"),
 				sz_elevation_h 	= get_param_handle("SCAN_ZONE_ORIGIN_ELEVATION"),
@@ -155,59 +165,60 @@ function update_switch_status()
 end
 
 function post_initialize()
-
+	Radar.iff_status_h:set(1)
 	dprintf("Radar - INIT")
-		
-		RadarSystem:listen_command(100)
-		
-		RadarSystem:listen_command(139)		--scanzone left
-		RadarSystem:listen_command(140)		--scanzone right
-		
-		RadarSystem:listen_command(141)		--scanzone up
-		RadarSystem:listen_command(142)		--scanzone down
-		
-		RadarSystem:listen_command(394)		--change PRF (radar puls freqency)
-	
-		RadarSystem:listen_command(509)		--lock start
-		RadarSystem:listen_command(510)		--lock finish
-		
-		RadarSystem:listen_command(285)		--Change radar mode RWS/TWS 
-		
-		RadarSystem:listen_command(2025)
-		RadarSystem:listen_command(2026)
-		RadarSystem:listen_command(2031)
-		RadarSystem:listen_command(2032)
-		RadarSystem:listen_command(2033)
-		RadarSystem:listen_command(2034)
-		
-		RadarSystem:listen_command(Keys.RadarRangeAxis)
-		RadarSystem:listen_command(Keys.RadarLightA)
-		RadarSystem:listen_command(Keys.RadarLightnessAxis)
-		RadarSystem:listen_command(Keys.RadarLightB)
-		RadarSystem:listen_command(Keys.RadarModeUp)
-		RadarSystem:listen_command(Keys.RadarModeDown)
-		RadarSystem:listen_command(Keys.RadarMaxRange)
-		
 
-		Radar.opt_pb_stab_h:set(1)
-		Radar.opt_pitch_stab_h:set(1)
-		Radar.opt_bank_stab_h:set(1)
-		local birth = LockOn_Options.init_conditions.birth_place
-		if birth=="AIR_HOT" then
-			target_status[radar_lightness][2] = SWITCH_ON
-			target_status[radar_mode][2] = SWITCH_ON
-			target_status[radar_range][2] = SWITCH_ON
-		elseif birth=="GROUND_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
-			target_status[radar_lightness][2] = SWITCH_ON
-			target_status[radar_mode][2] = SWITCH_OFF
-			target_status[radar_range][2] = SWITCH_ON
-		elseif birth=="GROUND_COLD" then
-			target_status[radar_lightness][2] = SWITCH_OFF
-			target_status[radar_mode][2] = SWITCH_OFF
-			target_status[radar_range][2] = SWITCH_OFF
-		end
-		
-	
+	RadarSystem:listen_command(100)
+
+	RadarSystem:listen_command(139) --scanzone left
+	RadarSystem:listen_command(140) --scanzone right
+
+	RadarSystem:listen_command(141) --scanzone up
+	RadarSystem:listen_command(142) --scanzone down
+
+	RadarSystem:listen_command(394) --change PRF (radar puls freqency)
+
+	RadarSystem:listen_command(509) --lock start
+	RadarSystem:listen_command(510) --lock finish
+
+	RadarSystem:listen_command(285) --Change radar mode RWS/TWS
+
+	RadarSystem:listen_command(2025)
+	RadarSystem:listen_command(2026)
+	RadarSystem:listen_command(2031)
+	RadarSystem:listen_command(2032)
+	RadarSystem:listen_command(2033)
+	RadarSystem:listen_command(2034)
+
+	RadarSystem:listen_command(Keys.RadarRangeAxis)
+	RadarSystem:listen_command(Keys.RadarLightA)
+	RadarSystem:listen_command(Keys.RadarLightnessAxis)
+	RadarSystem:listen_command(Keys.RadarLightB)
+	RadarSystem:listen_command(Keys.RadarModeUp)
+	RadarSystem:listen_command(Keys.RadarModeDown)
+	RadarSystem:listen_command(Keys.RadarMaxRange)
+
+
+	Radar.opt_pb_stab_h:set(1)
+	Radar.opt_pitch_stab_h:set(1)
+	Radar.opt_bank_stab_h:set(1)
+	local birth = LockOn_Options.init_conditions.birth_place
+	if birth == "AIR_HOT" then
+		target_status[radar_lightness][2] = SWITCH_ON
+		target_status[radar_mode][2] = SWITCH_ON
+		target_status[radar_range][2] = SWITCH_ON
+	elseif birth == "GROUND_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
+		target_status[radar_lightness][2] = SWITCH_ON
+		target_status[radar_mode][2] = SWITCH_OFF
+		target_status[radar_range][2] = SWITCH_ON
+	elseif birth == "GROUND_COLD" then
+		target_status[radar_lightness][2] = SWITCH_OFF
+		target_status[radar_mode][2] = SWITCH_OFF
+		target_status[radar_range][2] = SWITCH_OFF
+	end
+
+	local sndhost = create_sound_host("COCKPIT_AUTO_START", "HEADPHONES", 0, 0, 0)
+	autoStart_BGM = sndhost:create_sound("Music/A-10C_II")
 end
 
 function update_radar()
@@ -283,8 +294,8 @@ function SetCommand(command,value)
 	
 ----------------------------------------------------------------------	
 --print_message_to_user(command)
-	if Radar.tdc_range_h:get() > 60000 then
-		Radar.tdc_range_h:set(60000) -- 目标指示附 距离
+	if Radar.tdc_range_h:get() > 1200000 then
+		Radar.tdc_range_h:set(1200000) -- 目标指示附 距离
 	elseif Radar.tdc_range_h:get() < 0 then
 		Radar.tdc_range_h:set(0)
 	end
@@ -327,8 +338,10 @@ local radar_target_tracing_array = {}
 -- 雷达扫描增稳模式状态
 local radar_stable_status = 1
 
+local hk_mode = get_param_handle("HK_MODE")
+
 -- 设置雷达增稳状态
-function setRadarStable(stab_signal)
+local function setRadarStable(stab_signal)
 	if stab_signal == true then
 		-- 增稳打开，用于远程扫描跟踪
 		Radar.opt_pb_stab_h:set(1)
@@ -392,8 +405,8 @@ function updateTargetBox()
 		isLock:set(1)
         target_dis:set(hud_dis:get())
 		target_range:set(Radar.stt_range:get()/1000)
-        target_x:set(math.tan(Radar.stt_azimuth_h:get())*15.5)
-        target_y:set(math.tan(Radar.stt_elevation_h:get())*15.5)
+        target_x:set(math.tan(Radar.stt_azimuth_h:get())*0.871)
+        target_y:set(math.tan(Radar.stt_elevation_h:get())*0.871)
     else
 		isLock:set(0)
 		target_range:set(0)
@@ -406,11 +419,41 @@ function update_TDC_pos()
 	Radar.tdc_azi_h:set(Radar.tdc_azi_h:get()+tdc_azi_h_v)
 	Radar.tdc_range_h:set(Radar.tdc_range_h:get()+tdc_range_h_v)
 end
+local function playVideo()
+	if current_status[radar_max_range][2]>0.9 then
+		if not autoStart_BGM:is_playing() then
+			autoStart_BGM:play_continue()
+			video_time = 0
+		end
+	else
+		if autoStart_BGM:is_playing() then
+			autoStart_BGM:stop()
+			video_time = -1
+		end
+	end
+	if autoStart_BGM:is_playing() then
+        video_time = video_time + update_time_step
+        if video_time > 154 then
+            video_time = 0
+        end
+    else
+        video_time = -1
+        LOADING_DISPLAY:set(0)
+    end
+	CHN_LOADING_TIME:set(video_time)
+end
 function update()
+	playVideo()
 	update_radar()
 	update_switch_status()
 	updateTargetBox()
 	update_TDC_pos()
+	local hk_mode = hk_mode:get()
+	if hk_mode == 1 or hk_mode == 3 then
+		setRadarStable(false)--增稳关闭
+	else
+		setRadarStable(true)
+	end
 	count = count + update_time_step
 	if count > 1 then
 		

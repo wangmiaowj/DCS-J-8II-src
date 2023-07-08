@@ -261,7 +261,7 @@ return {
         -- Weapons
         { combos = { { key = 'V', reformers = { 'LCtrl' } } },                                                       down = iCommandPlaneSalvoOnOff,                        name = _('Salvo Mode'),                                      category = _('Weapons') },
 
-        { combos = { { key = 'Space', reformers = { 'RAlt' } } },                                                    down = iCommandPlanePickleOn,                          up = iCommandPlanePickleOff,                                 name = _('Weapon Release'),                 category = _('Weapons') },
+        --{ combos = { { key = 'Space', reformers = { 'RAlt' } } },                                                    down = iCommandPlanePickleOn,                          up = iCommandPlanePickleOff,                                 name = _('Weapon Release'),                 category = _('Weapons') },
         --{combos = {{key = 'C', reformers = {'LShift'}}}, down = iCommandChangeGunRateOfFire, name = _('Cannon Rate Of Fire / Cut Of Burst select'), category = _('Weapons')},
 
         -- General (Gameplay)

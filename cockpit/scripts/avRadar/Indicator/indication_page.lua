@@ -3,8 +3,8 @@ dofile(LockOn_Options.script_path .. "avRadar/Indicator/definitions.lua")
 --local MARK_MATERIAL   = MakeMaterial(nil,{255,120,0,255})
 RS = RADAR_SCALE
 
-ud_scale      = 0.00001 * 0.3 * RS --0.00001
-lr_scale      = 0.095 * 0.3 * 2 * RS --0.2		--0.085
+ud_scale      = 0.00001 * 0.1 * RS --0.00001
+lr_scale      = 0.095 * 0.1 * 2 * RS --0.2		--0.085
 life_time     = 1 --1
 life_time_low = 0
 
@@ -80,10 +80,10 @@ for ia = 1, 900 do
 		--{"move_up_down_using_parameter"		,0,1.0},
 		{ "move_left_right_using_parameter", 1, lr_scale },
 		{ "move_up_down_using_parameter", 2, ud_scale },
-		{ "parameter_in_range", 2, 30, 60000 },
+		{ "parameter_in_range", 2, 30, 120000 },
 		{ "parameter_in_range", 3, life_time_low, life_time },
 		{ "change_color_when_parameter_equal_to_number", 4, 1, 1.0, 1.0, 0.0 },
-		{ "opacity_using_parameter", 5, }
+		{ "parameter_in_range", 5, -1,100}
 	}
 	radar_contact.element_params  = {
 		"RADAR_CONTACT" .. i .. "ELEVATION",
@@ -139,6 +139,30 @@ radar_cursor.element_params  = {
 	"RADAR_LIGHTNESS"
 }
 Add(radar_cursor)
+
+local line_shape           = CreateElement "ceSimpleLineObject"
+line_shape.name            = create_guid_string()
+line_shape.width           = 0.008
+line_shape.vertices        = {{0,0},{0,0}}
+line_shape.init_pos        = { 0, -0.90 * RS}
+line_shape.init_rot        = { 0, 0 }
+line_shape.tex_params      = {{0, 0.5}, {1, 0.5}, {1 / (1024 * 100 / 275), 1}}
+line_shape.isdraw		   = true
+line_shape.material        = MakeMaterial(nil,{0, 0, 0, 255})
+line_shape.additive_alpha  = false
+line_shape.collimated      = false
+line_shape.use_mipfilter   = true
+--line_shape.parent_element  = "hud_base_clip"
+line_shape.h_clip_relation = h_clip_relations.COMPARE
+line_shape.level           = RADAR_DEFAULT_LEVEL
+line_shape.isdraw          = true
+line_shape.element_params           = {"RADAR_MODE","RADAR_TDC_AZIMUTH","RADAR_TDC_RANGE","RADAR_TDC_AZIMUTH_2","RADAR_TDC_RANGE_2"} --, "D_GUNSIGHT_VISIBLE"
+line_shape.controllers              = {
+	{"parameter_in_range",0,-0.1,2.1},
+	{"line_object_set_point_using_parameters",0,1,2,lr_scale,ud_scale},
+	{"line_object_set_point_using_parameters",1,3,4,lr_scale,ud_scale}
+}
+Add(line_shape)
 
 
 x_size = 0.03

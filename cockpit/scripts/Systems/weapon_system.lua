@@ -94,6 +94,10 @@ local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")-- 是否锁
 local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")-- 锁定的目标的高程
 local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")-- 锁定的目标的方向
 
+local stt_azimuth_h 	= get_param_handle("RADAR_STT_AZIMUTH")--雷达STT目标方位
+local stt_elevation_h = get_param_handle("RADAR_STT_ELEVATION")--雷达STT目标高度
+local mode_h 		= get_param_handle("RADAR_MODE")--雷达锁定模式
+
 --红外弹引导头相关
 local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")-- 红外弹引导头高程
 local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")-- 红外弹引导头方向
@@ -108,6 +112,7 @@ local target_round_y = get_param_handle('TARGET_ROUND_Y')
 local hud_dis=get_param_handle("HUD_DIS_ENABLE")
 local gun_grid = get_param_handle('GUN_GRID')
 local ecmHandle = get_param_handle('ECM')
+local hk_mode = get_param_handle("HK_MODE")
 
 local weapon_name_str = get_param_handle('WEAPON_NAME')
 local weapon_name_dis = get_param_handle('WEAPON_NAME_DIS')
@@ -1144,11 +1149,16 @@ function update_ir_msl_status()
                 snd_list[sidewinder_high][2]:play_continue()
             end
         else
-            target_round_dis:set(0)
+            target_round_dis:set(1)
             target_round_x:set(0)
             target_round_y:set(0)
-            ir_missile_des_az_param:set(0)
-            ir_missile_des_el_param:set(0)
+            if mode_h:get() == 3 then
+                ir_missile_des_az_param:set(stt_azimuth_h:get())
+                ir_missile_des_el_param:set(stt_elevation_h:get())
+            else
+                ir_missile_des_az_param:set(0)
+                ir_missile_des_el_param:set(0)
+            end
             if snd_list[sidewinder_high][2]:is_playing() then
                 snd_list[sidewinder_high][2]:stop()
             end
@@ -1178,8 +1188,8 @@ end
 local function update_cannon_track()
     if LAUNCH_MODE == 3 then
         gun_ccip_dis_enable:set(1)
-        gun_ccip_x:set(gun_piper_az:get())
-        gun_ccip_y:set(gun_piper_el:get())
+        gun_ccip_x:set(math.tan(gun_piper_az:get())*0.871)
+        gun_ccip_y:set(math.tan(gun_piper_el:get())*0.871)
     else
         gun_ccip_dis_enable:set(0)
         gun_ccip_x:set(0)
@@ -1190,8 +1200,8 @@ end
 local function update_rocket_track()
     if LAUNCH_MODE == 4 and USING_PYLON_DATA[2] ~= -1 then
         rocket_ccip_dis_enable:set(1)
-        rocket_ccip_x:set(rocket_piper_az:get())
-        rocket_ccip_y:set(rocket_piper_el:get())
+        rocket_ccip_x:set(math.tan(rocket_piper_az:get())*0.871)
+        rocket_ccip_y:set(math.tan(rocket_piper_el:get())*0.871)
     else
         rocket_ccip_dis_enable:set(0)
         rocket_ccip_x:set(0)
@@ -1214,6 +1224,7 @@ end
 function update()
     -- WeaponSystem:emergency_jettison(i-1)
     -- WeaponSystem:launch_station(pylonSelected - 1)
+    hk_mode:set(LAUNCH_MODE)
     local ECMStatus=WeaponSystem:get_ECM_status()
     if ECMStatus and (get_elec_ac_status() or get_elec_dc_status()) then
         ecmHandle:set(SWITCH_ON)
@@ -1236,6 +1247,7 @@ function update()
         update_launch_selection()--更新发射状态
         update_display_light()--更新挂架选择灯
         update_rocket_track()
+        update_cannon_track()
     end
     
     if c > 1 then

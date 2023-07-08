@@ -7,16 +7,19 @@ purposes 	   = {render_purpose.GENERAL,render_purpose.HUD_ONLY_VIEW}
 --subset ids
 BASE    = 1
 INDICATION = 2
+--LOADING = 3
 
 page_subsets  = {
 [BASE]    		= LockOn_Options.script_path.."avRadar/Indicator/base_page.lua",
 [INDICATION]    = LockOn_Options.script_path.."avRadar/Indicator/indication_page.lua",
+--[LOADING]		= LockOn_Options.script_path.."Loading/Indicator/indication_page.lua",
 }
 pages = 
 {
 	{
 	 BASE,
-	 INDICATION
+	 INDICATION,
+	 --LOADING
 	 },
 }
 

@@ -17,7 +17,7 @@ materials["RADAR_GRID"] = {0,100,0,192}
 materials["RADAR_SCRIBE"] = {0,200,0,192}
 materials["GUNSIGHT_GLASS"] = {0,120,0,128}
 materials["TEST_COLOR"] = {50,250,0,255}
-materials["HUD_DAY_COLOR"]          = {0,200,0,200}
+materials["HUD_DAY_COLOR"]          = {0, 255, 0, 255}
 materials["EALT_BG_COLOR"]	= {0,50,255,255}
 materials["EALT_BG_DARK_COLOR"]	= {0,30,120,255}
 
@@ -27,7 +27,7 @@ materials["GROUND_YELLOW"] = {42,34,29,255}
 
 -- MENU
 materials["MENU_GREY"]    = {30, 30, 30, 150}
-materials["DBG_WHITE"] = {200,200,200,255}
+materials["DBG_WHITE"] = {255,255,255,255}
 
 
 local IndicationFontPath = LockOn_Options.script_path.."../Textures/Fonts/"
@@ -139,3 +139,12 @@ preload_texture =
 {
 }
 --]]
+-- textures = {}
+
+-- preload_texture = {}
+-- ChinaLoading_video_PATH        = LockOn_Options.script_path .. "../Textures/video/A-10C_II/"--视频帧图片路径
+-- for i = 1, 4615, 1 do
+-- 	local textures_path = string.format( "%s%04.0f.jpeg",ChinaLoading_video_PATH,i)
+-- 	preload_texture[#preload_texture+1] = textures_path
+-- 	textures[string.format( "CHN_LOADING_%04.0f",i)] = {textures_path,materials.DBG_WHITE}
+-- end
