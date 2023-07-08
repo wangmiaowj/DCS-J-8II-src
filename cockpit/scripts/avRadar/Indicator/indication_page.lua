@@ -140,6 +140,30 @@ radar_cursor.element_params  = {
 }
 Add(radar_cursor)
 
+local line_shape           = CreateElement "ceSimpleLineObject"
+line_shape.name            = create_guid_string()
+line_shape.width           = 0.008
+line_shape.vertices        = {{0,0},{0,0}}
+line_shape.init_pos        = { 0, -0.90 * RS}
+line_shape.init_rot        = { 0, 0 }
+line_shape.tex_params      = {{0, 0.5}, {1, 0.5}, {1 / (1024 * 100 / 275), 1}}
+line_shape.isdraw		   = true
+line_shape.material        = MakeMaterial(nil,{0, 0, 0, 255})
+line_shape.additive_alpha  = false
+line_shape.collimated      = false
+line_shape.use_mipfilter   = true
+--line_shape.parent_element  = "hud_base_clip"
+line_shape.h_clip_relation = h_clip_relations.COMPARE
+line_shape.level           = RADAR_DEFAULT_LEVEL
+line_shape.isdraw          = true
+line_shape.element_params           = {"RADAR_MODE","RADAR_TDC_AZIMUTH","RADAR_TDC_RANGE","RADAR_TDC_AZIMUTH_2","RADAR_TDC_RANGE_2"} --, "D_GUNSIGHT_VISIBLE"
+line_shape.controllers              = {
+	{"parameter_in_range",0,-0.1,2.1},
+	{"line_object_set_point_using_parameters",0,1,2,lr_scale,ud_scale},
+	{"line_object_set_point_using_parameters",1,3,4,lr_scale,ud_scale}
+}
+Add(line_shape)
+
 
 x_size = 0.03
 y_size = 0.03

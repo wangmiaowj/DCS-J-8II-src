@@ -1,14 +1,15 @@
-
+local x_scale = 1.35
+local y_scale = 1.43
 target_box 			            = CreateElement "ceMeshPoly" --这是创建一个平面
 target_box.name 			        = create_guid_string()
-target_box.vertices 		        = {{0,1},{0,0.8},{1,0},{0.8,0},{0,-1},{0,-0.8},{-1,0},{-0.8,0}}
+target_box.vertices 		        = {{0,0.05},{0,0.04},{0.05,0},{0.04,0},{0,-0.05},{0,-0.04},{-0.05,0},{-0.04,0}}
 target_box.indices 		        = {0,1,2,2,3,1,3,2,5,5,4,2,4,5,6,6,7,5,6,7,0,0,1,7}
 --target_box.vertices 		        = {{1,1},{1,-1},{-1,-1},{-1,1}}
 --target_box.indices 		        = {0,1,2,2,3,0}
-target_box.init_pos		        = {0, 0, 200}
+target_box.init_pos		        = {0, 0}
 target_box.init_rot		        = {0, 0, default_hud_rot_offset}
 target_box.element_params           = {"TARGET_BOX_DIS_ENABLE","TARGET_BOX_Y","TARGET_BOX_X"} --, "D_GUNSIGHT_VISIBLE"
-target_box.controllers              = {{"opacity_using_parameter",0},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+target_box.controllers              = {{"opacity_using_parameter",0},{"move_up_down_using_parameter",1,y_scale},{"move_left_right_using_parameter",2,x_scale}}
 target_box.material		        = MakeMaterial(nil,{0, 255, 0, 255})
 target_box.h_clip_relation       = h_clip_relations.COMPARE--COMPARE --REWRITE_LEVEL
 target_box.level			        = HUD_BASE_DEFAULT_LEVEL
@@ -16,11 +17,31 @@ target_box.change_opacity        = false
 target_box.parent_element       = "hud_base_clip"
 Add(target_box)
 
+local line_shape           = CreateElement "ceSimpleLineObject"
+line_shape.name            = create_guid_string()
+line_shape.width           = 0.004
+line_shape.vertices        = {{0,0},{1,0}}
+line_shape.init_pos        = { 0, 0 }
+line_shape.init_rot        = { 0, 0 }
+line_shape.tex_params      = {{0, 0.5}, {1, 0.5}, {1 / (1024 * 100 / 275), 1}}
+line_shape.isdraw		   = true
+line_shape.material        = MakeMaterial(nil,{0, 255, 0, 255})
+line_shape.additive_alpha  = false
+line_shape.collimated      = false
+line_shape.use_mipfilter   = true
+line_shape.parent_element  = "hud_base_clip"
+line_shape.h_clip_relation = h_clip_relations.COMPARE
+line_shape.level           = HUD_BASE_DEFAULT_LEVEL
+line_shape.isdraw          = true
+line_shape.element_params           = {"TARGET_BOX_DIS_ENABLE","TARGET_BOX_X","TARGET_BOX_Y","TARGET_BOX_X_2","TARGET_BOX_Y_2"} --, "D_GUNSIGHT_VISIBLE"
+line_shape.controllers              = {{"opacity_using_parameter",0},{"line_object_set_point_using_parameters",0,1,2,x_scale,y_scale},{"line_object_set_point_using_parameters",1,3,4,x_scale,y_scale}}
+Add(line_shape)
+
 target_range             = CreateElement "ceStringPoly" --创建一个字符输出元素 "ceTexPoly"表示创建一个贴图模型
 target_range.material          = "hud_font_base"    --FONT_             --材质类型（注意上面创建的字体材质）
-target_range.init_pos          = {-1 + 275 / 2000 , 0 , 0}         -- 这是设置对齐点的坐标【这是当前模型的最大限制(在边角对齐时不要超出)】
+target_range.init_pos          = {-0.1 , 0}         -- 这是设置对齐点的坐标【这是当前模型的最大限制(在边角对齐时不要超出)】
 target_range.alignment         = "RightCenter"       --对齐方式设置：Left/Right/Center; Top/Down/Center
-target_range.stringdefs        = {0.15,0.15, 0, 0}   --{ecrase vertical si inf a 0.01,ecrase lateral * streccth, 0, 0} 第一个值控制宽度，第二个值控制高度
+target_range.stringdefs        = {0.008,0.008, 0, 0}   --{ecrase vertical si inf a 0.01,ecrase lateral * streccth, 0, 0} 第一个值控制宽度，第二个值控制高度
 target_range.formats           = {"%.2fKM","%s"} -- 这里设置输出，类似于C的printf模型 %开头的是输出类型，后面的%s是输入类型
 target_range.element_params    = {"TARGET_RANGE","TARGET_BOX_DIS_ENABLE"}
 target_range.controllers       = {{"text_using_parameter",0},{"opacity_using_parameter",1}}
@@ -35,9 +56,9 @@ Add(target_range)
 
 target_type             = CreateElement "ceStringPoly" --创建一个字符输出元素 "ceTexPoly"表示创建一个贴图模型
 target_type.material          = "hud_font_base"    --FONT_             --材质类型（注意上面创建的字体材质）
-target_type.init_pos          = {1 + 275 / 2000 , 0 , 0}         -- 这是设置对齐点的坐标【这是当前模型的最大限制(在边角对齐时不要超出)】
+target_type.init_pos          = {0.1 , 0}         -- 这是设置对齐点的坐标【这是当前模型的最大限制(在边角对齐时不要超出)】
 target_type.alignment         = "LeftCenter"       --对齐方式设置：Left/Right/Center; Top/Down/Center
-target_type.stringdefs        = {0.15,0.15, 0, 0}   --{ecrase vertical si inf a 0.01,ecrase lateral * streccth, 0, 0} 第一个值控制宽度，第二个值控制高度
+target_type.stringdefs        = {0.008,0.008, 0, 0}   --{ecrase vertical si inf a 0.01,ecrase lateral * streccth, 0, 0} 第一个值控制宽度，第二个值控制高度
 target_type.formats           = {"%.2fKM","%s"} -- 这里设置输出，类似于C的printf模型 %开头的是输出类型，后面的%s是输入类型
 target_type.element_params    = {"TARGET_TYPE","TARGET_BOX_DIS_ENABLE"}
 target_type.controllers       = {{"text_using_parameter",0},{"opacity_using_parameter",1}}
@@ -48,7 +69,7 @@ target_type.isvisible		 = true
 target_type.h_clip_relation   = h_clip_relations.COMPARE -- INCREASE_IF_LEVEL-- --REWRITE_LEVEL
 target_type.level			 = HUD_BASE_DEFAULT_LEVEL
 target_type.parent_element    = target_box.name  --父节点名字 --可以绑定不在同一层的父节点
-Add(target_type)
+--Add(target_type)
 
 
 -- target_round 				            = CreateElement "ceTexPoly"
@@ -71,13 +92,13 @@ Add(target_type)
 
 local target_round = CreateElement "ceMeshPoly"
 target_round.name = create_guid_string()
-set_circle(target_round, 2, 1.8, 360,64)
-target_round.init_pos                 = {0, 0, 200}
+set_circle(target_round, 0.07, 0.06, 360,64)
+target_round.init_pos                 = {0, 0}
 target_round.init_rot		            = {0, 0, default_hud_rot_offset}
 target_round.material        = "HUD_DAY_COLOR"
 target_round.parent_element  = "hud_base_clip"
 target_round.element_params           = {"TARGET_ROUND_DIS_ENABLE","TARGET_ROUND_Y","TARGET_ROUND_X"} --, "D_GUNSIGHT_VISIBLE"
-target_round.controllers              = {{"opacity_using_parameter",0},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+target_round.controllers              = {{"opacity_using_parameter",0},{"move_up_down_using_parameter",1,y_scale},{"move_left_right_using_parameter",2,x_scale}}
 target_round.h_clip_relation = h_clip_relations.COMPARE
 target_round.level           = HUD_BASE_DEFAULT_LEVEL
 target_round.isdraw          = true
@@ -112,13 +133,33 @@ gun_ccip.init_rot		            = {0, 0, default_hud_rot_offset}
 gun_ccip.material        = "HUD_DAY_COLOR"
 gun_ccip.parent_element  = "hud_base_clip"
 gun_ccip.element_params           = {"GUN_CCIP_DIS_ENABLE","GUN_CCIP_Y","GUN_CCIP_X"} --, "D_GUNSIGHT_VISIBLE"
-gun_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+gun_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1,y_scale},{"move_left_right_using_parameter",2,x_scale}}
 gun_ccip.h_clip_relation = h_clip_relations.COMPARE
 gun_ccip.level           = HUD_BASE_DEFAULT_LEVEL
 gun_ccip.isdraw          = true
 gun_ccip.collimated      = true
 gun_ccip.isvisible       = true
 Add(gun_ccip)
+
+line_shape           = CreateElement "ceSimpleLineObject"
+line_shape.name            = create_guid_string()
+line_shape.width           = 0.004
+line_shape.vertices        = {{0,0},{1,0}}
+line_shape.init_pos        = { 0, 0 }
+line_shape.init_rot        = { 0, 0 }
+line_shape.tex_params      = {{0, 0.5}, {1, 0.5}, {1 / (1024 * 100 / 275), 1}}
+line_shape.isdraw		   = true
+line_shape.material        = 'HUD_DAY_COLOR'
+line_shape.additive_alpha  = false
+line_shape.collimated      = false
+line_shape.use_mipfilter   = true
+line_shape.parent_element  = "hud_base_clip"
+line_shape.h_clip_relation = h_clip_relations.COMPARE
+line_shape.level           = HUD_BASE_DEFAULT_LEVEL
+line_shape.isdraw          = true
+line_shape.element_params           = {"GUN_CCIP_DIS_ENABLE","GUN_CCIP_X","GUN_CCIP_Y","GUN_CCIP_X_2","GUN_CCIP_Y_2"} --, "D_GUNSIGHT_VISIBLE"
+line_shape.controllers              = {{"parameter_in_range",0,0.5,1.1},{"line_object_set_point_using_parameters",0,1,2,x_scale,y_scale},{"line_object_set_point_using_parameters",1,3,4,x_scale,y_scale}}
+Add(line_shape)
 
 local rocket_ccip = CreateElement "ceMeshPoly"
 rocket_ccip.name = create_guid_string()
@@ -128,13 +169,33 @@ rocket_ccip.init_rot		            = {0, 0, default_hud_rot_offset}
 rocket_ccip.material        = "HUD_DAY_COLOR"
 rocket_ccip.parent_element  = "hud_base_clip"
 rocket_ccip.element_params           = {"ROCKET_CCIP_DIS_ENABLE","ROCKET_CCIP_Y","ROCKET_CCIP_X"} --, "D_GUNSIGHT_VISIBLE"
-rocket_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+rocket_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1,y_scale},{"move_left_right_using_parameter",2,x_scale}}
 rocket_ccip.h_clip_relation = h_clip_relations.COMPARE
 rocket_ccip.level           = HUD_BASE_DEFAULT_LEVEL
 rocket_ccip.isdraw          = true
 rocket_ccip.collimated      = true
 rocket_ccip.isvisible       = true
 Add(rocket_ccip)
+
+line_shape           = CreateElement "ceSimpleLineObject"
+line_shape.name            = create_guid_string()
+line_shape.width           = 0.004
+line_shape.vertices        = {{0,0},{1,0}}
+line_shape.init_pos        = { 0, 0 }
+line_shape.init_rot        = { 0, 0 }
+line_shape.tex_params      = {{0, 0.5}, {1, 0.5}, {1 / (1024 * 100 / 275), 1}}
+line_shape.isdraw		   = true
+line_shape.material        = 'HUD_DAY_COLOR'
+line_shape.additive_alpha  = false
+line_shape.collimated      = false
+line_shape.use_mipfilter   = true
+line_shape.parent_element  = "hud_base_clip"
+line_shape.h_clip_relation = h_clip_relations.COMPARE
+line_shape.level           = HUD_BASE_DEFAULT_LEVEL
+line_shape.isdraw          = true
+line_shape.element_params           = {"ROCKET_CCIP_DIS_ENABLE","ROCKET_CCIP_X","ROCKET_CCIP_Y","ROCKET_CCIP_X_2","ROCKET_CCIP_Y_2"} --, "D_GUNSIGHT_VISIBLE"
+line_shape.controllers              = {{"parameter_in_range",0,0.5,1.1},{"line_object_set_point_using_parameters",0,1,2,x_scale,y_scale},{"line_object_set_point_using_parameters",1,3,4,x_scale,y_scale}}
+Add(line_shape)
 
 local bomb_ccip = CreateElement "ceMeshPoly"
 bomb_ccip.name = create_guid_string()
@@ -144,7 +205,7 @@ bomb_ccip.init_rot		            = {0, 0, default_hud_rot_offset}
 bomb_ccip.material        = "HUD_DAY_COLOR"
 bomb_ccip.parent_element  = "hud_base_clip"
 bomb_ccip.element_params           = {"BOMB_CCIP_DIS_ENABLE","BOMB_CCIP_Y","BOMB_CCIP_X"} --, "D_GUNSIGHT_VISIBLE"
-bomb_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1},{"move_left_right_using_parameter",2}}
+bomb_ccip.controllers              = {{"parameter_in_range",0,0.5,1.1},{"move_up_down_using_parameter",1,y_scale},{"move_left_right_using_parameter",2,x_scale}}
 bomb_ccip.h_clip_relation = h_clip_relations.COMPARE
 bomb_ccip.level           = HUD_BASE_DEFAULT_LEVEL
 bomb_ccip.isdraw          = true

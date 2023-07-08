@@ -386,11 +386,11 @@ local function make_J_8II(rewrite_settings)
 				{
 
 					--/N/ ROCKETS
-					{ CLSID = "{UB-16_S5M}", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "{UB-16_S5M}", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "{UB-16_S5M}" } } } }, -- UB-16 S-5M
-					{ CLSID = "DIS_RKT_90_UG", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "DIS_RKT_90_UG", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "DIS_RKT_90_UG" } } } }, -- S-24B ED
-					{ CLSID = "DIS_BRM1_90", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "DIS_BRM1_90", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "DIS_BRM1_90" } } } }, -- S-24A
 
 					--/N/ BOMBS
@@ -408,13 +408,13 @@ local function make_J_8II(rewrite_settings)
 					--/N/ MISSILES
 
 
-					{ CLSID = "{Aspide_MK1}", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "{Aspide_MK1}", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "{Aspide_MK1}" } } } },
-					{ CLSID = "DIS_PL-5EII", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "DIS_PL-5EII", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "DIS_PL-5EII" } } } },
-					{ CLSID = "DIS_PL-8A", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "DIS_PL-8A", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "DIS_PL-8A" } } } },
-					{ CLSID = "DIS_PL-12", connector = "pylon001", arg = 309, arg_value = 0.5,
+					{ CLSID = "DIS_PL-12", connector = "pylon001", arg = 309, arg_value = 0.0,
 						required = { { station = 7, loadout = { "DIS_PL-12" } } } },
 
 					--SMOKE
@@ -425,7 +425,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon001", arg = 309, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon001", arg = 309, arg_value = 0.5 },
 
-					{ CLSID = "<CLEAN>", connector = "pylon001", arg = 309, arg_value = 0.0,
+					{ CLSID = "<CLEAN>", connector = "pylon001", arg = 309, arg_value = 1.0,
 						required = { { station = 7, loadout = { "<CLEAN>" } } } },
 				}
 			),
@@ -437,57 +437,57 @@ local function make_J_8II(rewrite_settings)
 				},
 				{
 					--/N/ ROCKETS
-					{ CLSID = "{UB-16_S5M}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{UB-16_S5M}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{UB-16_S5M}" } } } },
-					{ CLSID = "{UB-32_S5M}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{UB-32_S5M}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{UB-32_S5M}" } } } },
 					--{ CLSID = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",connector = "pylon002",arg = 310,arg_value = 0.5}, -- S-24B ED
-					{ CLSID = "DIS_RKT_90_UG", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_RKT_90_UG", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_RKT_90_UG" } } } }, -- S-24B ED
-					{ CLSID = "DIS_BRM1_90", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_BRM1_90", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_BRM1_90" } } } }, -- S-24A
 
 					--/N/ BOMBS
 					--{ CLSID = "{5A1AC2B4-CA4B-4D09-A1AF-AC52FBC4B60B}",connector = "pylon002",arg = 310,arg_value = 0.5}, -- MER 4xFAB-100
-					{ CLSID = "{FAB-100-4}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{FAB-100-4}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{FAB-100-4}" } } } }, -- MER 4xFAB-100 arg = 318 small doors
-					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{FB3CE165-BF07-4979-887C-92B87F13276B}" } } } }, -- FAB-100
-					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{3C612111-C7AD-476E-8A8E-2485812F4E5C}" } } } }, -- FAB-250
-					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{37DCC01E-9E02-432F-B61D-10C166CA2798}" } } } }, -- FAB-500 M62
-					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}" } } } }, -- BetAB-500
-					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{BD289E34-DF84-4C5E-9220-4B14C346E79D}" } } } }, -- BetAB-500ShP
-					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{4203753F-8198-4E85-9924-6F8FF679F9FF}" } } } }, -- RBK-250 PTAB
-					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{D5435F26-F120-4FA3-9867-34ACE562EF1B}" } } } }, -- RBK-500 PTAB-10-5
-					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}" } } } }, -- BL.755
-					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{0511E528-EA28-4caf-A212-00D1408DF10A}" } } } }, --SAB-100
 
 					-- Tanks
-					{ CLSID = "DIS_TANK1100", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_TANK1100", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_TANK1100" } } } },
 
 					--/N/ MISSILES
-					{ CLSID = "{Aspide_MK1}", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "{Aspide_MK1}", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "{Aspide_MK1}" } } } },
-					{ CLSID = "DIS_PL-5EII", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_PL-5EII", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_PL-5EII" } } } },
-					{ CLSID = "DIS_PL-8A", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_PL-8A", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_PL-8A" } } } },
-					{ CLSID = "DIS_PL-12", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_PL-12", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_PL-12" } } } },
-					{ CLSID = "DIS_LD-10", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_LD-10" } } } },
-					{ CLSID = "DIS_LD-10_DUAL_L", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10_DUAL_L", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_LD-10_DUAL_R" } } } },
-					{ CLSID = "DIS_C-802AK", connector = "pylon002", arg = 310, arg_value = 0.5,
+					{ CLSID = "DIS_C-802AK", connector = "pylon002", arg = 310, arg_value = 0.0,
 						required = { { station = 6, loadout = { "DIS_C-802AK" } } } },
 					--SMOKE
 					{ CLSID = "DIS_SMOKE_GENERATOR_R", connector = "pylon002", arg = 310, arg_value = 0.5 },
@@ -497,7 +497,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon002", arg = 310, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon002", arg = 310, arg_value = 0.5 },
 
-					{ CLSID = "<CLEAN>", connector = "pylon002", arg = 310, arg_value = 0.0,
+					{ CLSID = "<CLEAN>", connector = "pylon002", arg = 310, arg_value = 1.0,
 						required = { { station = 6, loadout = { "<CLEAN>" } } } },
 				}
 			),
@@ -508,53 +508,53 @@ local function make_J_8II(rewrite_settings)
 				},
 				{
 					--/N/ ROCKETS
-					{ CLSID = "{UB-16_S5M}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{UB-16_S5M}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{UB-16_S5M}" } } } },
-					{ CLSID = "{UB-32_S5M}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{UB-32_S5M}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{UB-32_S5M}" } } } },
 					--{ CLSID = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",connector = "pylon003",arg = 311,arg_value = 0.5}, -- S-24B ED
-					{ CLSID = "DIS_RKT_90_UG", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_RKT_90_UG", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_RKT_90_UG" } } } },
-					{ CLSID = "DIS_BRM1_90", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_BRM1_90", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_BRM1_90" } } } },
 
 					--/N/ BOMBS
 					--{ CLSID = "{5A1AC2B4-CA4B-4D09-A1AF-AC52FBC4B60B}",connector = "pylon003",arg = 311,arg_value = 0.5}, -- MER 4xFAB-100
-					{ CLSID = "{FAB-100-4}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{FAB-100-4}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{FAB-100-4}" } } } }, -- MER 4xFAB-100 arg = 318 small doors
-					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{FB3CE165-BF07-4979-887C-92B87F13276B}" } } } }, -- FAB-100
-					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{3C612111-C7AD-476E-8A8E-2485812F4E5C}" } } } }, -- FAB-250
-					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{37DCC01E-9E02-432F-B61D-10C166CA2798}" } } } }, -- FAB-500 M62
-					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}" } } } }, -- BetAB-500
-					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{BD289E34-DF84-4C5E-9220-4B14C346E79D}" } } } }, -- BetAB-500ShP
-					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{4203753F-8198-4E85-9924-6F8FF679F9FF}" } } } }, -- RBK-250 PTAB
-					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{D5435F26-F120-4FA3-9867-34ACE562EF1B}" } } } }, -- RBK-500 PTAB-10-5
-					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}" } } } }, -- BL.755
-					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{0511E528-EA28-4caf-A212-00D1408DF10A}" } } } }, --SAB-100
 
 					--/N/ MISSILES
-					{ CLSID = "{Aspide_MK1}", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "{Aspide_MK1}", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "{Aspide_MK1}" } } } },
-					{ CLSID = "DIS_PL-5EII", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_PL-5EII", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_PL-5EII" } } } },
-					{ CLSID = "DIS_PL-8A", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_PL-8A", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_PL-8A" } } } },
-					{ CLSID = "DIS_PL-12", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_PL-12", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_PL-12" } } } },
-					{ CLSID = "DIS_LD-10", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_LD-10" } } } },
-					{ CLSID = "DIS_LD-10_DUAL_L", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10_DUAL_L", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_LD-10_DUAL_R" } } } },
-					{ CLSID = "DIS_C-802AK", connector = "pylon003", arg = 311, arg_value = 0.5,
+					{ CLSID = "DIS_C-802AK", connector = "pylon003", arg = 311, arg_value = 0.0,
 						required = { { station = 5, loadout = { "DIS_C-802AK" } } } },
 					--SMOKE
 					{ CLSID = "DIS_SMOKE_GENERATOR_R", connector = "pylon003", arg = 311, arg_value = 0.5 },
@@ -564,7 +564,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon003", arg = 311, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon003", arg = 311, arg_value = 0.5 },
 
-					{ CLSID = "<CLEAN>", connector = "pylon003", arg = 311, arg_value = 0.0 ,
+					{ CLSID = "<CLEAN>", connector = "pylon003", arg = 311, arg_value = 1.0 ,
 					required = { { station = 5, loadout = { "<CLEAN>" } } } }
 				}
 			),
@@ -575,14 +575,14 @@ local function make_J_8II(rewrite_settings)
 				},
 				{
 					--/N/ BOMBS
-					{ CLSID = "{RN-24}", connector = "pylon004", arg = 312, arg_value = 0.5, }, --"nuclear" 10KT
-					{ CLSID = "{RN-28}", connector = "pylon004", arg = 312, arg_value = 0.5, }, --"nuclear" 1KT
-					{ CLSID = "{LSWM_AA}", connector = "pylon004", arg = 312, arg_value = 0.5, }, --"nuclear" 1KT
-					{ CLSID = "{LSWM_AS}", connector = "pylon004", arg = 312, arg_value = 0.5, }, --"nuclear" 1KT
-					{ CLSID = "{LSWM_AG}", connector = "pylon004", arg = 312, arg_value = 0.5, }, --"nuclear" 1KT
+					{ CLSID = "{RN-24}", connector = "pylon004", arg = 312, arg_value = 0.0, }, --"nuclear" 10KT
+					{ CLSID = "{RN-28}", connector = "pylon004", arg = 312, arg_value = 0.0, }, --"nuclear" 1KT
+					{ CLSID = "{LSWM_AA}", connector = "pylon004", arg = 312, arg_value = 0.0, }, --"nuclear" 1KT
+					{ CLSID = "{LSWM_AS}", connector = "pylon004", arg = 312, arg_value = 0.0, }, --"nuclear" 1KT
+					{ CLSID = "{LSWM_AG}", connector = "pylon004", arg = 312, arg_value = 0.0, }, --"nuclear" 1KT
 					--/N/ FUEL TANKS
 					{ CLSID = "DIS_TANK800", connector = "pylon004", arg = 312, arg_value = 0.5 },
-					{ CLSID = "DIS_TANK800_EMPTY", connector = "pylon004", arg = 312, arg_value = 0.5, },
+					{ CLSID = "DIS_TANK800_EMPTY", connector = "pylon004", arg = 312, arg_value = 0.0, },
 					--SMOKE
 					{ CLSID = "DIS_SMOKE_GENERATOR_R", connector = "pylon004", arg = 312, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_G", connector = "pylon004", arg = 312, arg_value = 0.5 },
@@ -590,7 +590,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon004", arg = 312, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon004", arg = 312, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon004", arg = 312, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon004", arg = 312, arg_value = 0.0 },
+					{ CLSID = "<CLEAN>", connector = "pylon004", arg = 312, arg_value = 1.0 },
 
 				}
 			),
@@ -602,53 +602,53 @@ local function make_J_8II(rewrite_settings)
 				},
 				{
 					--/N/ ROCKETS
-					{ CLSID = "{UB-16_S5M}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{UB-16_S5M}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{UB-16_S5M}" } } } },
-					{ CLSID = "{UB-32_S5M}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{UB-32_S5M}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{UB-32_S5M}" } } } },
 					--{ CLSID = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",connector = "pylon005",arg = 311,arg_value = 0.5}, -- S-24B ED
-					{ CLSID = "DIS_RKT_90_UG", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_RKT_90_UG", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_RKT_90_UG" } } } }, -- S-24B ED
-					{ CLSID = "DIS_BRM1_90", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_BRM1_90", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_BRM1_90" } } } }, -- S-24A
 
 					--/N/ BOMBS
 					--{ CLSID = "{5A1AC2B4-CA4B-4D09-A1AF-AC52FBC4B60B}",connector = "pylon005",arg = 311,arg_value = 0.5}, -- MER 4xFAB-100
-					{ CLSID = "{FAB-100-4}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{FAB-100-4}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{FAB-100-4}" } } } }, -- MER 4xFAB-100 arg = 319 small doors
-					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{FB3CE165-BF07-4979-887C-92B87F13276B}" } } } }, -- FAB-100
-					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{3C612111-C7AD-476E-8A8E-2485812F4E5C}" } } } }, -- FAB-250
-					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{37DCC01E-9E02-432F-B61D-10C166CA2798}" } } } }, -- FAB-500
-					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}" } } } }, -- BetAB-500
-					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{BD289E34-DF84-4C5E-9220-4B14C346E79D}" } } } }, -- BetAB-500ShP
-					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{4203753F-8198-4E85-9924-6F8FF679F9FF}" } } } }, -- RBK-250
-					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{D5435F26-F120-4FA3-9867-34ACE562EF1B}" } } } }, -- RBK-500AO
-					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}" } } } }, -- BL.755
-					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{0511E528-EA28-4caf-A212-00D1408DF10A}" } } } }, --SAB-100
 
 					--/N/ MISSILES
-					{ CLSID = "{Aspide_MK1}", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "{Aspide_MK1}", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "{Aspide_MK1}" } } } },
-					{ CLSID = "DIS_PL-5EII", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_PL-5EII", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_PL-5EII" } } } },
-					{ CLSID = "DIS_PL-8A", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_PL-8A", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_PL-8A" } } } },
-					{ CLSID = "DIS_PL-12", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_PL-12", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_PL-12" } } } },
-					{ CLSID = "DIS_LD-10_DUAL_R", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10_DUAL_R", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_LD-10_DUAL_L" } } } },
-					{ CLSID = "DIS_LD-10", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_LD-10" } } } },
-					{ CLSID = "DIS_C-802AK", connector = "pylon005", arg = 313, arg_value = 0.5,
+					{ CLSID = "DIS_C-802AK", connector = "pylon005", arg = 313, arg_value = 0.0,
 						required = { { station = 3, loadout = { "DIS_C-802AK" } } } },
 					--SMOKE
 					{ CLSID = "DIS_SMOKE_GENERATOR_R", connector = "pylon005", arg = 313, arg_value = 0.5 },
@@ -657,7 +657,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon005", arg = 313, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon005", arg = 313, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon005", arg = 313, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon005", arg = 313, arg_value = 0.0,
+					{ CLSID = "<CLEAN>", connector = "pylon005", arg = 313, arg_value = 1.0,
 					required = { { station = 3, loadout = { "<CLEAN>" } } }  },
 
 				}
@@ -670,56 +670,56 @@ local function make_J_8II(rewrite_settings)
 				},
 				{
 					--/N/ ROCKETS
-					{ CLSID = "{UB-16_S5M}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{UB-16_S5M}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{UB-16_S5M}" } } } },
-					{ CLSID = "{UB-32_S5M}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{UB-32_S5M}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{UB-32_S5M}" } } } },
 					--{ CLSID = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",connector = "pylon006",arg = 311,arg_value = 0.5}, -- S-24B ED
-					{ CLSID = "DIS_RKT_90_UG", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_RKT_90_UG", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_RKT_90_UG" } } } }, -- S-24B ED
-					{ CLSID = "DIS_BRM1_90", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_BRM1_90", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_BRM1_90" } } } }, -- S-24A
 
 					--/N/ BOMBS
 					--{ CLSID = "{5A1AC2B4-CA4B-4D09-A1AF-AC52FBC4B60B}",connector = "pylon006",arg = 311,arg_value = 0.5}, -- MER 4xFAB-100
-					{ CLSID = "{FAB-100-4}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{FAB-100-4}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{FAB-100-4}" } } } }, -- MER 4xFAB-100 arg = 319 small doors
-					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{FB3CE165-BF07-4979-887C-92B87F13276B}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{FB3CE165-BF07-4979-887C-92B87F13276B}" } } } }, -- FAB-100
-					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{3C612111-C7AD-476E-8A8E-2485812F4E5C}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{3C612111-C7AD-476E-8A8E-2485812F4E5C}" } } } }, -- FAB-250
-					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{37DCC01E-9E02-432F-B61D-10C166CA2798}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{37DCC01E-9E02-432F-B61D-10C166CA2798}" } } } }, -- FAB-500
-					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{35B698AC-9FEF-4EC4-AD29-484A0085F62B}" } } } }, -- BetAB-500
-					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{BD289E34-DF84-4C5E-9220-4B14C346E79D}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{BD289E34-DF84-4C5E-9220-4B14C346E79D}" } } } }, -- BetAB-500ShP
-					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{4203753F-8198-4E85-9924-6F8FF679F9FF}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{4203753F-8198-4E85-9924-6F8FF679F9FF}" } } } }, -- RBK-250
-					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{D5435F26-F120-4FA3-9867-34ACE562EF1B}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{D5435F26-F120-4FA3-9867-34ACE562EF1B}" } } } }, -- RBK-500AO
-					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{08164777-5E9C-4B08-B48E-5AA7AFB246E2}" } } } }, -- BL.755
-					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{0511E528-EA28-4caf-A212-00D1408DF10A}" } } } }, --SAB-100
 
 					-- Tanks
-					{ CLSID = "DIS_TANK1100", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_TANK1100", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_TANK1100" } } } },
 					--/N/ MISSILES
-					{ CLSID = "{Aspide_MK1}", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "{Aspide_MK1}", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "{Aspide_MK1}" } } } },
-					{ CLSID = "DIS_PL-5EII", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_PL-5EII", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_PL-5EII" } } } },
-					{ CLSID = "DIS_PL-8A", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_PL-8A", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_PL-8A" } } } },
-					{ CLSID = "DIS_PL-12", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_PL-12", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_PL-12" } } } },
-					{ CLSID = "DIS_LD-10_DUAL_R", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10_DUAL_R", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_LD-10_DUAL_L" } } } },
-					{ CLSID = "DIS_LD-10", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_LD-10", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_LD-10" } } } },
-					{ CLSID = "DIS_C-802AK", connector = "pylon006", arg = 314, arg_value = 0.5,
+					{ CLSID = "DIS_C-802AK", connector = "pylon006", arg = 314, arg_value = 0.0,
 						required = { { station = 2, loadout = { "DIS_C-802AK" } } } },
 					--SMOKE
 					{ CLSID = "DIS_SMOKE_GENERATOR_R", connector = "pylon006", arg = 314, arg_value = 0.5 },
@@ -728,7 +728,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon006", arg = 314, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon006", arg = 314, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon006", arg = 314, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon006", arg = 314, arg_value = 0.0 ,
+					{ CLSID = "<CLEAN>", connector = "pylon006", arg = 314, arg_value = 1.0 ,
 					required = { { station = 2, loadout = { "<CLEAN>" } } } },
 
 				}
@@ -741,13 +741,13 @@ local function make_J_8II(rewrite_settings)
 				},
 				{
 					--/N/ ROCKETS
-					{ CLSID = "{UB-16_S5M}", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "{UB-16_S5M}", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "{UB-16_S5M}" } } } }, -- UB-16 S-5M
 					--test --{ CLSID = "{UB-32_S5M}",connector = "pylon007",arg = 312,arg_value = 0.5},
 					--{ CLSID = "{3858707D-F5D5-4bbb-BDD8-ABB0530EBC7C}",connector = "pylon007",arg = 312,arg_value = 0.5}, -- S-24B ED
-					{ CLSID = "DIS_RKT_90_UG", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "DIS_RKT_90_UG", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "DIS_RKT_90_UG" } } } }, -- S-24B ED
-					{ CLSID = "DIS_BRM1_90", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "DIS_BRM1_90", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "DIS_BRM1_90" } } } }, -- S-24A
 
 					--/N/ BOMBS
@@ -763,13 +763,13 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "{0511E528-EA28-4caf-A212-00D1408DF10A}", connector = "pylon007",
 						required = { { station = 1, loadout = { "{0511E528-EA28-4caf-A212-00D1408DF10A}" } } } ,arg = 315, arg_value = 0.5}, --SAB-100
 
-					{ CLSID = "{Aspide_MK1}", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "{Aspide_MK1}", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "{Aspide_MK1}" } } } },
-					{ CLSID = "DIS_PL-5EII", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "DIS_PL-5EII", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "DIS_PL-5EII" } } } },
-					{ CLSID = "DIS_PL-8A", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "DIS_PL-8A", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "DIS_PL-8A" } } } },
-					{ CLSID = "DIS_PL-12", connector = "pylon007", arg = 315, arg_value = 0.5,
+					{ CLSID = "DIS_PL-12", connector = "pylon007", arg = 315, arg_value = 0.0,
 						required = { { station = 1, loadout = { "DIS_PL-12" } } } },
 					--SMOKE
 					{ CLSID = "DIS_SMOKE_GENERATOR_R", connector = "pylon007", arg = 315, arg_value = 0.5 },
@@ -778,7 +778,7 @@ local function make_J_8II(rewrite_settings)
 					{ CLSID = "DIS_SMOKE_GENERATOR_Y", connector = "pylon007", arg = 315, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_W", connector = "pylon007", arg = 315, arg_value = 0.5 },
 					{ CLSID = "DIS_SMOKE_GENERATOR_O", connector = "pylon007", arg = 315, arg_value = 0.5 },
-					{ CLSID = "<CLEAN>", connector = "pylon007", arg = 315, arg_value = 0.0 ,
+					{ CLSID = "<CLEAN>", connector = "pylon007", arg = 315, arg_value = 1.0 ,
 					required = { { station = 1, loadout = { "<CLEAN>" } } } },
 				}
 			)
@@ -936,12 +936,9 @@ local function make_J_8II(rewrite_settings)
 				["STABILIZER_R_IN"] = { critical_damage = 3, args = { 162 }, droppable = false }, -- AI Door R
 
 				-- Vertical Stabilizer
-				["BLADE_2_CENTER"] = { critical_damage = 3, args = { 289 } }, -- ATC Transponder
-
-				["FIN_L_TOP"]    = { critical_damage = 7, args = { 244 }, deps_cells = { "BLADE_2_CENTER" } },
-				["FIN_L_CENTER"] = { critical_damage = 10, args = { 245 }, deps_cells = { "BLADE_2_CENTER", "FIN_L_TOP" } },
-				["FIN_L_BOTTOM"] = { critical_damage = 14, args = { 246 },
-					deps_cells = { "BLADE_2_CENTER", "FIN_L_TOP", "FIN_L_CENTER" }, droppable = false },
+				["FIN_L_TOP"]    = { critical_damage = 7, args = { 244 }},
+				["FIN_L_CENTER"] = { critical_damage = 10, args = { 245 }, deps_cells = { "FIN_L_TOP" } },
+				["FIN_L_BOTTOM"] = { critical_damage = 14, args = { 246 }, deps_cells = { "FIN_L_TOP", "FIN_L_CENTER" }, droppable = false },
 
 				-- Rudder
 				["BLADE_1_OUT"] = { critical_damage = 4, args = { 290 } }, -- Top
@@ -965,60 +962,64 @@ local function make_J_8II(rewrite_settings)
 
 				-- Wings, Ailerons, Flaps
 				["WING_L_IN"]     = { critical_damage = 14, args = { 225 },
-					deps_cells = { "WING_L_CENTER", "WING_L_OUT", "AILERON_L", "FLAP_L", "PYLON1", "PYLON2", "LEFT_GEAR_BOX", "WHEEL_L" } },
+					deps_cells = { "WING_L_CENTER", "WING_L_OUT", "AILERON_L", "FLAP_L_OUT", "FLAP_L_IN", "PYLON1", "PYLON2", "PYLON3", --[["LEFT_GEAR_BOX",--]] "WHEEL_L" } },
 				["WING_L_CENTER"] = { critical_damage = 8, args = { 224 },
-					deps_cells = { "WING_L_OUT", "AILERON_L", "FLAP_L", "PYLON1", "PYLON2" } },
+					deps_cells = { "WING_L_OUT", "AILERON_L", "PYLON1" } },
 				["WING_L_OUT"]    = { critical_damage = 5, args = { 223 }, deps_cells = { "AILERON_L" } },
-				["FLAP_L"]        = { critical_damage = 3, args = { 227 } },
+				["FLAP_L_OUT"]        = { critical_damage = 3, args = { 227 } },
+				["FLAP_L_IN"]        = { critical_damage = 3, args = { 228 } },
 				["AILERON_L"]     = { critical_damage = 3, args = { 226 } },
 
 				["WING_R_IN"]     = { critical_damage = 14, args = { 215 },
-					deps_cells = { "WING_R_CENTER", "WING_R_OUT", "AILERON_R", "FLAP_R", "PYLON3", "PYLON4", "RIGHT_GEAR_BOX", "WHEEL_R" } },
+					deps_cells = { "WING_R_CENTER", "WING_R_OUT", "AILERON_R", "FLAP_R_OUT", "FLAP_R_IN", "PYLON5", "PYLON6", "PYLON7", --[["RIGHT_GEAR_BOX",]] "WHEEL_R" } },
 				["WING_R_CENTER"] = { critical_damage = 8, args = { 214 },
-					deps_cells = { "WING_R_OUT", "AILERON_R", "FLAP_R", "PYLON3", "PYLON4" } },
+					deps_cells = { "WING_R_OUT", "AILERON_R", "PYLON7" } },
 				["WING_R_OUT"]    = { critical_damage = 3, args = { 213 }, deps_cells = { "AILERON_R" } },
-				["FLAP_R"]        = { critical_damage = 3, args = { 217 } },
+				["FLAP_R_OUT"]        = { critical_damage = 3, args = { 217 } },
+				["FLAP_R_IN"]        = { critical_damage = 3, args = { 218 } },
 				["AILERON_R"]     = { critical_damage = 3, args = { 216 } },
 
 				-- Landing Gear, Gear Bay, Gear Doors
 
 				["CREW_3"]         = { critical_damage = 5, args = { 302 } }, -- Door F Left
 				["CREW_4"]         = { critical_damage = 5, args = { 303 } }, -- Door F Right
-				["FRONT_GEAR_BOX"] = { critical_damage = 4, args = { 264 } },
+				--["FRONT_GEAR_BOX"] = { critical_damage = 4, args = { 264 } },
 				["BLADE_5_IN"]     = { critical_damage = 5, args = { 253 } }, -- Front Strut
 				["BLADE_5_CENTER"] = { critical_damage = 3, args = { 254 } }, -- Front Piston
-				["BLADE_5_OUT"]    = { critical_damage = 3, args = { 254 } }, -- Front Fork
+				--["BLADE_5_OUT"]    = { critical_damage = 3, args = { 254 } }, -- Front Fork
 				["WHEEL_F"]        = { critical_damage = 3, args = { 134 } },
 
 
 				["WING_L_PART_OUT"]    = { critical_damage = 4, args = { 260 } }, -- Door L Big
 				["WING_L_PART_CENTER"] = { critical_damage = 4, args = { 261 } }, -- Door L Small
-				["LEFT_GEAR_BOX"]      = { critical_damage = 4, args = { 259 } },
+				--["LEFT_GEAR_BOX"]      = { critical_damage = 4, args = { 259 } },
 				["BLADE_3_IN"]         = { critical_damage = 5, args = { 260 } }, -- Left Strut
 				["BLADE_3_CENTER"]     = { critical_damage = 4, args = { 261 } }, -- Left Piston
 				["WHEEL_L"]            = { critical_damage = 6, args = { 136 } },
 
-				["BLADE_6_IN"]     = { critical_damage = 3, args = { 267 } }, -- Fuselage L Gear Bay
+				--["BLADE_6_IN"]     = { critical_damage = 3, args = { 267 } }, -- Fuselage L Gear Bay
 				["WING_L_PART_IN"] = { critical_damage = 5, args = { 268 } }, -- Fuselage L Door
 
 
 				["WING_R_PART_OUT"]    = { critical_damage = 4, args = { 256 } }, -- Door R Big
 				["WING_R_PART_CENTER"] = { critical_damage = 4, args = { 257 } }, -- Door R Small
-				["RIGHT_GEAR_BOX"]     = { critical_damage = 4, args = { 255 } },
+				--["RIGHT_GEAR_BOX"]     = { critical_damage = 4, args = { 255 } },
 				["BLADE_4_IN"]         = { critical_damage = 5, args = { 256 } }, -- Right Strut
 				["BLADE_4_CENTER"]     = { critical_damage = 4, args = { 257 } }, -- Right Piston
 				["WHEEL_R"]            = { critical_damage = 6, args = { 135 } },
 
-				["BLADE_6_OUT"]    = { critical_damage = 3, args = { 265 } }, -- Fuselage R Gear Bay
+				--["BLADE_6_OUT"]    = { critical_damage = 3, args = { 265 } }, -- Fuselage R Gear Bay
 				["WING_R_PART_IN"] = { critical_damage = 5, args = { 266 } }, -- Fuselage R Door
 
 				-- Pylons
-				["PYLON1"] = { critical_damage = 5, args = { 228 } }, -- Left Outer
-				["PYLON2"] = { critical_damage = 5, args = { 229 } }, -- Left Inner
-				["PYLON3"] = { critical_damage = 5, args = { 218 } }, -- Right Inner
-				["PYLON4"] = { critical_damage = 5, args = { 219 } }, -- Right Outer
-				["CREW_1"] = { critical_damage = 5, args = { 170 } }, -- Center Fuel
-				["CREW_2"] = { critical_damage = 5, args = { 170 } }, -- Center Nuke
+				["PYLON1"] = { critical_damage = 5, args = { 309 } }, -- Left Outer
+				["PYLON2"] = { critical_damage = 5, args = { 310 } }, -- Left Center
+				["PYLON3"] = { critical_damage = 5, args = { 311 } }, -- Left Inner
+				["PYLON4"] = { critical_damage = 5, args = { 312 } }, -- Center 
+				["PYLON5"] = { critical_damage = 5, args = { 313 } }, -- Right Inner
+				["PYLON6"] = { critical_damage = 5, args = { 314 } }, -- Right Center
+				["PYLON7"] = { critical_damage = 5, args = { 315 } }, -- Right Outer
+				--["CREW_2"] = { critical_damage = 5, args = { 170 } }, -- Center Nuke
 
 				--Fuel Tanks
 				["FUEL_TANK_B"] = { critical_damage = 5, args = { 298 } }, -- Dorsal
