@@ -229,7 +229,7 @@ return {
         -- { combos = { { key = '2' } },                                                                                down = iCommandViewCockpitChangeSeat,                  value_down = 2,                                              name = _('Occupy Seat 2'),                  category = _('View Cockpit') },
 
         -- Autopilot
-        { combos = { { key = 'A' }, { key = '1', reformers = { 'LAlt' } } },                                         down = iCommandPlaneAutopilot,                         name = _('Autopilot - Attitude Hold'),                       category = _('Autopilot') },
+        { combos = {{ key = '1', reformers = { 'LAlt' } } },                                         down = iCommandPlaneAutopilot,                         name = _('Autopilot - Attitude Hold'),                       category = _('Autopilot') },
         { combos = { { key = 'H' }, { key = '2', reformers = { 'LAlt' } } },                                         down = iCommandPlaneStabHbar,                          name = _('Autopilot - Altitude Hold'),                       category = _('Autopilot') },
         { combos = { { key = '9', reformers = { 'LAlt' } } },                                                        down = iCommandPlaneStabCancel,                        name = _('Autopilot Disengage'),                             category = _('Autopilot') },
         { combos = { { key = '1', reformers = { 'LCtrl' } } },                                                       down = iCommandHelicopter_PPR_button_T_up,             name = _('CAS Pitch'),                                       category = _('Autopilot') },
@@ -285,11 +285,11 @@ return {
 
         { combos = { { key = 'Back' } },                                                                             down = iCommandSensorReset,                            name = _('Return To Search'),                                category = _('Sensors') },
         { combos = { { key = 'I' } },                                                                                down = iCommandPlaneRadarOnOff,                        name = _('Radar On/Off'),                                    category = _('Sensors') },
-        { combos = { { key = 'Enter' } },                                                                            down = iCommandPlane_LockOn_start,                     up = iCommandPlane_LockOn_finish,                            name = 'Target Lock',                       category = 'Sensors' },
+        { combos = { { key = 'Enter' } },                                                                            down = iCommandPlane_LockOn_start,                     up = iCommandPlane_LockOn_finish,                            name = 'Target Lock',                       category = _('Sensors') },
         { combos = { { key = 'I', reformers = { 'RAlt' } } },                                                        down = iCommandPlaneRadarChangeMode,                   name = _('Radar RWS/TWS Mode Select'),                       category = _('Sensors') },
         { combos = { { key = 'I', reformers = { 'RCtrl' } } },                                                       down = iCommandPlaneRadarCenter,                       name = _('Target Designator To Center'),                     category = _('Sensors') },
         { combos = { { key = 'I', reformers = { 'RShift' } } },                                                      down = iCommandPlaneChangeRadarPRF,                    name = _('Radar Pulse Repeat Frequency Select'),             category = _('Sensors') },
-        { combos = { { key = 'O' } },                                                                                down = iCommandPlaneEOSOnOff,                          name = _('Electro-Optical System On/Off'),                   category = _('Sensors') },
+        --{ combos = { { key = 'O' } },                                                                                down = iCommandPlaneEOSOnOff,                          name = _('Electro-Optical System On/Off'),                   category = _('Sensors') },
         { combos = { { key = ';', reformers = { 'RShift' } } },                                                      pressed = iCommandSelecterUp,                          up = iCommandSelecterStop,                                   name = _('Scan Zone Up'),                   category = _('Sensors') },
         { combos = { { key = '.', reformers = { 'RShift' } } },                                                      pressed = iCommandSelecterDown,                        up = iCommandSelecterStop,                                   name = _('Scan Zone Down'),                 category = _('Sensors') },
         { combos = { { key = ',', reformers = { 'RShift' } } },                                                      pressed = iCommandSelecterLeft,                        up = iCommandSelecterStop,                                   name = _('Scan Zone Left'),                 category = _('Sensors') },
@@ -386,27 +386,12 @@ return {
         { combos = { { key = 'S', reformers = { 'LShift' } } },down = Keys.ToAAMIr,                                                                                       name = _('ir AAM'),                                    category = _('Weapons') },
         { combos = { { key = 'D', reformers = { 'LShift' } } },down = Keys.ToAAMRdr,                                                                                      name = _('radar AAM'),                                 category = _('Weapons') },
         -- debug
-        { combos = { { key = 'D', reformers = { 'LAlt','LShift','LCtrl' } } },down = Keys.ShowParamList,	name = _('DEBUG RECORD'),		category = _('Debugs')},
+        { combos = { { key = 'D', reformers = { 'LAlt','LShift','LCtrl' } } },down = Keys.ShowParamList,	name = _('DEBUG RECORD'),		category = _('Debug')},
 
 
         --HOTAS
         { down = Keys.Flap_Pos_Up,                                                                                   up = Keys.Flap_Pos_Half,                               name = _('HOTAS Flap Up Position'),                          category = _('HOTAS') },
         { down = Keys.Flap_Pos_Down,                                                                                 up = Keys.Flap_Pos_Half,                               name = _('HOTAS Flap Down Position'),                        category = _('HOTAS') },
-
-        -- special functions
-        -- { down = Keys.SpecialSence,                                                                                  name = _('Tjena Hejsan'),                              category = _('Special Function') },
-        -- { down = Keys.Custom_Menu,                                                                                   name = _('Trigger on Screen Menu'),                    category = _('Special Function') },
-        -- { down = Keys.Custom_Menu_Enter,                                                                             name = _('Menu Enter'),                                category = _('Special Function') },
-
-        -- -- Music Player
-        -- { down = Keys.MusicPauseOrPlay,                                                                              name = _('Music Pause/Play'),                          category = _('Music Player') },
-        -- { down = Keys.MusicVolUp,                                                                                    name = _('Music Volume Up'),                           category = _('Music Player') },
-        -- { down = Keys.MusicVolDown,                                                                                  name = _('Music Volume Down'),                         category = _('Music Player') },
-        -- { down = Keys.MusicNext,                                                                                     name = _('Music Play Next'),                           category = _('Music Player') },
-        -- { down = Keys.MusicLast,                                                                                     name = _('Music Play Last'),                           category = _('Music Player') },
-        -- { down = Keys.MusicFastForward,                                                                              name = _('Music Play Fast Forward'),                   category = _('Music Player') },
-        -- { down = Keys.MusicFastBack,                                                                                 name = _('Music Play Fast Backward'),                  category = _('Music Player') },
-        -- { down = Keys.MusicLrcViewTrigger,                                                                           name = _('Music Display Lyrics'),                      category = _('Music Player') },
 
         { combos = { { key = 'X', reformers = { 'LShift' } } },                                                      down = Keys.ToGun,                                     value_down = 1.0,                                            name = _('Select Gun'),                     category = { _('Stick'), _('HOTAS') } },
         { combos = { { key = 'D', reformers = { 'LShift' } } },                                                      down = Keys.ToAAMRdr,                                  value_down = 1.0,                                            name = _('Select AMRAAM'),                  category = { _('Stick'), _('HOTAS') } },
@@ -418,5 +403,6 @@ return {
         ---------------------------------------------
         { combos = { { key = 'Home', reformers = { 'LWin' } } },                                                     down = Keys.autoStart,                                 name = _('Auto Start'),                                      category = _('Cheat') },
         { combos = { { key = 'End', reformers = { 'LWin' } } },                                                      down = Keys.autoStop,                                  name = _('Auto Stop'),                                       category = _('Cheat') },
+        { combos = { { key = 'A' } },down = 1000040, value_down = 1	, name = _('JOJO IA Menu'),          category = _('JOJO IA')},
     },
 }

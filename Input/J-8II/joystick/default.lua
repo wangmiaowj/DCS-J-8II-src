@@ -122,11 +122,11 @@ return {
 
         { down = iCommandSensorReset, name = _('Return To Search'), category = _('Sensors') },
         { down = iCommandPlaneRadarOnOff, name = _('Radar On/Off'), category = _('Sensors') },
-        { down = iCommandPlane_LockOn_start, up = iCommandPlane_LockOn_finish, name = 'Target Lock', category = 'Sensors' },
+        { down = iCommandPlane_LockOn_start, up = iCommandPlane_LockOn_finish, name = 'Target Lock', category = _('Sensors') },
         { down = iCommandPlaneRadarChangeMode, name = _('Radar RWS/TWS Mode Select'), category = _('Sensors') },
         { down = iCommandPlaneRadarCenter, name = _('Target Designator To Center'), category = _('Sensors') },
         { down = iCommandPlaneChangeRadarPRF, name = _('Radar Pulse Repeat Frequency Select'), category = _('Sensors') },
-        { down = iCommandPlaneEOSOnOff, name = _('Electro-Optical System On/Off'), category = _('Sensors') },
+        --{ down = iCommandPlaneEOSOnOff, name = _('Electro-Optical System On/Off'), category = _('Sensors') },
         { pressed = iCommandSelecterUp, up = iCommandSelecterStop, name = _('Scan Zone Up'), category = _('Sensors') },
         { pressed = iCommandSelecterDown, up = iCommandSelecterStop, name = _('Scan Zone Down'), category = _('Sensors') },
         { pressed = iCommandSelecterLeft, up = iCommandSelecterStop, name = _('Scan Zone Left'), category = _('Sensors') },
@@ -511,15 +511,12 @@ return {
         { down = Keys.Flap_Pos_Up, up = Keys.Flap_Pos_Half, name = _('HOTAS Flap Up Position'), category = _('HOTAS') },
         { down = Keys.Flap_Pos_Down, up = Keys.Flap_Pos_Half, name = _('HOTAS Flap Down Position'), category = _('HOTAS') },
 
-        { down = Keys.SpecialSence, name = _('Tjena Hejsan'), category = _('Special Function') },
-        { down = Keys.Custom_Menu, name = _('Trigger on Screen Menu'), category = _('Special Function') },
-        { down = Keys.Custom_Menu_Enter, name = _('Menu Enter'), category = _('Special Function') },
-
         -- Music Player
         { down = Keys.ToGun, value_down = 1.0, name = _('Select Gun'), category = { _('Stick'), _('HOTAS') } },
         { down = Keys.ToAAMRdr, value_down = 1.0, name = _('Select AMRAAM'), category = { _('Stick'), _('HOTAS') } },
         { down = Keys.ToAAMIr, value_down = 1.0, name = _('Select Sidewinder'), category = { _('Stick'), _('HOTAS') } },
         { down = Keys.NextWeapon,value_down = 1.0,name = _('Next Weapon'),category = { _('Stick'), _('HOTAS') } },
+        {down = 1000040, value_down = 1	,           			                    name = _('JOJO IA Menu'),          category = _('JOJO IA')},
     },
 
     -- joystick axes
