@@ -4,7 +4,7 @@ local SHOW_MASKS = false
 
 local base_simple          = AddSimple()
 
-IndicatorName = 'RADAR_LIGHTNESS'
+IndicatorName = 'RADAR'
 
 AddCircle(nil,Width,0,360,72,nil,nil,'DBG_RED',REWRITE_LEVEL,DEFAULT_NOCLIP_LEVEL,base_simple,nil,nil,not SHOW_MASKS)
 

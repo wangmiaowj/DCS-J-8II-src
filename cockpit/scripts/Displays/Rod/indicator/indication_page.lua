@@ -1,7 +1,7 @@
 
 dofile(LockOn_Options.script_path .. "Displays/Rod/indicator/definitions.lua")
 
-IndicatorName = 'ROD_DISPLAY'
+IndicatorName = 'ROD'
 
 local base_simple = AddSimple()
 

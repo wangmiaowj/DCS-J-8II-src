@@ -22,7 +22,7 @@ HUD_base_clip.level			    = HUD_DEFAULT_NOCLIP_LEVEL
 HUD_base_clip.isdraw		    = true
 HUD_base_clip.collimated		= false
 HUD_base_clip.change_opacity    = false
-HUD_base_clip.element_params    = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
+HUD_base_clip.element_params    = {"HUD_BRT"}              -- 初始化主显示控制
 HUD_base_clip.controllers       = {{"opacity_using_parameter",0}}
 HUD_base_clip.isvisible		    = SHOW_MASKS
 Add(HUD_base_clip)
@@ -39,7 +39,7 @@ speed_move_clip.h_clip_relation         = h_clip_relations.INCREASE_IF_LEVEL--CO
 speed_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 speed_move_clip.change_opacity          = false
 speed_move_clip.collimated 		        = true
-speed_move_clip.element_params          = {"HUD_DIS_ENABLE","HUD_DETAIL_DATA_DIS"}
+speed_move_clip.element_params          = {"HUD_BRT","HUD_DETAIL_DATA_DIS"}
 speed_move_clip.controllers             = {{"opacity_using_parameter",0},{"parameter_in_range",1,0.5,1.1}}
 speed_move_clip.isvisible		        = SHOW_MASKS
 --speed_move_clip.parent_element	       = "hud_base_data_clip"
@@ -57,7 +57,7 @@ altitude_move_clip.h_clip_relation          = h_clip_relations.INCREASE_IF_LEVEL
 altitude_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 altitude_move_clip.change_opacity           = false
 altitude_move_clip.collimated 		        = true
-altitude_move_clip.element_params          = {"HUD_DIS_ENABLE","HUD_DETAIL_DATA_DIS"}
+altitude_move_clip.element_params          = {"HUD_BRT","HUD_DETAIL_DATA_DIS"}
 altitude_move_clip.controllers             = {{"opacity_using_parameter",0},{"parameter_in_range",1,0.5,1.1}}
 altitude_move_clip.isvisible		        = SHOW_MASKS
 Add(altitude_move_clip)
@@ -74,7 +74,7 @@ heading_move_clip.h_clip_relation       = h_clip_relations.INCREASE_IF_LEVEL--CO
 heading_move_clip.level			        = HUD_DEFAULT_LEVEL - 1
 heading_move_clip.change_opacity        = false
 heading_move_clip.collimated            = true
-heading_move_clip.element_params        = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
+heading_move_clip.element_params        = {"HUD_BRT"}              -- 初始化主显示控制
 heading_move_clip.controllers           = {{"opacity_using_parameter",0}}
 heading_move_clip.isvisible		        = SHOW_MASKS
 Add(heading_move_clip)

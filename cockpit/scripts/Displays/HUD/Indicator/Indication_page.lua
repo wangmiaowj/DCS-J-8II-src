@@ -1,19 +1,19 @@
 dofile(LockOn_Options.script_path .. "Displays/HUD/Indicator/hud_def.lua")
 
 IS_HUD = true
-IndicatorName = 'HUD_DIS_ENABLE'
+IndicatorName = 'HUD'
 local base_simple = AddSimple()
 --AddBox(nil,nil,nil,nil,nil,MakeMaterial(nil,{0,0,0,255}),DEFAULT_LEVEL,COMPARE,base_simple)
 
 local mask_level = DEFAULT_LEVEL+2
 
 --速度
-local spd_simple = AddSimple({-0.8*Width,0},nil,base_simple)
+local spd_simple = AddSimple(nil,{-0.8*Width,0},nil,base_simple)
 local w = 0.15*Width
 local h = 0.7*Height
 
 AddBox(nil,w,h,nil,nil,'DBG_RED',mask_level,REWRITE_LEVEL,spd_simple,nil,nil,true)
-local spd_mv_simple = AddSimple(nil,nil,spd_simple,{'SPD_VAL'},{{'move_up_down_using_parameter',0,-0.00098}})
+local spd_mv_simple = AddSimple(nil,nil,nil,spd_simple,{'SPD_VAL'},{{'move_up_down_using_parameter',0,-0.00098}})
 for i = 0, 300, 1 do
     local txt_ = (math.fmod(i,5) == 0 and i > 0)
     if txt_ then
@@ -28,9 +28,9 @@ local spd_box = AddBoxBorder(nil,0.7*w,0.05*h,0.005*Width,{-0.3*w,0},nil,'DBG_GR
 AddText(nil,nil,'hud_font_base',{0.95*0.7*w,0},'RightCenter',DEFAULT_FONT_SIZE[1],nil,mask_level,spd_box,{'%.0f'},{'SPD_VAL'},{{'text_using_parameter',0}})
 
 --高度
-local alt_simple = AddSimple({0.8*Width,0},nil,base_simple)
+local alt_simple = AddSimple(nil,{0.8*Width,0},nil,base_simple)
 AddBox(nil,0.15*Width,0.7*Height,nil,nil,'DBG_RED',mask_level,REWRITE_LEVEL,alt_simple,nil,nil,true)
-local alt_mv_simple = AddSimple(nil,nil,alt_simple,{'BALT_VAL'},{{'move_up_down_using_parameter',0,-0.000098}})
+local alt_mv_simple = AddSimple(nil,nil,nil,alt_simple,{'BALT_VAL'},{{'move_up_down_using_parameter',0,-0.000098}})
 for i = 0, 300, 1 do
     local txt_ = (math.fmod(i,5) == 0 and i > 0)
     if txt_ then
@@ -45,11 +45,11 @@ local alt_box = AddBoxBorder(nil,0.7*w,0.05*h,0.005*Width,{0.3*w,0},nil,'DBG_GRE
 AddText(nil,nil,'hud_font_base',{-0.95*0.7*w,0},'LeftCenter',DEFAULT_FONT_SIZE[1],nil,mask_level,alt_box,{'%.0f'},{'HUD_ALT_DIS'},{{'text_using_parameter',0}})
 
 --航向
-local hdg_simple = AddSimple({0,0.85*Height},nil,base_simple)
+local hdg_simple = AddSimple(nil,{0,0.85*Height},nil,base_simple)
 w=0.65*Width
 h=0.1*Height
 AddBox(nil,w,h,nil,nil,'DBG_RED',mask_level,REWRITE_LEVEL,hdg_simple,nil,nil,true)
-local hdg_mv_simple = AddSimple(nil,nil,hdg_simple,{'HDG_DEG'},{{'move_left_right_using_parameter',0,-0.00325}})
+local hdg_mv_simple = AddSimple(nil,nil,nil,hdg_simple,{'HDG_DEG'},{{'move_left_right_using_parameter',0,-0.00325}})
 for i = -6, 71, 1 do
     local value = nil
     local line_thickness = 0.008
@@ -135,9 +135,9 @@ AddText(nil,nil,'hud_font_base',{0.65*Width,-0.87*Height},'LeftCenter',DEFAULT_F
 
 --姿态
 AddSimpleLine(nil,0.004*Width,{{-0.1*Width,0},{0.1*Width,0}},nil,nil,'DBG_GREEN',nil,nil,base_simple)
-local adi_rot_simple = AddSimple(nil,nil,base_simple,{'HUD_ADI_ROLL'},{{'rotate_using_parameter',0,-math.rad(1)}})
-local adi_mov_simple = AddSimple(nil,nil,adi_rot_simple,{'HUD_ADI_PITCH'},{{'move_up_down_using_parameter',0,-0.014}})
-local simple = AddSimple(nil,nil,adi_mov_simple)
+local adi_rot_simple = AddSimple(nil,nil,nil,base_simple,{'HUD_ADI_ROLL'},{{'rotate_using_parameter',0,-math.rad(1)}})
+local adi_mov_simple = AddSimple(nil,nil,nil,adi_rot_simple,{'HUD_ADI_PITCH'},{{'move_up_down_using_parameter',0,-0.014}})
+local simple = AddSimple(nil,nil,nil,adi_mov_simple)
 --左半
 IndicatorName = 'ADI_LINE_GROUP'
 AddSimpleLine(nil,0.004*Width,{{-0.55*Width,0},{-0.1*Width,0}},nil,nil,'DBG_GREEN',nil,nil,simple)
@@ -147,7 +147,7 @@ AddText(nil,'0','hud_font_base',{-0.6*Width,0},nil,DEFAULT_FONT_SIZE[1],nil,nil,
 AddText(nil,'0','hud_font_base',{0.6*Width,0},nil,DEFAULT_FONT_SIZE[1],nil,nil,simple)
 for i = 1, 18, 1 do
     --上半部分
-    simple = AddSimple({0,0.7*i*Height},nil,adi_mov_simple)
+    simple = AddSimple(nil,{0,0.7*i*Height},nil,adi_mov_simple)
     --左半
     AddSimpleLine(nil,0.004*Width,{{-0.3*Width,0.05*Height},{-0.3*Width,0},{-0.1*Width,0}},nil,nil,'DBG_GREEN',nil,nil,simple)
     --右半
@@ -156,7 +156,7 @@ for i = 1, 18, 1 do
     AddText(nil,tostring(i*5),'hud_font_base',{0.35*Width,0},nil,DEFAULT_FONT_SIZE[1],nil,nil,simple)
 
     --下半部分
-    simple = AddSimple({0,-0.7*i*Height},nil,adi_mov_simple)
+    simple = AddSimple(nil,{0,-0.7*i*Height},nil,adi_mov_simple)
     --左半
     AddSimpleLine(nil,0.004*Width,{{-0.3*Width,-0.05*Height},{-0.3*Width,0},{-0.1*Width,0}},nil,nil,'DBG_GREEN',nil,nil,simple)
     --右半
@@ -165,7 +165,7 @@ for i = 1, 18, 1 do
     AddText(nil,tostring(i*5),'hud_font_base',{0.35*Width,0},nil,DEFAULT_FONT_SIZE[1],nil,nil,simple)
 end
 --矢量符
-local fd_simple = AddSimple(nil,nil,base_simple,
+local fd_simple = AddSimple(nil,nil,nil,base_simple,
     {"HUD_FD_X","HUD_FD_Y"},
     {{"move_left_right_using_parameter",0,1},{"move_up_down_using_parameter",1,1},}
 )
@@ -174,7 +174,7 @@ AddSimpleLine(nil,0.004*Width,{{0.04*Width,0},{0.08*Width,0}},nil,nil,'DBG_GREEN
 AddSimpleLine(nil,0.004*Width,{{-0.04*Width,0},{-0.08*Width,0}},nil,nil,'DBG_GREEN',nil,nil,fd_simple)
 AddSimpleLine(nil,0.004*Width,{{0,0.04*Height},{0,0.08*Height}},nil,nil,'DBG_GREEN',nil,nil,fd_simple)
 
-IndicatorName = 'HUD_DIS_ENABLE'
+IndicatorName = 'HUD'
 --警告相关
 --注意文字提示
 --AddText(nil,'注意','hud_font_base',{0,-0.2*Height},nil,DEFAULT_FONT_SIZE[1],nil,nil,base_simple,nil,{'WARNING_FLASH'},{{'parameter_in_range',0,0,0.9}})
@@ -345,39 +345,39 @@ AddText(nil,nil,'hud_font_base',{0 , -0.5*Height},nil,DEFAULT_FONT_SIZE[1],nil,n
     }
 )
 
---	for ia = 1,999 do
-for i = 1, 16 do
-    AddSimpleLine(nil,0.01*Width,{{0,0.05*Height},{-0.05*Width,-0.05*Height},{0.05*Width,-0.05*Height}},nil,nil,'DBG_GREEN',nil,nil,base_simple,
-        {
-            string.format('HUD_RDR_CONTACT_%02.0f_ELEVATION',i),
-            string.format('HUD_RDR_CONTACT_%02.0f_AZIMUTH',i),
-            string.format('RADAR_CONTACT_%02.0f_RANGE',i),
-			string.format('RADAR_CONTACT_%02.0f_FRIENDLY',i),
-			string.format('RADAR_CONTACT_%02.0f_RCS',i),
-        },{
-			{"move_up_down_using_parameter"		,0,y_scale},
-			{ "move_left_right_using_parameter", 1, x_scale },
-			--{ "move_up_down_using_parameter", 2, ud_scale },
-			{ "parameter_in_range", 2, 30, 120000 },
-			{ "parameter_in_range", 3, 0,0.9 },
-			{ "parameter_in_range", 4, -1,100},
-		}
-    )
-	AddBoxBorder(nil, 0.05*Width,0.05 * Height,0.01*Width,nil,nil,'DBG_GREEN',nil,nil,base_simple,
-		{
-			string.format('HUD_RDR_CONTACT_%02.0f_ELEVATION',i),
-			string.format('HUD_RDR_CONTACT_%02.0f_AZIMUTH',i),
-			string.format('RADAR_CONTACT_%02.0f_RANGE',i),
-			string.format('RADAR_CONTACT_%02.0f_FRIENDLY',i),
-			string.format('RADAR_CONTACT_%02.0f_RCS',i),
-		},
-		{
-			{"move_up_down_using_parameter"		,0,y_scale},
-			{ "move_left_right_using_parameter", 1, x_scale },
-			--{ "move_up_down_using_parameter", 2, ud_scale },
-			{ "parameter_in_range", 2, 30, 80000 },
-			{ "parameter_in_range", 3, 0.9, 1.1},
-			{ "parameter_in_range", 4, -1,100},
-		}
-	)
-end
+-- --	for ia = 1,999 do
+-- for i = 1, 16 do
+--     AddSimpleLine(nil,0.01*Width,{{0,0.05*Height},{-0.05*Width,-0.05*Height},{0.05*Width,-0.05*Height}},nil,nil,'DBG_GREEN',nil,nil,base_simple,
+--         {
+--             string.format('HUD_RDR_CONTACT_%02.0f_ELEVATION',i),
+--             string.format('HUD_RDR_CONTACT_%02.0f_AZIMUTH',i),
+--             string.format('RADAR_CONTACT_%02.0f_RANGE',i),
+-- 			string.format('RADAR_CONTACT_%02.0f_FRIENDLY',i),
+-- 			string.format('RADAR_CONTACT_%02.0f_RCS',i),
+--         },{
+-- 			{"move_up_down_using_parameter"		,0,y_scale},
+-- 			{ "move_left_right_using_parameter", 1, x_scale },
+-- 			--{ "move_up_down_using_parameter", 2, ud_scale },
+-- 			{ "parameter_in_range", 2, 30, 120000 },
+-- 			{ "parameter_in_range", 3, 0,0.9 },
+-- 			{ "parameter_in_range", 4, -1,100},
+-- 		}
+--     )
+-- 	AddBoxBorder(nil, 0.05*Width,0.05 * Height,0.01*Width,nil,nil,'DBG_GREEN',nil,nil,base_simple,
+-- 		{
+-- 			string.format('HUD_RDR_CONTACT_%02.0f_ELEVATION',i),
+-- 			string.format('HUD_RDR_CONTACT_%02.0f_AZIMUTH',i),
+-- 			string.format('RADAR_CONTACT_%02.0f_RANGE',i),
+-- 			string.format('RADAR_CONTACT_%02.0f_FRIENDLY',i),
+-- 			string.format('RADAR_CONTACT_%02.0f_RCS',i),
+-- 		},
+-- 		{
+-- 			{"move_up_down_using_parameter"		,0,y_scale},
+-- 			{ "move_left_right_using_parameter", 1, x_scale },
+-- 			--{ "move_up_down_using_parameter", 2, ud_scale },
+-- 			{ "parameter_in_range", 2, 30, 80000 },
+-- 			{ "parameter_in_range", 3, 0.9, 1.1},
+-- 			{ "parameter_in_range", 4, -1,100},
+-- 		}
+-- 	)
+-- end

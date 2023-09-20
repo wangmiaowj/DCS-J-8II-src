@@ -3,7 +3,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 
 local dev = GetSelf()
 
-local update_time_step = 0.02  --每秒50次刷新
+local update_time_step = 1  --每秒50次刷新
 make_default_activity(update_time_step)
 
 local sensor_data = get_base_data()
@@ -29,18 +29,10 @@ function update()
     if (current_hour > 12) then
         current_hour = current_hour - 12
     end
-    if target_seconds > current_seconds then
-        current_seconds = current_seconds + 0.1
-    elseif target_seconds < 5 and current_seconds > 58 then
-        if current_seconds < 60 then
-            current_seconds = current_seconds + 0.1
-        else
-            current_seconds = current_seconds + 0.1 - 60
-        end
-    end
-    hour_ind:set(current_hour / 12)
-    min_ind:set(current_minute / 60)
-    second_ind:set(current_seconds / 60)
+    hour_ind:set(current_hour)
+    min_ind:set(current_minute)
+    second_ind:set(target_seconds)
+    --print_message_to_user('-')
 end
 
 need_to_be_closed = false

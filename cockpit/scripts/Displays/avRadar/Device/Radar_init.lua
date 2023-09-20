@@ -85,7 +85,7 @@ local target_alt=get_param_handle("TARGET_ALT")
 local target_type = get_param_handle("TARGET_TYPE")
 local target_x=get_param_handle("TARGET_BOX_X")
 local target_y=get_param_handle("TARGET_BOX_Y")
-local hud_dis=get_param_handle("HUD_DIS_ENABLE")
+local hud_dis=get_param_handle("HUD_BRT")
 
 local target_status = {
 	{radar_range, SWITCH_OFF, get_param_handle('PNT_1211'), 'PNT_1211'},
@@ -147,7 +147,7 @@ Radar = 	{
 				bit_h 					= get_param_handle("RADAR_BIT"),
 
 				antenna_pos 	= get_param_handle("SCAN_BEAM_AZIMUTH"), --设置扫描扇区显示
-				radar_lightness = get_param_handle("RADAR_LIGHTNESS"),
+				radar_lightness = get_param_handle("RADAR_BRT"),
 			}
 
 function update_switch_status()

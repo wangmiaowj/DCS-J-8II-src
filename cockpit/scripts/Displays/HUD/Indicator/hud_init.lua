@@ -11,7 +11,8 @@ BASIC_PAGE = 2 --这是基础仪表页面
 --子页面
 page_subsets  = {
 	[BASE]    		= LockOn_Options.script_path .. "Displays/HUD/Indicator/base_page.lua",    --底页面
-	[BASIC_PAGE]    = LockOn_Options.script_path .. "Displays/HUD/Indicator/Indication_page.lua",	--基础飞行数据页面
+	--[BASIC_PAGE]    = LockOn_Options.script_path .. "Displays/HUD/Indicator/Indication_page.lua",	--基础飞行数据页面
+	[BASIC_PAGE]    = LockOn_Options.script_path .. "Displays/HUD/Indicator/hud_base_page.lua",	--基础飞行数据页面
 }
 --目前暂时无法控制页面集显示,所以只用一个页面控制
 --页面集

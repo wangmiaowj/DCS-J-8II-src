@@ -8,7 +8,7 @@ local lr_scale      = 0.095 * 0.1 * 2 * RS --0.2		--0.085
 local life_time     = 1 --1
 local life_time_low = 0
 
-IndicatorName = 'RADAR_LIGHTNESS'
+IndicatorName = 'RADAR'
 
 
 -------------------------------------------------------------

@@ -22,7 +22,7 @@ HUD_base_clip.level			    = HUD_BASE_DEFAULT_NOCLIP_LEVEL
 HUD_base_clip.isdraw		    = true
 HUD_base_clip.collimated        = false
 HUD_base_clip.change_opacity    = false
-HUD_base_clip.element_params    = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
+HUD_base_clip.element_params    = {"HUD_BRT"}              -- 初始化主显示控制
 HUD_base_clip.controllers       = {{"opacity_using_parameter",0}}
 HUD_base_clip.isvisible		    = SHOW_MASKS
 Add(HUD_base_clip)
@@ -40,7 +40,7 @@ Base_Indication_clip.level			        = HUD_BASE_DEFAULT_LEVEL - 1
 Base_Indication_clip.isdraw		            = true
 Base_Indication_clip.collimated        = true
 Base_Indication_clip.change_opacity         = false
-Base_Indication_clip.element_params         = {"HUD_DIS_ENABLE"}              -- 初始化主显示控制
+Base_Indication_clip.element_params         = {"HUD_BRT"}              -- 初始化主显示控制
 Base_Indication_clip.controllers            = {{"opacity_using_parameter",0}}
 Base_Indication_clip.isvisible		        = SHOW_MASKS
 Add(Base_Indication_clip)

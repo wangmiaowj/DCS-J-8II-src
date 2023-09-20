@@ -1,7 +1,7 @@
 
 dofile(LockOn_Options.script_path .. "Displays/avRwr/indicator/definitions.lua")
 
-IndicatorName = "RWR_DISPLAY"
+IndicatorName = "RWR"
 
 local contact_scale = 0.030
 local pct_display_fill = 0.90
@@ -33,7 +33,7 @@ local txtsize = 0.005
 local strdefsymbol = {txtsize, txtsize / 4, -txtsize / 20, 0}
 
 for ia = 1, 20 do
-    local rwr_contact = AddSimple(nil, nil, RWR_Simp,
+    local rwr_contact = AddSimple(nil,nil, nil, RWR_Simp,
         {
             string.format("RWR_CONTACT_%02.0f_AZIMUTH",ia),
             string.format("RWR_CONTACT_%02.0f_POWER_SYM",ia),

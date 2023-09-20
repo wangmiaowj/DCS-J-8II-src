@@ -1,5 +1,5 @@
 dofile(LockOn_Options.script_path .. "Displays/avRwr/Indicator/definitions.lua")
-IndicatorName = 'RWR_DISPLAY'
+IndicatorName = 'RWR'
 
 local SHOW_MASKS                    = false
 

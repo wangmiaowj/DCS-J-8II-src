@@ -26,7 +26,7 @@ local lt_whl_brake_pos = _switch_counter() --left_wheel_brake_position
 local rt_whl_brake_pos = _switch_counter() --right_wheel_brake_position
 
 local target_status ={
-    {display,0,get_param_handle("ROD_DISPLAY")},
+    {display,0,get_param_handle("ROD_BRT")},
     {roll_pos,0,get_param_handle("ROD_STICK_ROLL_POS")},
     {pitch_pos,0,get_param_handle("ROD_STICK_PITCH_POS")},
     {rud_pos,0,get_param_handle("ROD_RUD_POS")},

@@ -1,3 +1,7 @@
+local cscripts = folder .. "../../../Cockpit/Scripts/"
+dofile(cscripts .. "devices.lua")
+dofile(cscripts .. "command_defs.lua")
+
 return {
 forceFeedback = {
 	invertX		= false,
@@ -17,7 +21,6 @@ keyCommands = {
 {pressed = iCommandThrottle1Decrease, up = iCommandThrottle1Stop,  name = _("Throttle Left Down"),  category = _("Flight Control"), },
 {down = iCommandViewTerrainLock,  name = _("Lock terrain view"),  category = _("View Padlock"), },
 {down = iCommandMarkerStatePlane,  name = _("Aircraft Labels"),  category = _("Labels"), },
-{down = iCommandRightEngineStop,  name = _("Engine Right Stop"),  category = _("Systems"), },
 {pressed = iCommandViewRight, up = iCommandViewStop,  name = _("View right"),  category = _("View Cockpit"), },
 {combos = {{key = "JOY_BTN_POV1_R"}, }, pressed = iCommandViewRightSlow, up = iCommandViewStopSlow,  name = _("View Right slow"),  category = _("View"), },
 {combos = {{key = "JOY_BTN_POV1_U"}, }, pressed = iCommandViewUpSlow, up = iCommandViewStopSlow,  name = _("View Up slow"),  category = _("View"), },
@@ -111,7 +114,12 @@ keyCommands = {
 {down = iCommandAllMissilePadlock,  name = _("All missiles padlock"),  category = _("View Padlock"), },
 {down = iCommandPlaneCoverMySix,  name = _("Cover Me"),  category = _("Communications"), },
 {down = iCommandPlaneThreatWarnSoundVolumeDown,  name = _("RWR/SPO Sound Signals Volume Down"),  category = _("Sensors"), },
-{down = iCommandEnginesStart,  name = _("Engines Start"),  category = _("Systems"), },
+{down = Keys.EnginesStart,  name = _("Engines Start"),  category = _("Systems"), },
+{down = Keys.EnginesStop,  name = _("Engines Stop"),  category = _("Systems"), },
+{down = Keys.RightEngineStart,  name = _("Engine Right Start"),  category = _("Systems"), },
+{down = Keys.RightEngineStop,  name = _("Engine Right Stop"),  category = _("Systems"), },
+{down = Keys.LeftEngineStart,  name = _("Engine Left Start"),  category = _("Systems"), },
+{down = Keys.LeftEngineStop,  name = _("Engine Left Stop"),  category = _("Systems"), },
 {down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,  name = _("Aircraft Bank Right"),  category = _("Flight Control"), },
 {down = iCommandPlaneRadarCenter,  name = _("Target Designator To Center"),  category = _("Sensors"), },
 {down = iCommandPlaneRadarChangeMode,  name = _("Radar RWS/TWS Mode Select"),  category = _("Sensors"), },
@@ -215,15 +223,11 @@ keyCommands = {
 {pressed = iCommandViewPitCameraMoveUp, up = iCommandViewPitCameraMoveStop,  name = _("Cockpit Camera Move Up"),  category = _("View Cockpit"), },
 {down = iCommandViewTargets,  name = _("F8 Target view"),  category = _("View"), },
 {down = iCommandBrightnessILS,  name = _("HUD Color"),  category = _("Systems"), },
-{down = iCommandRightEngineStart,  name = _("Engine Right Start"),  category = _("Systems"), },
 {down = iCommandQuit,  name = _("End mission"),  category = _("General"), },
 {pressed = iCommandViewExternalZoomIn, up = iCommandViewExternalZoomInStop,  name = _("Zoom external in"),  category = _("View"), },
-{down = iCommandLeftEngineStop,  name = _("Engine Left Stop"),  category = _("Systems"), },
 {down = iCommandViewFightGround,  name = _("F5 Ground hostile view"),  category = _("View"), },
-{down = iCommandLeftEngineStart,  name = _("Engine Left Start"),  category = _("Systems"), },
-{down = iCommandEnginesStop,  name = _("Engines Stop"),  category = _("Systems"), },
 {down = iCommandFlightClockReset,  name = _("Flight Clock Start/Stop/Reset"),  category = _("Systems"), },
-{down = iCommandPlaneEject,  name = _("Eject (3 times)"),  category = _("Systems"), },
+{down = Keys.Eject,  name = _("Eject (3 times)"),  category = _("Systems"), },
 {down = iCommandViewHUDOnlyOnOff,  name = _("F1 HUD only view switch"),  category = _("View"), },
 {down = iCommandViewTargetType,  name = _("F8 Player targets/All targets filter"),  category = _("View"), },
 {down = iCommandPlaneFormation,  name = _("Toggle Formation"),  category = _("Communications"), },

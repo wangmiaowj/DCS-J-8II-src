@@ -55,7 +55,7 @@ local function update_switch_status()
     end
 end
 
-local rwrDisplay = get_param_handle("RWR_DISPLAY")
+local rwrDisplay = get_param_handle("RWR_BRT")
 local rwrOverlay = get_param_handle("RWR_Overlay")
 local RWR_dubug_01 = get_param_handle("rwrSystem_symb")
 -- rwr_brightness = get_param_handle(Nav_Radar_brightness_parameter)
